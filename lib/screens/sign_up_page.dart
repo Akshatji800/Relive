@@ -2,11 +2,20 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/services/firebase_Service.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  late String email, password;
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     bool _showPassword = false;
@@ -151,12 +160,18 @@ class SignUpPage extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
+                                  keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.mail),
                                       hintText: "Enter your mail id",
                                       hintStyle: TextStyle(color: Colors.black45),
                                       border: InputBorder.none,
                                   ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      email = value.trim();
+                                    });
+                                  },
                                 ),
                               ),
                             ],
@@ -180,12 +195,18 @@ class SignUpPage extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
+                                  keyboardType: TextInputType.visiblePassword,
                                   decoration: InputDecoration(
                                       prefixIcon: Icon(Icons.lock),
                                       hintText: "Enter your password",
                                       hintStyle: TextStyle(color: Colors.black45),
                                       border: InputBorder.none
                                   ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      password = value.trim();
+                                    });
+                                  },
                                 ),
                               ),
                             ],
@@ -196,31 +217,20 @@ class SignUpPage extends StatelessWidget {
                           ),
                         ),
                         ),
-                        GestureDetector(
-                          onTap: (){Navigator.pushNamedAndRemoveUntil(context, Constants.homeNavigate, (route) => false);},
-                          child: Container(
-                            height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 75),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.cyan.shade500,
-                                border: Border.all(
-                                  color: Colors.black12
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black26,
-                                      spreadRadius: 1,
-                                      blurRadius: 4
-                                  )
-                                ]
-                            ),
-                            child: Center(
-                              child: Text("Sign up", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                            ),
-                          ),
-                        ),
-
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children:[
+                              // ignore: deprecated_member_use
+                              RaisedButton(
+                                color: Theme.of(context).accentColor,
+                                child: Text('Signup'),
+                                onPressed: (){
+                                  auth.createUserWithEmailAndPassword(email: email, password: password).then((_){
+                                    Navigator.pushNamedAndRemoveUntil(context, Constants.homerNavigate, (route) => true);
+                                  });
+                                },
+                              )
+                            ]),
                         SizedBox(height: 10,),
                         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                           Text("Already have an account?"),

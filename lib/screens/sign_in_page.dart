@@ -1,107 +1,135 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/services/firebase_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mental_health/utils/constants.dart';
 
-class SignInPage extends StatelessWidget {
+import 'NewHome.dart';
+
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  late String email;
+  late String password;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     OutlineInputBorder border = OutlineInputBorder(
-        borderSide: BorderSide(color: Constants.kBorderColor, width: 3.0));
+        borderSide: BorderSide(color: Constants.kBlackColor, width: 1.0));
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.cyan[200],
         body: Center(
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Image.asset("assets/images/sign-in.png"),
-          RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(children: <TextSpan>[
-                TextSpan(
-                    text: Constants.textSignInTitle,
-                    style: TextStyle(
-                      color: Constants.kBlackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                    )),
-              ])),
-          SizedBox(height: size.height * 0.01),
-          Text(
-            Constants.textSmallSignIn,
-            style: TextStyle(color: Constants.kBlackColor),
-          ),
-          Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
-          SizedBox(
-            width: size.width * 0.8,
-            child: TextField(
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                    hintText: "Enter your mail ID",
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Image.asset("assets/images/sign-in.png",width: 300,height: 200),
+              RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                        text: Constants.textSignInTitle,
+                        style: TextStyle(
+                          color: Constants.kBlackColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                        )),
+                  ])),
+              SizedBox(height: size.height * 0.01),
+              Text(
+                Constants.textSmallSignIn,
+                style: TextStyle(color: Constants.kBlackColor),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
+              SizedBox(
+                width: size.width * 0.8,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                      hintText: "Enter your mail ID",
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                      enabledBorder: border,
+                      focusedBorder: border),
+                  onChanged: (value) {
+                    setState(() {
+                      email = value.trim();
+                    });
+                  },),
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              SizedBox(
+                width: size.width * 0.8,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    hintText: "Enter your password",
                     contentPadding:
                     EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     enabledBorder: border,
-                    focusedBorder: border)),
-          ),
-          SizedBox(
-            height: size.height * 0.01,
-          ),
-          SizedBox(
-            width: size.width * 0.8,
-            child: TextField(
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: "Enter your password",
-                contentPadding:
-                EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                enabledBorder: border,
-                focusedBorder: border,
-                suffixIcon: Padding(
-                  child: FaIcon(
-                    FontAwesomeIcons.eye,
-                    size: 15,
-                    color: Colors.black,
+                    focusedBorder: border,
+                    suffixIcon: Padding(
+                      child: FaIcon(
+                        FontAwesomeIcons.eye,
+                        size: 15,
+                        color: Colors.black,
+                      ),
+                      padding: EdgeInsets.only(top: 15, left: 15),
+                    ),
                   ),
-                  padding: EdgeInsets.only(top: 15, left: 15),
+                  onChanged: (value) {
+                    setState(() {
+                      password = value.trim();
+                    });
+                  },
                 ),
               ),
-            ),
-          ),
-          Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
-          SizedBox(
-            width: size.width * 0.8,
-            child: OutlinedButton(
-              onPressed: () async {},
-              child: Text(Constants.textSignIn),
-              style: ButtonStyle(
-                  foregroundColor:
-                  MaterialStateProperty.all<Color>(Constants.kPrimaryColor),
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(Constants.kBlackColor),
-                  side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-            ),
-          ),
-          buildRowDivider(size: size),
-          Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
-          GoogleSignIn(),
-
-          Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text("Don't have an account?"),
-            SizedBox(width: 10),
-            GestureDetector(
-              onTap: () {Navigator.pushNamedAndRemoveUntil(context, Constants.signUpNavigate, (route) => false);},
-              child: Container(
-                child: Text("Register now",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.deepPurpleAccent)),
+              Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
+              SizedBox(
+                width: size.width * 0.8,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    auth.signInWithEmailAndPassword(email: email, password: password).then((_){
+                      Navigator.pushNamedAndRemoveUntil(context, Constants.homerNavigate, (route) => false);
+                    });
+                  },
+                  child: Text(Constants.textSignIn),
+                  style: ButtonStyle(
+                      foregroundColor:
+                      MaterialStateProperty.all<Color>(Constants.kPrimaryColor),
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(Constants.kBlackColor),
+                      side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+                ),
               ),
-            )
-          ]),
-        ])));
+              buildRowDivider(size: size),
+              Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
+              GoogleSignIn(),
+
+              Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
+
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text("Don't have an account?"),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {Navigator.pushNamedAndRemoveUntil(context, Constants.signUpNavigate, (route) => false);},
+                  child: Container(
+                    child: Text("Register now",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.deepPurpleAccent)),
+                  ),
+                )
+              ]),
+            ])));
   }
 
   Widget buildRowDivider({required Size size}) {
@@ -144,8 +172,8 @@ class _GoogleSignInState extends State<GoogleSignIn> {
           });
           FirebaseService service = new FirebaseService();
           try {
-           await service.signInwithGoogle();
-           Navigator.pushNamedAndRemoveUntil(context, Constants.homeNavigate, (route) => false);
+            await service.signInwithGoogle();
+            Navigator.pushNamedAndRemoveUntil(context, Constants.homeNavigate, (route) => false);
           } catch(e){
             if(e is FirebaseAuthException){
               showMessage(e.message!);
@@ -162,7 +190,7 @@ class _GoogleSignInState extends State<GoogleSignIn> {
         ),
         style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color>(Constants.kBlackColor),
+            MaterialStateProperty.all<Color>(Constants.kBlackColor),
             side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
       ),
     ) : CircularProgressIndicator();
