@@ -33,7 +33,6 @@ class WelcomePage extends StatelessWidget {
                               color: Constants.kBlackColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0)),
-
                     ])),
                 SizedBox(height: size.height * 0.03),
                 Text(
@@ -45,8 +44,7 @@ class WelcomePage extends StatelessWidget {
                   width: size.width * 0.8,
                   child: OutlinedButton(
                     onPressed: () {
-                          Navigator.pushNamed(
-                          context, Constants.signInNavigate);
+                      Navigator.pushNamed(context, Constants.signInNavigate);
                     },
                     child: Text(Constants.textStart),
                     style: ButtonStyle(

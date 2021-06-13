@@ -45,11 +45,6 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(user!.email!),
-            Text(user!.displayName!),
-            CircleAvatar(
-              backgroundImage: NetworkImage(user!.photoURL!),
-              radius: 20,
-            )
           ],
         )));
   }
