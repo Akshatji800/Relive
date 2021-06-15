@@ -46,14 +46,20 @@ class _SplashscreenState extends State<Splashscreen> {
           width: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Colors.cyan.shade700,
-            Colors.cyan.shade300,
-            Colors.cyanAccent
-          ])),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Image.asset("assets/images/ReliveLogo.png",
-                width: 500, height: 500),
-          ])),
+                Colors.cyan.shade700,
+                Colors.cyan.shade300,
+                Colors.cyanAccent
+              ])),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(),
+                Image.asset("assets/images/ReliveLogo.png",
+                    width: double.infinity, height: 90),
+                CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.lightBlue),
+                )
+              ])),
     );
   }
 }

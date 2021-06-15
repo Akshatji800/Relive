@@ -56,6 +56,7 @@ flutter:
     - assets/images/mentalHealth.png
     - assets/images/google-logo.png
     - assets/images/ReliveLogo.png
+    - assets/images/GetStarted.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
