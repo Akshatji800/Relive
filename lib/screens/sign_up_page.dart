@@ -93,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 10,
+                          height: 2,
                         ),
                         Container(
                           child: Padding(
@@ -101,17 +101,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  "  Sign up",
-                                  style: const TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                //Text("    Full name",style: const TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
                                 SizedBox(
                                   height: 5,
                                 ),
