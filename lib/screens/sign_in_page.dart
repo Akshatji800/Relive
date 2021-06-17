@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/services/firebase_Service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dashboard_doctor.dart';
+
 class SignInPage extends StatefulWidget {
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -195,10 +197,13 @@ class _SignInPageState extends State<SignInPage> {
                                 .signInWithEmailAndPassword(
                                     email: email, password: password)
                                 .then((_) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                              if (prefs.getString('login_as') == "doctor") {
+                                Navigator.pushReplacement(
+                                    context, MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+                              } else if (prefs.getString('login_as') == "patient") {
+                                Navigator.pushReplacement(
+                                    context, MaterialPageRoute(builder: (context) => HomePage()));
+                              }
                             });
                           },
                           child: Container(

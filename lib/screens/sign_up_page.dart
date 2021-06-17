@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,6 +7,7 @@ import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/services/firebase_Service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dashboard_doctor.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -17,6 +17,14 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   late String email, password;
   final auth = FirebaseAuth.instance;
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +74,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                         height: 8,
                       ),
-                      //Text("Register", style: TextStyle(color: Colors.white, fontSize: 25,fontWeight: FontWeight.bold),),
                     ],
                   ),
-                  //Image.asset("assets/images/sign.png",width: 120,height: 100),
                 ],
               ),
             ),
@@ -133,7 +139,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                //Text("    Username",style: const TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
                                 SizedBox(
                                   height: 2,
                                 ),
@@ -251,19 +256,108 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setString('email', email);
-                            prefs.setString('password', password);
-                            auth
-                                .createUserWithEmailAndPassword(
-                                    email: email, password: password)
-                                .then((_) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()));
-                            });
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      title: const Text('Select Role As:'),
+                                      content: Container(
+                                        height: 200,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                              onTap: () async {
+                                                SharedPreferences prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                prefs.setString('email', email);
+                                                prefs.setString(
+                                                    'password', password);
+                                                prefs.setString(
+                                                    'login_as', "patient");
+                                                auth
+                                                    .createUserWithEmailAndPassword(
+                                                        email: email,
+                                                        password: password)
+                                                    .then((_) {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              HomePage()));
+                                                });
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade200,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
+                                                    child: Center(
+                                                      child:
+                                                          const Text('Patient'),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                SharedPreferences prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                prefs.setString('email', email);
+                                                prefs.setString(
+                                                    'password', password);
+                                                prefs.setString(
+                                                    'login_as', "doctor");
+                                                auth
+                                                    .createUserWithEmailAndPassword(
+                                                        email: email,
+                                                        password: password)
+                                                    .then((_) {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DoctorDashBoard()));
+                                                });
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade200,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
+                                                    child: Center(
+                                                      child:
+                                                          const Text('Doctor'),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ));
                           },
                           child: Container(
                             height: 50,
@@ -319,7 +413,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        GoogleSignIn()
+                        GoogleSignIn(),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   ),

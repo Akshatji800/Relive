@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           ],
           backwardsCompatibility: false,
           systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.blue),
-          title: Text("Home"),
+          title: Text("Patient's DashBoard"),
         ),
         body: Center(
             child: Column(

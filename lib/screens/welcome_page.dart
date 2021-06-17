@@ -15,9 +15,9 @@ class WelcomePage extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-              Colors.cyan.shade700,
-              Colors.cyan.shade300,
-              Colors.cyanAccent
+          Colors.cyan.shade700,
+          Colors.cyan.shade300,
+          Colors.cyanAccent
         ])),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

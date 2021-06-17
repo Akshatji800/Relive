@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mental_health/screens/dashboard_doctor.dart';
 import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/screens/sign_in_page.dart';
 import 'package:mental_health/screens/welcome_page.dart';
@@ -20,14 +21,22 @@ class _SplashscreenState extends State<Splashscreen> {
     if (FirebaseAuth.instance.currentUser?.uid == null) {
       // signed in
       Timer(
-          Duration(seconds: 2),
+          Duration(seconds: 1),
           () => Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => WelcomePage())));
     } else {
-      Timer(
-          Duration(seconds: 2),
-          () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage())));
+      Timer(Duration(seconds: 1), () => user_exist_auth());
+    }
+  }
+
+  user_exist_auth() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (pref.getString('login_as') == "doctor") {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+    } else if (pref.getString('login_as') == "patient") {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     }
   }
 
@@ -46,10 +55,10 @@ class _SplashscreenState extends State<Splashscreen> {
           width: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                Colors.cyan.shade700,
-                Colors.cyan.shade300,
-                Colors.cyanAccent
-              ])),
+            Colors.cyan.shade700,
+            Colors.cyan.shade300,
+            Colors.cyanAccent
+          ])),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -57,7 +66,8 @@ class _SplashscreenState extends State<Splashscreen> {
                 Image.asset("assets/images/ReliveLogo.png",
                     width: double.infinity, height: 90),
                 CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.lightBlue),
+                  valueColor:
+                      new AlwaysStoppedAnimation<Color>(Colors.lightBlue),
                 )
               ])),
     );
