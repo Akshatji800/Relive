@@ -18,12 +18,11 @@ class _SignUpPageState extends State<SignUpPage> {
   late String email, password;
   final auth = FirebaseAuth.instance;
   bool _obscureText = true;
-
-  // Toggles the password show status
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
+  bool _passwordVisible = true;
+  final passwordController = TextEditingController();
+  @override
+  void initState() {
+    _passwordVisible = false;
   }
 
   @override
@@ -231,20 +230,31 @@ class _SignUpPageState extends State<SignUpPage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.all(0),
-                                        child: TextField(
-                                          keyboardType:
-                                              TextInputType.visiblePassword,
+                                        child:TextFormField(controller: passwordController,
+                                          keyboardType: TextInputType.text,
+                                          obscureText: !_passwordVisible,//This will obscure text dynamically
                                           decoration: InputDecoration(
-                                              prefixIcon: Icon(Icons.lock),
-                                              hintText: "Enter your password",
-                                              hintStyle: TextStyle(
-                                                  color: Colors.black45),
-                                              border: InputBorder.none),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              password = value.trim();
-                                            });
-                                          },
+                                            prefixIcon: Icon(Icons.lock),
+                                            hintText: 'Enter your password',
+                                            hintStyle: TextStyle(
+                                                color: Colors.black45),
+                                            border: InputBorder.none,
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                // Based on passwordVisible state choose the icon
+                                                _passwordVisible
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Colors.black45,
+                                              ),
+                                              onPressed: () {
+                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                setState(() {
+                                                  _passwordVisible = !_passwordVisible;
+                                                });
+                                              },
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -268,6 +278,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           children: [
                                             InkWell(
                                               onTap: () async {
+                                                password = passwordController.text;
                                                 SharedPreferences prefs =
                                                     await SharedPreferences
                                                         .getInstance();
@@ -312,6 +323,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             ),
                                             InkWell(
                                               onTap: () async {
+                                                password = passwordController.text;
                                                 SharedPreferences prefs =
                                                     await SharedPreferences
                                                         .getInstance();
