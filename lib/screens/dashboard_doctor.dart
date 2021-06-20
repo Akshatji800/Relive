@@ -3,6 +3,7 @@ import 'package:mental_health/services/firebase_Service.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mental_health/screens/Settings_Pages/settings.dart';
 
 class DoctorDashBoard extends StatefulWidget {
   DoctorDashBoard({Key? key}) : super(key: key);
@@ -17,7 +18,6 @@ class _DoctorDashBoardState extends State<DoctorDashBoard> {
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,19 +25,21 @@ class _DoctorDashBoardState extends State<DoctorDashBoard> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.logout,
+                Icons.settings,
                 color: Colors.white,
               ),
-              onPressed: () async {
-                FirebaseService service = new FirebaseService();
-                await service.signOutFromGoogle();
-                Navigator.pushReplacementNamed(
-                    context, Constants.signInNavigate);
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => SettingsPage()
+                    ));
               },
             )
           ],
           backwardsCompatibility: false,
-          systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.blue),
+          backgroundColor: Colors.cyan,
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.cyan),
           title: Text("Doctor's DashBoard"),
         ),
         body: Center(
