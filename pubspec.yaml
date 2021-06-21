@@ -21,7 +21,6 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  #firebase_core: ^1.0.3
   firebase_database: ^7.1.0
   flutter:
     sdk: flutter
@@ -31,6 +30,7 @@ dependencies:
   google_sign_in: ^5.0.4
   flutter_screenutil: ^5.0.0+2
   shared_preferences: ^2.0.6
+  google_fonts: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -57,6 +57,13 @@ flutter:
     - assets/images/google-logo.png
     - assets/images/ReliveLogo.png
     - assets/images/GetStarted.png
+    - assets/settings.png
+    - assets/appointment.png
+    - assets/patient.png
+    - assets/available.png
+    - assets/interaction.png
+    - assets/report.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
