@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mental_health/services/firebase_Service.dart';
+import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_doctor.dart';
 
@@ -425,7 +425,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        GoogleSignIn(),
+                        GoogleSignIn(buttonText: "Sign up with Google"),
                         SizedBox(
                           height: 10,
                         ),
@@ -458,76 +458,3 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-class GoogleSignIn extends StatefulWidget {
-  GoogleSignIn({Key? key}) : super(key: key);
-
-  @override
-  _GoogleSignInState createState() => _GoogleSignInState();
-}
-
-class _GoogleSignInState extends State<GoogleSignIn> {
-  bool isLoading = false;
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return !isLoading
-        ? SizedBox(
-            width: size.width * 0.8,
-            height: 50,
-            child: OutlinedButton.icon(
-              icon: Image.asset("assets/images/google-logo.png",
-                  width: 30, height: 30),
-              onPressed: () async {
-                setState(() {
-                  isLoading = true;
-                });
-                FirebaseService service = new FirebaseService();
-                try {
-                  await service.signInwithGoogle();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, Constants.homeNavigate, (route) => false);
-                } catch (e) {
-                  if (e is FirebaseAuthException) {
-                    showMessage(e.message!);
-                  }
-                }
-                setState(() {
-                  isLoading = false;
-                });
-              },
-              label: Text(
-                Constants.textSignUpGoogle,
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.cyan.shade500,
-                  shadowColor: Colors.black45,
-                  elevation: 8,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50)))),
-            ),
-          )
-        : CircularProgressIndicator();
-  }
-
-  void showMessage(String message) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Text(message),
-            actions: [
-              TextButton(
-                child: Text("Ok"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
-  }
-}
