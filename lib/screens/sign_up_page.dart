@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,10 +17,14 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   late String email, password;
+  String message1 = "";
+  bool _validate_pass = false;
+  bool _validate_email = false;
   final auth = FirebaseAuth.instance;
   bool _obscureText = true;
   bool _passwordVisible = true;
   final passwordController = TextEditingController();
+
   @override
   void initState() {
     _passwordVisible = false;
@@ -28,16 +33,18 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     bool _showPassword = false;
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Colors.cyan.shade700,
-          Colors.cyan.shade300,
-          Colors.cyanAccent
-        ])),
+              Colors.cyan.shade700,
+              Colors.cyan.shade300,
+              Colors.cyanAccent
+            ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -153,7 +160,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
                                         child: TextField(
@@ -191,9 +198,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
                                           keyboardType:
-                                              TextInputType.emailAddress,
+                                          TextInputType.emailAddress,
                                           decoration: InputDecoration(
                                             prefixIcon: Icon(Icons.mail),
+
                                             hintText: "Enter your mail id",
                                             hintStyle: TextStyle(
                                                 color: Colors.black45),
@@ -208,6 +216,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                       ),
                                     ],
                                   ),
+                                ),
+                                !_validate_email ? Container(): Text(
+                                  "$message1",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal),
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -230,11 +245,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.all(0),
-                                        child:TextFormField(controller: passwordController,
+                                        child: TextFormField(
+                                          controller: passwordController,
                                           keyboardType: TextInputType.text,
-                                          obscureText: !_passwordVisible,//This will obscure text dynamically
+                                          obscureText: !_passwordVisible,
+                                          //This will obscure text dynamically
                                           decoration: InputDecoration(
                                             prefixIcon: Icon(Icons.lock),
+
                                             hintText: 'Enter your password',
                                             hintStyle: TextStyle(
                                                 color: Colors.black45),
@@ -250,7 +268,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                               onPressed: () {
                                                 // Update the state i.e. toogle the state of passwordVisible variable
                                                 setState(() {
-                                                  _passwordVisible = !_passwordVisible;
+                                                  _passwordVisible =
+                                                  !_passwordVisible;
                                                 });
                                               },
                                             ),
@@ -260,116 +279,23 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ],
                                   ),
                                 ),
+                                !_validate_pass ? Container(): Text(
+                                  "$message1",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ],
                             ),
                           ),
                         ),
                         GestureDetector(
                           onTap: () async {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      title: const Text('Select Role As:'),
-                                      content: Container(
-                                        height: 200,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              onTap: () async {
-                                                password = passwordController.text;
-                                                SharedPreferences prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
-                                                prefs.setString('email', email);
-                                                prefs.setString(
-                                                    'password', password);
-                                                prefs.setString(
-                                                    'login_as', "patient");
-                                                auth
-                                                    .createUserWithEmailAndPassword(
-                                                        email: email,
-                                                        password: password)
-                                                    .then((_) {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              HomePage()));
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: Center(
-                                                      child:
-                                                          const Text('Patient'),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () async {
-                                                password = passwordController.text;
-                                                SharedPreferences prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
-                                                prefs.setString('email', email);
-                                                prefs.setString(
-                                                    'password', password);
-                                                prefs.setString(
-                                                    'login_as', "doctor");
-                                                auth
-                                                    .createUserWithEmailAndPassword(
-                                                        email: email,
-                                                        password: password)
-                                                    .then((_) {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              DoctorDashBoard()));
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: Center(
-                                                      child:
-                                                          const Text('Doctor'),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ));
+                            password = passwordController.text;
+                            password =
+                                passwordController.text;
+                            _signup(email, password);
                           },
                           child: Container(
                             height: 50,
@@ -407,7 +333,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       Constants.signInNavigate,
-                                      (route) => false);
+                                          (route) => false);
                                 },
                                 child: Container(
                                   child: Text("Sign in",
@@ -456,5 +382,124 @@ class _SignUpPageState extends State<SignUpPage> {
       ]),
     );
   }
-}
 
+  _signup(String _email, String _password) async {
+    try {
+      //Create Get Firebase Auth User
+      SharedPreferences prefs =
+      await SharedPreferences.getInstance();
+      prefs.setString('email', email);
+      prefs.setString('password', password);
+      await auth
+          .createUserWithEmailAndPassword(
+          email: email,
+          password: password)
+          .then((_) {
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) =>
+                AlertDialog(
+                  title: const Text('Select Role As:'),
+                  content: Container(
+                    height: 200,
+                    child: Column(
+                      mainAxisAlignment:
+                      MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            password =
+                                passwordController.text;
+                            SharedPreferences prefs =
+                            await SharedPreferences
+                                .getInstance();
+                            prefs.setString(
+                                'login_as', "patient");
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(
+                                builder: (context) => HomePage()));
+                          },
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color:
+                                  Colors.grey.shade200,
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      20)),
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.all(
+                                    20.0),
+                                child: Center(
+                                  child:
+                                  const Text('Patient'),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            password =
+                                passwordController.text;
+                            SharedPreferences prefs =
+                            await SharedPreferences
+                                .getInstance();
+                            prefs.setString(
+                                'login_as', "doctor");
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(
+                                builder: (context) => DoctorDashBoard()));
+                          },
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color:
+                                  Colors.grey.shade200,
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      20)),
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.all(
+                                    20.0),
+                                child: Center(
+                                  child:
+                                  const Text('Doctor'),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ));
+      });
+    } on FirebaseAuthException catch (error) {
+      message1 = error.message.toString();
+      setState(() {
+        if (message1 == "Password should be at least 6 characters") {
+          _validate_pass = true;
+          _validate_email = false;
+        } else {
+          if (message1 == "The email address is badly formatted.") {
+            message1= "Invalid email";
+            _validate_email = true;
+            _validate_pass = false;
+          }
+          else {
+            Fluttertoast.showToast(msg: message1, gravity: ToastGravity.TOP);
+            _validate_email = false;
+            _validate_pass = false;
+          }
+        }
+      });
+    }
+  }
+}
