@@ -19,7 +19,7 @@ class _SignInPageState extends State<SignInPage> {
   late String email, password;
   bool _validate_pass = false;
   bool _validate_email = false;
-  String message1 = "";
+  String error_message = "";
   final auth = FirebaseAuth.instance;
   bool _obscureText = true;
   bool _passwordVisible = true;
@@ -39,18 +39,16 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     bool _showPassword = false;
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-              Colors.cyan.shade700,
-              Colors.cyan.shade300,
-              Colors.cyanAccent
-            ])),
+          Colors.cyan.shade700,
+          Colors.cyan.shade300,
+          Colors.cyanAccent
+        ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -141,7 +139,7 @@ class _SignInPageState extends State<SignInPage> {
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
                                           keyboardType:
-                                          TextInputType.emailAddress,
+                                              TextInputType.emailAddress,
                                           decoration: InputDecoration(
                                             prefixIcon: Icon(Icons.mail),
                                             hintText: "Enter your mail ID",
@@ -159,13 +157,15 @@ class _SignInPageState extends State<SignInPage> {
                                     ],
                                   ),
                                 ),
-                                !_validate_email ? Container(): Text(
-                                  "$message1",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal),
-                                ),
+                                !_validate_email
+                                    ? Container()
+                                    : Text(
+                                        "$error_message",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -210,7 +210,7 @@ class _SignInPageState extends State<SignInPage> {
                                                 // Update the state i.e. toogle the state of passwordVisible variable
                                                 setState(() {
                                                   _passwordVisible =
-                                                  !_passwordVisible;
+                                                      !_passwordVisible;
                                                 });
                                               },
                                             ),
@@ -220,13 +220,15 @@ class _SignInPageState extends State<SignInPage> {
                                     ],
                                   ),
                                 ),
-                                !_validate_pass ? Container(): Text(
-                                  "$message1",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal),
-                                ),
+                                !_validate_pass
+                                    ? Container()
+                                    : Text(
+                                        "$error_message",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -286,7 +288,7 @@ class _SignInPageState extends State<SignInPage> {
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       Constants.signUpNavigate,
-                                          (route) => false);
+                                      (route) => false);
                                 },
                                 child: Container(
                                   child: Text("Register now",
@@ -328,40 +330,35 @@ class _SignInPageState extends State<SignInPage> {
   _signin(String _email, String _password) async {
     try {
       //Create Get Firebase Auth User
-      SharedPreferences prefs =
-      await SharedPreferences.getInstance();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('email', email);
       prefs.setString('password', password);
       await auth
-          .signInWithEmailAndPassword(
-          email: email, password: password)
+          .signInWithEmailAndPassword(email: email, password: password)
           .then((_) {
         if (prefs.getString('login_as') == "doctor") {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+        } else if (prefs.getString('login_as') == "patient") {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(
-              builder: (context) => DoctorDashBoard()));
-        } else
-        if (prefs.getString('login_as') == "patient") {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(
-              builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         }
       });
     } on FirebaseAuthException catch (error) {
-      message1 = error.message.toString();
+      error_message = error.message.toString();
       setState(() {
-        if (message1 == "The password is invalid or the user does not have a password.") {
-          message1= "Invalid Password";
+        if (error_message ==
+            "The password is invalid or the user does not have a password.") {
+          error_message = "Invalid Password";
           _validate_pass = true;
           _validate_email = false;
         } else {
-          if (message1 == "The email address is badly formatted.") {
-            message1= "Invalid email";
+          if (error_message == "The email address is badly formatted.") {
+            error_message = "Invalid email";
             _validate_email = true;
             _validate_pass = false;
-          }
-          else {
-            Fluttertoast.showToast(msg: message1, gravity: ToastGravity.TOP);
+          } else {
+            Fluttertoast.showToast(msg: error_message, gravity: ToastGravity.TOP);
             _validate_email = false;
             _validate_pass = false;
           }
@@ -370,4 +367,3 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 }
-

@@ -16,14 +16,18 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late String email, password;
-  String message1 = "";
+  late String email, password, username, fullname;
+  String error_message = "";
   bool _validate_pass = false;
   bool _validate_email = false;
+  bool _validate_username = false;
+  bool _validate_fullname = false;
   final auth = FirebaseAuth.instance;
   bool _obscureText = true;
   bool _passwordVisible = true;
   final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  final fullnameController = TextEditingController();
 
   @override
   void initState() {
@@ -33,18 +37,16 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     bool _showPassword = false;
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-              Colors.cyan.shade700,
-              Colors.cyan.shade300,
-              Colors.cyanAccent
-            ])),
+          Colors.cyan.shade700,
+          Colors.cyan.shade300,
+          Colors.cyanAccent
+        ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -130,7 +132,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.all(0),
-                                        child: TextField(
+                                        child: TextFormField(
+                                          controller: fullnameController,
+                                          keyboardType: TextInputType.text,
                                           decoration: InputDecoration(
                                               prefixIcon: Icon(Icons.person),
                                               hintText: "Enter your full name",
@@ -142,6 +146,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ],
                                   ),
                                 ),
+                                !_validate_fullname
+                                    ? Container()
+                                    : Text(
+                                        "Field cannot be Empty",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -160,10 +173,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        child: TextField(
+                                        child: TextFormField(
+                                          controller: usernameController,
+                                          keyboardType: TextInputType.text,
                                           decoration: InputDecoration(
                                               prefixIcon: Icon(Icons.person),
                                               hintText: "Enter your username",
@@ -175,6 +190,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ],
                                   ),
                                 ),
+                                !_validate_username
+                                    ? Container()
+                                    : Text(
+                                        "Field cannot be Empty",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -198,10 +222,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
                                           keyboardType:
-                                          TextInputType.emailAddress,
+                                              TextInputType.emailAddress,
                                           decoration: InputDecoration(
                                             prefixIcon: Icon(Icons.mail),
-
                                             hintText: "Enter your mail id",
                                             hintStyle: TextStyle(
                                                 color: Colors.black45),
@@ -217,13 +240,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ],
                                   ),
                                 ),
-                                !_validate_email ? Container(): Text(
-                                  "$message1",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal),
-                                ),
+                                !_validate_email
+                                    ? Container()
+                                    : Text(
+                                        "$error_message",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -252,7 +277,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                           //This will obscure text dynamically
                                           decoration: InputDecoration(
                                             prefixIcon: Icon(Icons.lock),
-
                                             hintText: 'Enter your password',
                                             hintStyle: TextStyle(
                                                 color: Colors.black45),
@@ -269,7 +293,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 // Update the state i.e. toogle the state of passwordVisible variable
                                                 setState(() {
                                                   _passwordVisible =
-                                                  !_passwordVisible;
+                                                      !_passwordVisible;
                                                 });
                                               },
                                             ),
@@ -279,13 +303,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ],
                                   ),
                                 ),
-                                !_validate_pass ? Container(): Text(
-                                  "$message1",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal),
-                                ),
+                                !_validate_pass
+                                    ? Container()
+                                    : Text(
+                                        "$error_message",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                               ],
                             ),
                           ),
@@ -293,9 +319,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         GestureDetector(
                           onTap: () async {
                             password = passwordController.text;
-                            password =
-                                passwordController.text;
-                            _signup(email, password);
+                            username = usernameController.text;
+                            fullname = fullnameController.text;
+                            setState(() {
+                              if (username.length > 0) {
+                                _validate_username = false;
+                                if (fullname.length > 0) {
+                                  _validate_fullname = false;
+                                  _signup(email, password);
+                                }
+                              } else {
+                                if (username.length == 0) {
+                                  _validate_username = true;
+                                }
+                                if (fullname.length == 0) {
+                                  _validate_fullname = true;
+                                }
+                              }
+                            });
                           },
                           child: Container(
                             height: 50,
@@ -333,7 +374,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       Constants.signInNavigate,
-                                          (route) => false);
+                                      (route) => false);
                                 },
                                 child: Container(
                                   child: Text("Sign in",
@@ -386,56 +427,42 @@ class _SignUpPageState extends State<SignUpPage> {
   _signup(String _email, String _password) async {
     try {
       //Create Get Firebase Auth User
-      SharedPreferences prefs =
-      await SharedPreferences.getInstance();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('email', email);
       prefs.setString('password', password);
       await auth
-          .createUserWithEmailAndPassword(
-          email: email,
-          password: password)
+          .createUserWithEmailAndPassword(email: email, password: password)
           .then((_) {
         showDialog<String>(
             context: context,
-            builder: (BuildContext context) =>
-                AlertDialog(
+            builder: (BuildContext context) => AlertDialog(
                   title: const Text('Select Role As:'),
                   content: Container(
                     height: 200,
                     child: Column(
-                      mainAxisAlignment:
-                      MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
                           onTap: () async {
-                            password =
-                                passwordController.text;
+                            password = passwordController.text;
                             SharedPreferences prefs =
-                            await SharedPreferences
-                                .getInstance();
-                            prefs.setString(
-                                'login_as', "patient");
+                                await SharedPreferences.getInstance();
+                            prefs.setString('login_as', "patient");
                             Navigator.pushReplacement(
-                                context, MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
                           },
                           child: Padding(
-                            padding:
-                            const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color:
-                                  Colors.grey.shade200,
-                                  borderRadius:
-                                  BorderRadius.circular(
-                                      20)),
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(20)),
                               child: Padding(
-                                padding:
-                                const EdgeInsets.all(
-                                    20.0),
+                                padding: const EdgeInsets.all(20.0),
                                 child: Center(
-                                  child:
-                                  const Text('Patient'),
+                                  child: const Text('Patient'),
                                 ),
                               ),
                             ),
@@ -443,34 +470,25 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         InkWell(
                           onTap: () async {
-                            password =
-                                passwordController.text;
+                            password = passwordController.text;
                             SharedPreferences prefs =
-                            await SharedPreferences
-                                .getInstance();
-                            prefs.setString(
-                                'login_as', "doctor");
+                                await SharedPreferences.getInstance();
+                            prefs.setString('login_as', "doctor");
                             Navigator.pushReplacement(
-                                context, MaterialPageRoute(
-                                builder: (context) => DoctorDashBoard()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DoctorDashBoard()));
                           },
                           child: Padding(
-                            padding:
-                            const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color:
-                                  Colors.grey.shade200,
-                                  borderRadius:
-                                  BorderRadius.circular(
-                                      20)),
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(20)),
                               child: Padding(
-                                padding:
-                                const EdgeInsets.all(
-                                    20.0),
+                                padding: const EdgeInsets.all(20.0),
                                 child: Center(
-                                  child:
-                                  const Text('Doctor'),
+                                  child: const Text('Doctor'),
                                 ),
                               ),
                             ),
@@ -482,19 +500,18 @@ class _SignUpPageState extends State<SignUpPage> {
                 ));
       });
     } on FirebaseAuthException catch (error) {
-      message1 = error.message.toString();
+      error_message = error.message.toString();
       setState(() {
-        if (message1 == "Password should be at least 6 characters") {
+        if (error_message == "Password should be at least 6 characters") {
           _validate_pass = true;
           _validate_email = false;
         } else {
-          if (message1 == "The email address is badly formatted.") {
-            message1= "Invalid email";
+          if (error_message == "The email address is badly formatted.") {
+            error_message = "Invalid email";
             _validate_email = true;
             _validate_pass = false;
-          }
-          else {
-            Fluttertoast.showToast(msg: message1, gravity: ToastGravity.TOP);
+          } else {
+            Fluttertoast.showToast(msg: error_message, gravity: ToastGravity.TOP);
             _validate_email = false;
             _validate_pass = false;
           }
