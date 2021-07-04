@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/home_page.dart';
+import 'package:mental_health/screens/verify_email.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
@@ -451,7 +452,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => VerifyScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -477,7 +478,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DoctorDashBoard()));
+                                    builder: (context) => VerifyScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

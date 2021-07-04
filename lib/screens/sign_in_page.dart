@@ -4,12 +4,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/home_page.dart';
+import 'package:mental_health/screens/verify_email.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_doctor.dart';
-
+late User user;
 class SignInPage extends StatefulWidget {
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -333,22 +334,29 @@ class _SignInPageState extends State<SignInPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('email', email);
       prefs.setString('password', password);
-      await auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((_) {
-        if (prefs.getString('login_as') == "doctor") {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => DoctorDashBoard()));
-        } else if (prefs.getString('login_as') == "patient") {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
-        }
-      });
+        await auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((_) {
+          user = auth.currentUser!;
+              if (user.emailVerified) {
+                if (prefs.getString('login_as') == "doctor") {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(
+                          builder: (context) => DoctorDashBoard()));
+                } else if (prefs.getString('login_as') == "patient") {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                }
+              }
+              else {
+                Fluttertoast.showToast(msg: "Please verify your email before signing-in", gravity: ToastGravity.TOP);
+              }
+        });
     } on FirebaseAuthException catch (error) {
       error_message = error.message.toString();
       setState(() {
-        if (error_message ==
-            "The password is invalid or the user does not have a password.") {
+        if (error_message == "The password is invalid or the user does not have a password.") {
           error_message = "Invalid Password";
           _validate_pass = true;
           _validate_email = false;

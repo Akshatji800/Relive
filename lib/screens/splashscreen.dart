@@ -14,18 +14,32 @@ class Splashscreen extends StatefulWidget {
 
 class _SplashscreenState extends State<Splashscreen> {
   final auth = FirebaseAuth.instance;
+  String null_check_error_message = "";
 
   checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    if (FirebaseAuth.instance.currentUser?.uid == null) {
+    try {
+      user = auth.currentUser!;
+    }
+    catch (error){
+      null_check_error_message = error.toString();
+      if (null_check_error_message == "Null check operator used on a null value") {
+        Timer(
+            Duration(seconds: 1),
+            () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => WelcomePage())));
+      }
+    }
+    if (FirebaseAuth.instance.currentUser?.uid == null || user.emailVerified == false) {
       // signed in
       Timer(
           Duration(seconds: 1),
           () => Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => WelcomePage())));
     } else {
-      Timer(Duration(seconds: 1), () => user_exist_auth());
+      //if (user.emailVerified) {
+        Timer(Duration(seconds: 1), () => user_exist_auth());
+      //}
     }
   }
 
