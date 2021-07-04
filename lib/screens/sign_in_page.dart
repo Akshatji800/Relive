@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/home_page.dart';
+import 'package:mental_health/screens/reset_password.dart';
 import 'package:mental_health/screens/verify_email.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -230,13 +231,31 @@ class _SignInPageState extends State<SignInPage> {
                                             fontSize: 12,
                                             fontWeight: FontWeight.normal),
                                       ),
-                                SizedBox(
-                                  height: 15,
-                                ),
                               ],
                             ),
                           ),
                         ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Forgot Password?"),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ResetScreen()));
+                                },
+                                child: Container(
+                                  child: Text("To Reset Click Here!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.cyan.shade500,
+                                      )),
+                                ),
+                              )
+                            ]),
+                        SizedBox(height: 20),
                         GestureDetector(
                           onTap: () async {
                             password = passwordController.text;
