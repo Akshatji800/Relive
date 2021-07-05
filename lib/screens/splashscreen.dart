@@ -17,7 +17,6 @@ class _SplashscreenState extends State<Splashscreen> {
   String null_check_error_message = "";
 
   checkLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       user = auth.currentUser!;
     }
@@ -62,8 +61,6 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool _showPassword = false;
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
           width: double.infinity,

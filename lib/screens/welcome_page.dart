@@ -1,15 +1,10 @@
 import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool _showPassword = false;
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         width: double.infinity,

@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/screens/reset_password.dart';
-import 'package:mental_health/screens/verify_email.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
@@ -23,24 +22,17 @@ class _SignInPageState extends State<SignInPage> {
   bool _validate_email = false;
   String error_message = "";
   final auth = FirebaseAuth.instance;
-  bool _obscureText = true;
   bool _passwordVisible = true;
   final passwordController = TextEditingController();
 
   @override
+  // ignore: must_call_super
   void initState() {
     _passwordVisible = false;
   }
 
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    bool _showPassword = false;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(

@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/screens/verify_email.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dashboard_doctor.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -24,20 +22,19 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _validate_username = false;
   bool _validate_fullname = false;
   final auth = FirebaseAuth.instance;
-  bool _obscureText = true;
   bool _passwordVisible = true;
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
   final fullnameController = TextEditingController();
 
   @override
+  // ignore: must_call_super
   void initState() {
     _passwordVisible = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    bool _showPassword = false;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(

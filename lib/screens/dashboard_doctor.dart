@@ -109,6 +109,7 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
   }
 }
 
+// ignore: must_be_immutable
 class OptionsCreater extends StatelessWidget {
   Items item1 = new Items(
     title: "Patients Data",
@@ -150,7 +151,6 @@ class OptionsCreater extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Items> myList = [item1, item2, item3, item4, item5, item6];
-    var color = 0xfFF66D4D4;
     return Flexible(
       child: GridView.count(
           childAspectRatio: 1.0,

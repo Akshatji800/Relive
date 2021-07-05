@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mental_health/services/firebase_Service.dart';
-import 'package:mental_health/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mental_health/screens/Settings_Pages/settings.dart';

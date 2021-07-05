@@ -5,6 +5,7 @@ import 'package:mental_health/services/firebase_Service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 
+// ignore: must_be_immutable
 class GoogleSignIn extends StatefulWidget {
   String buttonText;
   GoogleSignIn({Key? key, required this.buttonText}) : super(key: key);

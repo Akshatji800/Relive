@@ -6,6 +6,7 @@ stages:
 before_script:
   - flutter pub get
   - flutter clean
+  - flutter analyze
 
 build:apk:
   stage: build
