@@ -10,7 +10,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_doctor.dart';
+
 late User user;
+
 class SignInPage extends StatefulWidget {
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -345,29 +347,94 @@ class _SignInPageState extends State<SignInPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('email', email);
       prefs.setString('password', password);
-        await auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((_) {
-          user = auth.currentUser!;
-              if (user.emailVerified) {
-                if (prefs.getString('login_as') == "doctor") {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(
-                          builder: (context) => DoctorDashBoard()));
-                } else if (prefs.getString('login_as') == "patient") {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                }
-              }
-              else {
-                Fluttertoast.showToast(msg: "Please verify your email before signing-in", gravity: ToastGravity.TOP);
-              }
-        });
+      await auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((_) {
+        user = auth.currentUser!;
+        if (user.emailVerified) {
+          if (prefs.getString('login_as') == "doctor") {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+          } else if (prefs.getString('login_as') == "patient") {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          } else {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Select Role As:'),
+                      content: Container(
+                        height: 200,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString('login_as', "patient");
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Center(
+                                      child: const Text('Patient'),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString('login_as', "doctor");
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorDashBoard()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Center(
+                                      child: const Text('Doctor'),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ));
+          }
+        } else {
+          Fluttertoast.showToast(
+              msg: "Please verify your email before signing-in",
+              gravity: ToastGravity.TOP);
+        }
+      });
     } on FirebaseAuthException catch (error) {
       error_message = error.message.toString();
       setState(() {
-        if (error_message == "The password is invalid or the user does not have a password.") {
+        if (error_message ==
+            "The password is invalid or the user does not have a password.") {
           error_message = "Invalid Password";
           _validate_pass = true;
           _validate_email = false;
@@ -377,7 +444,8 @@ class _SignInPageState extends State<SignInPage> {
             _validate_email = true;
             _validate_pass = false;
           } else {
-            Fluttertoast.showToast(msg: error_message, gravity: ToastGravity.TOP);
+            Fluttertoast.showToast(
+                msg: error_message, gravity: ToastGravity.TOP);
             _validate_email = false;
             _validate_pass = false;
           }
