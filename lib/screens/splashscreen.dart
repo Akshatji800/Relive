@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/dashboard_doctor.dart';
-import 'package:mental_health/screens/home_page.dart';
+import 'package:mental_health/screens/patient_dashboard/fitness_app_home_screen.dart';
 import 'package:mental_health/screens/sign_in_page.dart';
 import 'package:mental_health/screens/welcome_page.dart';
 import 'dart:async';
@@ -49,7 +49,7 @@ class _SplashscreenState extends State<Splashscreen> {
           context, MaterialPageRoute(builder: (context) => DoctorDashBoard()));
     } else if (pref.getString('login_as') == "patient") {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()));
     }
   }
 

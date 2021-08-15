@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mental_health/screens/home_page.dart';
 import 'package:mental_health/screens/reset_password.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_doctor.dart';
+import 'patient_dashboard/fitness_app_home_screen.dart';
 
 late User user;
 
@@ -357,7 +357,7 @@ class _SignInPageState extends State<SignInPage> {
                 MaterialPageRoute(builder: (context) => DoctorDashBoard()));
           } else if (prefs.getString('login_as') == "patient") {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context, MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()));
           } else {
             showDialog<String>(
                 context: context,
@@ -376,7 +376,7 @@ class _SignInPageState extends State<SignInPage> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage()));
+                                        builder: (context) => FitnessAppHomeScreen()));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
