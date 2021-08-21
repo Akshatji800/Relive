@@ -24,15 +24,6 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
           ),
           backgroundColor: Colors.cyan,
           elevation: 1,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(

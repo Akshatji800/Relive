@@ -1,5 +1,6 @@
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mental_health/screens/Settings_Pages/settings.dart';
 import 'package:mental_health/screens/patient_dashboard/training/training_screen.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
@@ -17,6 +18,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   AnimationController? animationController;
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
+  int index_adopted = 0;
 
   Widget tabBody = Container(
     color: FitnessAppTheme.background,
@@ -45,22 +47,39 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   Widget build(BuildContext context) {
     return Container(
       color: FitnessAppTheme.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: FutureBuilder<bool>(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (!snapshot.hasData) {
-              return const SizedBox();
-            } else {
-              return Stack(
-                children: <Widget>[
-                  tabBody,
-                  bottomBar(),
-                ],
-              );
-            }
-          },
+      child: WillPopScope( onWillPop: () async {
+        if (index_adopted ==0) {
+          if (Platform.isAndroid) {
+            SystemNavigator.pop();
+          } else if (Platform.isIOS) {
+            exit(0);
+          }
+        }
+        else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FitnessAppHomeScreen()));
+        }
+        return false;
+      },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: FutureBuilder<bool>(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (!snapshot.hasData) {
+                return const SizedBox();
+              } else {
+                return Stack(
+                  children: <Widget>[
+                    tabBody,
+                    bottomBar(),
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -81,6 +100,9 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
           tabIconsList: tabIconsList,
           addClick: () {},
           changeIndex: (int index) {
+            setState(() {
+              index_adopted = index;
+            });
             if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {

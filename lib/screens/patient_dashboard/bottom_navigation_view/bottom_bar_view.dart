@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import '../fitness_app_theme.dart';
 import '../models/tabIcon_data.dart';
 

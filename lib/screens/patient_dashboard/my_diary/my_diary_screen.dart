@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/patient_dashboard/my_diary/water_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/body_measurement.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/glass_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/mediterranean_diet_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/title_view.dart';
-
 import '../fitness_app_theme.dart';
 import 'meals_list_view.dart';
 

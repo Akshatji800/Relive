@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mental_health/screens/Settings_Pages/Profile.dart';
 import 'package:mental_health/screens/Settings_Pages/AboutUs.dart';
 import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
 import 'package:mental_health/screens/Settings_Pages/Help.dart';
+import 'package:mental_health/screens/patient_dashboard/fitness_app_home_screen.dart';
 import 'package:mental_health/screens/sign_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/services/firebase_Service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SettingsPage extends StatefulWidget {
@@ -33,8 +34,17 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor:Colors.cyan,
         elevation: 1,
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            if (prefs.getString('login_as') == "doctor"){
+              Navigator.of(context).pop();
+            }
+            else {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FitnessAppHomeScreen()));
+            }
           },
           icon: Icon(
             Icons.arrow_back,
@@ -109,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) => ProfilePage()));
+                              builder: (BuildContext context) => FitnessAppHomeScreen()));
                           //open edit profile
                         },
                       ),

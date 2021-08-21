@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/area_list_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/running_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/title_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/workout_view.dart';
-
 import '../fitness_app_theme.dart';
 
 class TrainingScreen extends StatefulWidget {

@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/reset_password.dart';
+import 'package:mental_health/screens/sign_up_page.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
@@ -299,10 +300,10 @@ class _SignInPageState extends State<SignInPage> {
                               SizedBox(width: 10),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamedAndRemoveUntil(
+                                  Navigator.pushReplacement(
                                       context,
-                                      Constants.signUpNavigate,
-                                      (route) => false);
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUpPage()));
                                 },
                                 child: Container(
                                   child: Text("Register now",
@@ -370,6 +371,7 @@ class _SignInPageState extends State<SignInPage> {
                           children: [
                             InkWell(
                               onTap: () async {
+                                Navigator.pop(context);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.setString('login_as', "patient");
@@ -395,6 +397,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             InkWell(
                               onTap: () async {
+                                Navigator.pop(context);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.setString('login_as', "doctor");

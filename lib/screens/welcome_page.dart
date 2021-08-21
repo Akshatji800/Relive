@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:mental_health/screens/sign_in_page.dart';
 import 'package:mental_health/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -72,8 +73,10 @@ class _GetStartedState extends State<GetStarted> {
                   isLoading = true;
                   Timer(
                       Duration(milliseconds: 500),
-                      () => Navigator.pushNamed(
-                          context, Constants.signInNavigate));
+                      () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SignInPage())));
                 });
               },
               label: Text(

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/dashboard_doctor.dart';
+import 'package:mental_health/screens/patient_dashboard/fitness_app_home_screen.dart';
 import 'package:mental_health/services/firebase_Service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'constants.dart';
 
 // ignore: must_be_immutable
 class GoogleSignIn extends StatefulWidget {
@@ -50,8 +50,10 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                             FirebaseService service = new FirebaseService();
                             try {
                               await service.signInwithGoogle();
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, Constants.homeNavigate, (route) => false);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FitnessAppHomeScreen()));
                             } catch (e) {
                               if (e is FirebaseAuthException) {
                                 showMessage(e.message!);
@@ -93,7 +95,7 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                             FirebaseService service = new FirebaseService();
                             try {
                               await service.signInwithGoogle();
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
