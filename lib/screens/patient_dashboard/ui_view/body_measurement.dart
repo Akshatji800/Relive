@@ -1,25 +1,55 @@
-
 import 'package:flutter/material.dart';
-
+import 'package:mental_health/screens/patient_dashboard/BodyMesurment/BodyM_shared_preferences.dart';
 import '../fitness_app_theme.dart';
 
-class BodyMeasurementView extends StatelessWidget {
+class BodyMeasurementView extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
-
-  const BodyMeasurementView({Key? key, this.animationController, this.animation})
+  // final String weight,heightCM,BMI,BMR,BMIStatus;
+  const BodyMeasurementView({Key? key, this.animationController, this.animation,})
       : super(key: key);
+
+  @override
+  _BodyMeasurementViewState createState() => _BodyMeasurementViewState();
+}
+
+class _BodyMeasurementViewState extends State<BodyMeasurementView> {
+  final _preferencesService = PreferencesService();
+  var _height="0";
+  var _weight="0";
+  var _BMW="0";
+  var _BMR="0";
+  var _status="None";
+  var _time = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _populateDetails();
+  }
+
+  void _populateDetails() async{
+    final details = await _preferencesService.getFinalDetails();
+    setState(() {
+      _height = details.height;
+      _weight = details.weight;
+      _BMW = details.BMW ;
+      _status = details.Status;
+      _BMR = details.BMR;
+      _time = details.Time;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController!,
+      animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
-          opacity: animation!,
+          opacity: widget.animation!,
           child: new Transform(
             transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
+                0.0, 30 * (1.0 - widget.animation!.value), 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 24, right: 24, top: 16, bottom: 18),
@@ -42,7 +72,7 @@ class BodyMeasurementView extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 16, left: 16, right: 24),
+                      const EdgeInsets.only(top: 16, left: 16, right: 24),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,19 +103,19 @@ class BodyMeasurementView extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         left: 4, bottom: 3),
                                     child: Text(
-                                      '206.8',
+                                      (double.parse(_weight)*2.2).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 32,
+                                        fontSize: 24,
                                         color: FitnessAppTheme.nearlyDarkBlue,
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 8, bottom: 8),
+                                        left: 2, bottom: 5),
                                     child: Text(
                                       'Ibs',
                                       textAlign: TextAlign.center,
@@ -115,15 +145,15 @@ class BodyMeasurementView extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(left: 4.0),
+                                        const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          'Today 8:26 AM',
+                                          "Last Measured: "+_time,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
-                                                FitnessAppTheme.fontName,
+                                            FitnessAppTheme.fontName,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 14,
+                                            fontSize: 8,
                                             letterSpacing: 0.0,
                                             color: FitnessAppTheme.grey
                                                 .withOpacity(0.5),
@@ -173,21 +203,24 @@ class BodyMeasurementView extends StatelessWidget {
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Text(
-                                  '185 cm',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    letterSpacing: -0.2,
-                                    color: FitnessAppTheme.darkText,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child:  Text(
+                                    _height.toString()+" cm",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      letterSpacing: -0.2,
+                                      color: FitnessAppTheme.darkText,
+                                    ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 6),
+                                  padding: const EdgeInsets.only(top: 6,right: 12),
                                   child: Text(
                                     'Height',
                                     textAlign: TextAlign.center,
@@ -196,7 +229,7 @@ class BodyMeasurementView extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                       color:
-                                          FitnessAppTheme.grey.withOpacity(0.5),
+                                      FitnessAppTheme.grey.withOpacity(0.5),
                                     ),
                                   ),
                                 ),
@@ -213,7 +246,7 @@ class BodyMeasurementView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      '27.3 BMI',
+                                      _BMW.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -226,7 +259,7 @@ class BodyMeasurementView extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        'Overweight',
+                                        _status,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -249,10 +282,10 @@ class BodyMeasurementView extends StatelessWidget {
                               children: <Widget>[
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      '20%',
+                                      _BMR.toString(),
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
@@ -264,7 +297,7 @@ class BodyMeasurementView extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        'Body fat',
+                                        'BMR',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,

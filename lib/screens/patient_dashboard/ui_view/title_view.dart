@@ -1,20 +1,25 @@
-
 import 'package:flutter/material.dart';
-
+import 'package:mental_health/screens/patient_dashboard/BodyMesurment/input.dart';
+import 'package:mental_health/screens/patient_dashboard/Meals/mealsToday.dart';
+import 'package:mental_health/screens/patient_dashboard/MediterranDiet/diet.dart';
+import 'package:mental_health/screens/patient_dashboard/water/waterTaken.dart';
 import '../fitness_app_theme.dart';
 
 class TitleView extends StatelessWidget {
   final String titleTxt;
   final String subTxt;
+  final int index;
   final AnimationController? animationController;
   final Animation<double>? animation;
 
   const TitleView(
       {Key? key,
-      this.titleTxt: "",
-      this.subTxt: "",
-      this.animationController,
-      this.animation})
+        this.titleTxt: "",
+        this.subTxt: "",
+        this.index=0,
+        this.animationController,
+        this.animation,
+      })
       : super(key: key);
 
   @override
@@ -48,7 +53,23 @@ class TitleView extends StatelessWidget {
                     InkWell(
                       highlightColor: Colors.transparent,
                       borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      onTap: () {},
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              switch(index){
+                                case 0:
+                                  return Diet();
+                                case 1:
+                                  return meals();
+                                case 2:
+                                  return InputPage();
+                                default:
+                                  return watertaken();
+                              }
+                            }
+                        )
+                        );
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Row(

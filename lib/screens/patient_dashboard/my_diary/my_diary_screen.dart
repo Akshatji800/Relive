@@ -18,7 +18,6 @@ class MyDiaryScreen extends StatefulWidget {
 class _MyDiaryScreenState extends State<MyDiaryScreen>
     with TickerProviderStateMixin {
   Animation<double>? topBarAnimation;
-
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
@@ -63,10 +62,11 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       TitleView(
         titleTxt: 'Mediterranean diet',
         subTxt: 'Details',
+        index: 0,
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+            Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -75,7 +75,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
+            Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -83,10 +83,11 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       TitleView(
         titleTxt: 'Meals today',
         subTxt: 'Customize',
+        index: 1,
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+            Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -106,10 +107,14 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       TitleView(
         titleTxt: 'Body measurement',
         subTxt: 'Today',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+        index: 2,
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: widget.animationController!,
+              curve:
+              Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn)
+          ),
+        ),
         animationController: widget.animationController!,
       ),
     );
@@ -119,7 +124,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
+            Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -127,10 +132,11 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       TitleView(
         titleTxt: 'Water',
         subTxt: 'Aqua SmartBottle',
+        index: 3,
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+            Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -174,6 +180,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
+
           ],
         ),
       ),

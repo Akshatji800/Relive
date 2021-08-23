@@ -50,7 +50,7 @@ class MediterranesnDietView extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  left: 8, right: 8, top: 4),
+                                  left: 8, right: 0, top: 4),
                               child: Column(
                                 children: <Widget>[
                                   Row(
@@ -124,7 +124,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
+                                                          left: 2, bottom: 3),
                                                   child: Text(
                                                     'Kcal',
                                                     textAlign: TextAlign.center,
@@ -156,7 +156,7 @@ class MediterranesnDietView extends StatelessWidget {
                                     children: <Widget>[
                                       Container(
                                         height: 48,
-                                        width: 2,
+                                        width: 1,
                                         decoration: BoxDecoration(
                                           color: HexColor('#F56E98')
                                               .withOpacity(0.5),
@@ -253,7 +253,7 @@ class MediterranesnDietView extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 16),
+                            padding: const EdgeInsets.only(right: 4),
                             child: Center(
                               child: Stack(
                                 clipBehavior: Clip.none,
