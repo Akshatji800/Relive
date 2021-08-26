@@ -103,7 +103,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                     padding: const EdgeInsets.only(
                                         left: 4, bottom: 3),
                                     child: Text(
-                                      (double.parse(_weight)*2.2).toStringAsFixed(2),
+                                      (ConvertDouble(_weight)*2.2).toStringAsFixed(2),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -324,5 +324,12 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
         );
       },
     );
+  }
+  double ConvertDouble(String weight) {
+    if (weight == "null") {
+      return 0.0;
+    } else {
+      return double.parse(weight);
+    }
   }
 }
