@@ -60,7 +60,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'Mediterranean diet',
+        titleTxt: 'Diet details',
         subTxt: 'Details',
         index: 0,
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(

@@ -6,9 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/sign_in_page.dart';
 import 'package:mental_health/screens/verify_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mental_health/services/database.dart';
 import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+late User user;
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -430,7 +432,23 @@ class _SignUpPageState extends State<SignUpPage> {
       prefs.setString('password', password);
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((_) {
+          .then((_) async {
+        user = auth.currentUser!;
+        await DatabaseService(uid: user.uid).updateUserData(fullname, username, email);
+        await DatabaseService(uid: user.uid).updateFoodDataBreakfast1(12, "whole");
+        await DatabaseService(uid: user.uid).updateFoodDataBreakfast2(12, "whole");
+        await DatabaseService(uid: user.uid).updateFoodDataLunch1(12, "whole");
+        await DatabaseService(uid: user.uid).updateFoodDataLunch2(12, "whole");
+        await DatabaseService(uid: user.uid).updateFoodDataSnack(3);
+        await DatabaseService(uid: user.uid).updateFoodDataDinner1(12, "whole");
+        await DatabaseService(uid: user.uid).updateFoodDataDinner2(12, "whole");
+        await DatabaseService(uid: user.uid).updateBodyData4("Male");
+        await DatabaseService(uid: user.uid).updateBodyData1(180);
+        await DatabaseService(uid: user.uid).updateBodyData2(60);
+        await DatabaseService(uid: user.uid).updateBodyData3(34);
+        await DatabaseService(uid: user.uid).updateBodyData5(1700);
+        await DatabaseService(uid: user.uid).updateWaterData(4);
+        await DatabaseService(uid: user.uid).updateFoodDataTotal(240, 334, 120);
         showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
