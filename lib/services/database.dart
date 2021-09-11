@@ -40,9 +40,12 @@ class DatabaseService {
 
   final CollectionReference waterCollection = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('water_track');
 
-  Future<void> updateWaterData(int glasses) async {
+  Future<void> updateWaterData(int glasses,int target,String lastSeen, String time) async {
     return await waterCollection.doc(formattedDate).set({
-      'no. of glasses': glasses,
+      'consumed(ml)': glasses,
+      'target(ml)' : target,
+      'last seen' : lastSeen,
+      'time' : time,
     });
   }
 

@@ -225,7 +225,7 @@ class _ResultState extends State<Result> {
                       ),
 
                       Text(
-                        "Daily Calorie Required",
+                        "Current Calories",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -253,7 +253,7 @@ class _ResultState extends State<Result> {
                         ),
                       ),
                       Text(
-                        "Daily Calorie Required",
+                        "Daily Calories Required",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,

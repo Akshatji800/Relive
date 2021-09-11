@@ -1,8 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/patient_dashboard/models/waterData.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/wave_view.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:mental_health/screens/patient_dashboard/water/waterTaken_shared_preferences.dart';
+import 'package:mental_health/services/database.dart';
 import '../fitness_app_theme.dart';
+import 'package:mental_health/screens/sign_up_page.dart';
 
+late User user;
 class WaterView extends StatefulWidget {
   const WaterView(
       {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
@@ -16,13 +24,31 @@ class WaterView extends StatefulWidget {
 }
 
 class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
+  final _preferencesService = WaterPreferencesServices();
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _waterDetails();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    user = auth.currentUser!;
+    FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('water_track').doc(formattedDate).get().then((value){
+      consumed = value.data()!["consumed(ml)"];
+      target = value.data()!["target(ml)"];
+      WaterFeatureUsedDate = value.data()!["last seen"];
+      WaterFeatureUsedTime = value.data()!["time"];
+      _saveWaterData();
+    });
+
     return AnimatedBuilder(
       animation: widget.mainScreenAnimationController!,
       builder: (BuildContext context, Widget? child) {
@@ -69,7 +95,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                       padding: const EdgeInsets.only(
                                           left: 4, bottom: 3),
                                       child: Text(
-                                        '2100',
+                                        consumed.toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -98,9 +124,9 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 4, top: 2, bottom: 14),
+                                      left: 4, top: 2, bottom: 5),
                                   child: Text(
-                                    'of daily goal 3.5L',
+                                    'of daily goal '+(target*1/1000).toString()+'L',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: FitnessAppTheme.fontName,
@@ -126,7 +152,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 16),
+                              padding: const EdgeInsets.only(top: 1),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -149,7 +175,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                         padding:
                                             const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          'Last drink 8:26AM',
+                                          'Last drink '+WaterFeatureUsedTime,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
@@ -201,60 +227,6 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 34,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                color: FitnessAppTheme.nearlyWhite,
-                                shape: BoxShape.circle,
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: FitnessAppTheme.nearlyDarkBlue
-                                          .withOpacity(0.4),
-                                      offset: const Offset(4.0, 4.0),
-                                      blurRadius: 8.0),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Icon(
-                                  Icons.add,
-                                  color: FitnessAppTheme.nearlyDarkBlue,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 28,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: FitnessAppTheme.nearlyWhite,
-                                shape: BoxShape.circle,
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: FitnessAppTheme.nearlyDarkBlue
-                                          .withOpacity(0.4),
-                                      offset: const Offset(4.0, 4.0),
-                                      blurRadius: 8.0),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Icon(
-                                  Icons.remove,
-                                  color: FitnessAppTheme.nearlyDarkBlue,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       Padding(
                         padding:
                             const EdgeInsets.only(left: 8, right: 8, top: 16),
@@ -276,7 +248,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                             ],
                           ),
                           child: WaveView(
-                            percentageValue: 60.0,
+                            percentageValue: (consumed.toDouble()/target.toDouble())*100,
                           ),
                         ),
                       )
@@ -289,5 +261,23 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
         );
       },
     );
+  }
+  void _saveWaterData(){
+    final newData =  WaterData(
+      consumed: consumed.toString(),
+      target: target.toString(),
+      last_seen: WaterFeatureUsedDate,
+      time:  WaterFeatureUsedTime,
+    );
+    _preferencesService.saveWaterDetails(newData);
+  }
+  void _waterDetails() async{
+    final details = await _preferencesService.getFinalDetails();
+    setState(() {
+      consumed = int.parse(details.consumed);
+      target = int.parse(details.target);
+      WaterFeatureUsedDate = details.last_seen;
+      WaterFeatureUsedTime = details.time;
+    });
   }
 }

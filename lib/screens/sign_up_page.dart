@@ -11,6 +11,11 @@ import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late User user;
+int consumed = 0;
+int target = 2000;
+String WaterFeatureUsedDate = "";
+String WaterFeatureUsedTime = "";
+
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -122,11 +127,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(50),
-                                    // boxShadow: [BoxShadow(
-                                    //     color: Colors.black12,
-                                    //     blurRadius: 25,
-                                    //     offset: Offset(0, 2)
-                                    // )]
                                   ),
                                   child: Column(
                                     children: <Widget>[
@@ -165,11 +165,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(50),
-                                    // boxShadow: [BoxShadow(
-                                    //     color: Colors.black12,
-                                    //     blurRadius: 25,
-                                    //     offset: Offset(0, 2)
-                                    // )]
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
@@ -202,7 +197,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                //Text("    Mail id",style: const TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
                                 SizedBox(
                                   height: 2,
                                 ),
@@ -210,11 +204,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(50),
-                                    // boxShadow: [BoxShadow(
-                                    //     color: Colors.black12,
-                                    //     blurRadius: 25,
-                                    //     offset: Offset(0, 2)
-                                    // )]
                                   ),
                                   child: Column(
                                     children: <Widget>[
@@ -252,7 +241,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                //Text("    Password",style: const TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
                                 SizedBox(
                                   height: 2,
                                 ),
@@ -260,11 +248,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(50),
-                                    // boxShadow: [BoxShadow(
-                                    //     color: Colors.black12,
-                                    //     blurRadius: 25,
-                                    //     offset: Offset(0, 2)
-                                    // )]
                                   ),
                                   child: Column(
                                     children: <Widget>[
@@ -447,7 +430,6 @@ class _SignUpPageState extends State<SignUpPage> {
         await DatabaseService(uid: user.uid).updateBodyData2(60);
         await DatabaseService(uid: user.uid).updateBodyData3(34);
         await DatabaseService(uid: user.uid).updateBodyData5(1700);
-        await DatabaseService(uid: user.uid).updateWaterData(4);
         await DatabaseService(uid: user.uid).updateFoodDataTotal(240, 334, 120);
         showDialog<String>(
             context: context,
