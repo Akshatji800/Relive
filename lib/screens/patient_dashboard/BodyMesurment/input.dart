@@ -476,7 +476,7 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
           ),
-
+          SizedBox(height: 20,),
         ],
       ),
     );

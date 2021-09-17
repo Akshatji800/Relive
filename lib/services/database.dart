@@ -102,44 +102,18 @@ class DatabaseService {
       'unit': unit,
     });
   }
-
-  final CollectionReference bodyCollection4 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).collection('bodyMeasurement');
-
-  Future<void> updateBodyData4(String gender) async {
-    return await bodyCollection4.doc("Gender").set({
-      'gender': gender,
-    });
-  }
-
-  final CollectionReference bodyCollection1 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).collection('bodyMeasurement');
-
-  Future<void> updateBodyData1(int height) async {
-    return await bodyCollection1.doc("Height").set({
-      'height': height,
-    });
-  }
-
-  final CollectionReference bodyCollection2 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).collection('bodyMeasurement');
-
-  Future<void> updateBodyData2(int weight) async {
-    return await bodyCollection2.doc("Weight").set({
-      'weight': weight,
-    });
-  }
-
-  final CollectionReference bodyCollection3 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).collection('bodyMeasurement');
-
-  Future<void> updateBodyData3(int age) async {
-    return await bodyCollection3.doc("Age").set({
-      'age': age,
-    });
-  }
-
-  final CollectionReference bodyCollection5 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).collection('bodyMeasurement');
-
-  Future<void> updateBodyData5(int BMR) async {
-    return await bodyCollection5.doc("BMR").set({
-      'BMR': BMR,
+  final CollectionReference bodyCollection = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track');
+  Future<void> updateBodyMesurmentData(int height, int weight, double BMR, double BMW, String status, String lastSeen,String age, String gender) async {
+    print(formattedDate);
+    return await bodyCollection.doc(formattedDate).set({
+      'height(cm)': height,
+      'weight(kg)': weight,
+      'BMR(Body Metabolic Rate)': BMR,
+      'BMW(Body Mass weight)' : BMW,
+      'BMW status':status,
+      'last seen': lastSeen,
+      'age':age,
+      'gender':gender
     });
   }
 

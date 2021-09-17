@@ -1,15 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
 import 'package:mental_health/screens/patient_dashboard/BodyMesurment/input.dart';
 import 'package:mental_health/screens/patient_dashboard/BodyMesurment/models.dart';
 import 'package:mental_health/screens/patient_dashboard/fitness_app_home_screen.dart';
 import 'package:mental_health/screens/patient_dashboard/BodyMesurment/BodyM_shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:mental_health/services/database.dart';
 
+late User user;
 class Result extends StatefulWidget {
   final String status, msg;
-  final String statusNumber,currentCalorie,goalCalorie,bmr,heightCm,weight;
-  Result({required this.status,required this.msg,required this.statusNumber,required this.currentCalorie,required this.goalCalorie,required this.bmr,required this.heightCm,required this.weight,});
+  final String statusNumber,currentCalorie,goalCalorie,bmr,heightCm,weight,age,gender;
+  Result({required this.status,required this.msg,required this.statusNumber,required this.currentCalorie,required this.goalCalorie,required this.bmr,required this.heightCm,required this.weight,required this.age, required this.gender});
 
   @override
   _ResultState createState() => _ResultState();
@@ -25,6 +29,7 @@ class _ResultState extends State<Result> {
   var _height = "";
   var _weight = "";
   var _Date = "";
+  var _age,_gender = "";
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -34,8 +39,10 @@ class _ResultState extends State<Result> {
       _height = widget.heightCm;
       _weight = widget.weight;
       _Date = formattedDate;
+      _age = widget.age;
+      _gender = widget.gender;
     });
-
+    user = auth.currentUser!;
     return Scaffold(
       appBar: AppBar(
         title: Text("Result"),
@@ -326,7 +333,7 @@ class _ResultState extends State<Result> {
           GestureDetector(
             onTap: () {
               _saveDetails();
-              // BodyMeasurementView(weight: weight,heightCM: heightCm,BMI: statusNumber,BMR: bmr,BMIStatus: status,);
+              DatabaseService(uid: user.uid).updateBodyMesurmentData(int.parse(_height),int.parse(_weight),double.parse(_BMR),double.parse(_BMW),_status,_Date,_age,_gender);
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>FitnessAppHomeScreen()), (Route<dynamic> route) => false,);
             },
             child: Container(
@@ -360,6 +367,7 @@ class _ResultState extends State<Result> {
               ),
             ),
           ),
+          SizedBox(height: 20,),
         ],
       ),
     );

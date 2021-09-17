@@ -293,6 +293,8 @@ class _AimPageState extends State<AimPage> {
                     bmr: c.calculateBMR(),
                     heightCm: c.getHeight().toString(),
                     weight: c.getWeight().toString(),
+                    age: age.toString(),
+                    gender: gender,
                   ),
                 ),
               );
@@ -322,6 +324,7 @@ class _AimPageState extends State<AimPage> {
               ),
             ),
           ),
+          SizedBox(height: 20,),
 
         ],
 

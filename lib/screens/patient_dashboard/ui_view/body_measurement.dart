@@ -1,11 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
 import 'package:mental_health/screens/patient_dashboard/BodyMesurment/BodyM_shared_preferences.dart';
+import 'package:mental_health/screens/patient_dashboard/BodyMesurment/models.dart';
+import 'package:mental_health/services/database.dart';
 import '../fitness_app_theme.dart';
 
+late User user;
 class BodyMeasurementView extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
-  // final String weight,heightCM,BMI,BMR,BMIStatus;
+
   const BodyMeasurementView({Key? key, this.animationController, this.animation,})
       : super(key: key);
 
@@ -20,7 +26,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
   var _BMW="0";
   var _BMR="0";
   var _status="None";
-  var _time = "";
+  var _timeAppeared = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -28,20 +34,15 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
     _populateDetails();
   }
 
-  void _populateDetails() async{
-    final details = await _preferencesService.getFinalDetails();
-    setState(() {
-      _height = details.height;
-      _weight = details.weight;
-      _BMW = details.BMW ;
-      _status = details.Status;
-      _BMR = details.BMR;
-      _time = details.Time;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+
+    user = auth.currentUser!;
+    FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).get().then((value){
+      _saveBMData(value.data()!["height(cm)"].toString(),value.data()!["weight(kg)"].toString(),value.data()!["BMW(Body Mass weight)"].toString(),value.data()!["BMR(Body Metabolic Rate)"].toString(),value.data()!["BMW status"].toString(),value.data()!["last seen"].toString());
+      _populateDetails();
+    });
+
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -147,7 +148,7 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
                                         padding:
                                         const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          "Last Measured: "+_time,
+                                          "Last Measured: "+_timeAppeared,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
@@ -331,5 +332,27 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
     } else {
       return double.parse(weight);
     }
+  }
+  void _saveBMData(String Hcm, String Wlbs, String BMeasWt, String BMeasRate, String stat, String time){
+    final newDetails = BodyM(
+      height: Hcm,
+      weight: Wlbs,
+      BMW: BMeasWt,
+      BMR: BMeasRate,
+      Status: stat,
+      Time: time,
+    );
+    _preferencesService.saveFinalDetails(newDetails);
+  }
+  void _populateDetails() async{
+    final details = await _preferencesService.getFinalDetails();
+    setState(() {
+      _height = details.height;
+      _weight = details.weight;
+      _BMW = details.BMW ;
+      _status = details.Status;
+      _BMR = details.BMR;
+      _timeAppeared = details.Time;
+    });
   }
 }

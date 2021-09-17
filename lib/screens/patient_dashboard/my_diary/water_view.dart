@@ -42,11 +42,8 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
 
     user = auth.currentUser!;
     FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('water_track').doc(formattedDate).get().then((value){
-      consumed = value.data()!["consumed(ml)"];
-      target = value.data()!["target(ml)"];
-      WaterFeatureUsedDate = value.data()!["last seen"];
-      WaterFeatureUsedTime = value.data()!["time"];
-      _saveWaterData();
+      _saveWaterData(value.data()!["consumed(ml)"].toString(),value.data()!["target(ml)"].toString(),value.data()!["last seen"],value.data()!["time"]);
+      _waterDetails();
     });
 
     return AnimatedBuilder(
@@ -262,12 +259,12 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
       },
     );
   }
-  void _saveWaterData(){
+  void _saveWaterData(String con,String tar,String lts,String db_time){
     final newData =  WaterData(
-      consumed: consumed.toString(),
-      target: target.toString(),
-      last_seen: WaterFeatureUsedDate,
-      time:  WaterFeatureUsedTime,
+      consumed: con,
+      target: tar,
+      last_seen: lts,
+      time:  db_time,
     );
     _preferencesService.saveWaterDetails(newData);
   }

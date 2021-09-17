@@ -425,11 +425,6 @@ class _SignUpPageState extends State<SignUpPage> {
         await DatabaseService(uid: user.uid).updateFoodDataSnack(3);
         await DatabaseService(uid: user.uid).updateFoodDataDinner1(12, "whole");
         await DatabaseService(uid: user.uid).updateFoodDataDinner2(12, "whole");
-        await DatabaseService(uid: user.uid).updateBodyData4("Male");
-        await DatabaseService(uid: user.uid).updateBodyData1(180);
-        await DatabaseService(uid: user.uid).updateBodyData2(60);
-        await DatabaseService(uid: user.uid).updateBodyData3(34);
-        await DatabaseService(uid: user.uid).updateBodyData5(1700);
         await DatabaseService(uid: user.uid).updateFoodDataTotal(240, 334, 120);
         showDialog<String>(
             context: context,

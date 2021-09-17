@@ -533,8 +533,8 @@ class _watertakenState extends State<watertaken> {
                               target = updateTar;
                               consumed =0;
                               target = 2000;
-                              _saveWaterData();
                               WaterFeatureUsedTime = CurrentTime();
+                              _saveWaterData();
                               Navigator.pop(context);
                             });
                             Fluttertoast.showToast(

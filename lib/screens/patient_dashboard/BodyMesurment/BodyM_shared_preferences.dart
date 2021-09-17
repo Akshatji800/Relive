@@ -9,8 +9,7 @@ class PreferencesService{
     await preferences.setString('bmw', bodyM.BMW);
     await preferences.setString('bmw_status', bodyM.Status);
     await preferences.setString('bmr', bodyM.BMR);
-    await preferences.setString('time', bodyM.Time);
-    print("Saved Details");
+    await preferences.setString('timeAppeared', bodyM.Time);
   }
 
   Future<BodyM> getFinalDetails() async {
@@ -21,8 +20,7 @@ class PreferencesService{
     final bmw = preferences.getString('bmw');
     final bmw_status = preferences.getString('bmw_status');
     final bmr = preferences.getString('bmr');
-    final time = preferences.getString('time');
-
+    final time = preferences.getString('timeAppeared');
 
     return BodyM(
         height: height.toString(),
