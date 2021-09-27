@@ -257,7 +257,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                           controller: passwordController,
                                           keyboardType: TextInputType.text,
                                           obscureText: !_passwordVisible,
-                                          //This will obscure text dynamically
                                           decoration: InputDecoration(
                                             prefixIcon: Icon(Icons.lock),
                                             hintText: 'Enter your password',
@@ -418,14 +417,6 @@ class _SignUpPageState extends State<SignUpPage> {
           .then((_) async {
         user = auth.currentUser!;
         await DatabaseService(uid: user.uid).updateUserData(fullname, username, email);
-        await DatabaseService(uid: user.uid).updateFoodDataBreakfast1(12, "whole");
-        await DatabaseService(uid: user.uid).updateFoodDataBreakfast2(12, "whole");
-        await DatabaseService(uid: user.uid).updateFoodDataLunch1(12, "whole");
-        await DatabaseService(uid: user.uid).updateFoodDataLunch2(12, "whole");
-        await DatabaseService(uid: user.uid).updateFoodDataSnack(3);
-        await DatabaseService(uid: user.uid).updateFoodDataDinner1(12, "whole");
-        await DatabaseService(uid: user.uid).updateFoodDataDinner2(12, "whole");
-        await DatabaseService(uid: user.uid).updateFoodDataTotal(240, 334, 120);
         showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(

@@ -20,21 +20,45 @@ class DatabaseService {
     });
   }
 
-  final CollectionReference foodCollectionbreakfast1 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('breakfast');
+  final CollectionReference foodTotalData = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('Total');
 
-  Future<void> updateFoodDataBreakfast1(int quantity, String unit) async {
-    return await foodCollectionbreakfast1.doc("Chapati").set({
-      'quantity': quantity,
-      'unit': unit,
+  Future<void> updateTotalFoodData(String typeOfFood, String calories, String carbo, String protein, String fat, String sugars, String cholesterol) async {
+    return await foodTotalData.doc(typeOfFood).set({
+      'Total Calories': calories,
+      'Total Carbohydrate': carbo,
+      'Total Protein': protein,
+      'Total Fat': fat,
+      'Total Sugars': sugars,
+      'Total Cholesterol': cholesterol,
     });
   }
 
-  final CollectionReference foodCollectionbreakfast2 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('breakfast');
+  final CollectionReference foodSetGoal = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('Target');
 
-  Future<void> updateFoodDataBreakfast2(int quantity, String unit) async {
-    return await foodCollectionbreakfast2.doc("Dal").set({
-      'quantity': quantity,
-      'unit': unit,
+  Future<void> updateSetGoalData( String mealType, String calories, String carbo, String protein, String fat, String sugars, String cholesterol) async {
+    return await foodSetGoal.doc(mealType).set({
+        'Target Calories': calories,
+        'Target Carbohydrate': carbo,
+        'Target Protein': protein,
+        'Target Fat': fat,
+        'Target Sugars': sugars,
+        'Target Cholesterol': cholesterol,
+    });
+  }
+
+  final CollectionReference foodCollectionbreakfast = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('breakfast');
+
+  Future<void> updateFoodDataBreakfast( String food_name, String calories, String carbo, String protein, String fat, String sugars, String cholesterol, String servings) async {
+    return await foodCollectionbreakfast.doc(food_name).set({
+      food_name: {
+        'Total Calories': calories,
+        'Carbohydrate': carbo,
+        'Protein': protein,
+        'Fat': fat,
+        'Servings': servings,
+        'Sugars': sugars,
+        'Cholesterol': cholesterol,
+      }
     });
   }
 
@@ -59,47 +83,51 @@ class DatabaseService {
     });
   }
 
-  final CollectionReference foodCollectionlunch1 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('lunch');
+  final CollectionReference foodCollectionLunch = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('lunch');
 
-  Future<void> updateFoodDataLunch1(int quantity, String unit) async {
-    return await foodCollectionlunch1.doc("Chapati").set({
-      'quantity': quantity,
-      'unit': unit,
+  Future<void> updateFoodDataLunch( String food_name, String calories, String carbo, String protein, String fat, String sugars, String cholesterol, String servings) async {
+    return await foodCollectionLunch.doc(food_name).set({
+      food_name: {
+        'Total Calories': calories,
+        'Carbohydrate': carbo,
+        'Protein': protein,
+        'Fat': fat,
+        'Servings': servings,
+        'Sugars': sugars,
+        'Cholesterol': cholesterol,
+      }
     });
   }
 
-  final CollectionReference foodCollectionlunch2 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('lunch');
+  final CollectionReference foodCollectionSnack = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('snack');
 
-  Future<void> updateFoodDataLunch2(int quantity, String unit) async {
-    return await foodCollectionlunch2.doc("Dal").set({
-      'quantity': quantity,
-      'unit': unit,
+  Future<void> updateFoodDataSnack( String food_name, String calories, String carbo, String protein, String fat, String sugars, String cholesterol, String servings) async {
+    return await foodCollectionSnack.doc(food_name).set({
+      food_name: {
+        'Total Calories': calories,
+        'Carbohydrate': carbo,
+        'Protein': protein,
+        'Fat': fat,
+        'Servings': servings,
+        'Sugars': sugars,
+        'Cholesterol': cholesterol,
+      }
     });
   }
 
-  final CollectionReference foodCollectionsnack = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('snack');
+  final CollectionReference foodCollectionDinner = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('dinner');
 
-  Future<void> updateFoodDataSnack(int packets) async {
-    return await foodCollectionsnack.doc("Chips").set({
-      'unit': packets,
-    });
-  }
-
-  final CollectionReference foodCollectiondinner1 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('dinner');
-
-  Future<void> updateFoodDataDinner1(int quantity, String unit) async {
-    return await foodCollectiondinner1.doc("Chapati").set({
-      'quantity': quantity,
-      'unit': unit,
-    });
-  }
-
-  final CollectionReference foodCollectiondinner2 = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('dinner');
-
-  Future<void> updateFoodDataDinner2(int quantity, String unit) async {
-    return await foodCollectiondinner2.doc("Dal").set({
-      'quantity': quantity,
-      'unit': unit,
+  Future<void> updateFoodDataDinner( String food_name, String calories, String carbo, String protein, String fat, String sugars, String cholesterol, String servings) async {
+    return await foodCollectionDinner.doc(food_name).set({
+      food_name: {
+        'Total Calories': calories,
+        'Carbohydrate': carbo,
+        'Protein': protein,
+        'Fat': fat,
+        'Servings': servings,
+        'Sugars': sugars,
+        'Cholesterol': cholesterol,
+      }
     });
   }
   final CollectionReference bodyCollection = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track');

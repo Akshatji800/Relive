@@ -4,6 +4,10 @@ stages:
   - build
 
 before_script:
+  - touch .env
+  - echo APP_ID=$APP_ID >> .env
+  - echo APP_KEY=$APP_KEY >> .env
+  - cat .env
   - flutter pub get
   - flutter clean
   - flutter analyze
