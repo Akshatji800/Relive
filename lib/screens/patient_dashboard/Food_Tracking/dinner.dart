@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
 import 'package:mental_health/screens/patient_dashboard/my_diary/meals_list_view.dart';
+import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 import 'package:mental_health/services/database.dart';
 import 'add_new_food.dart';
 import 'dart:async';
@@ -27,6 +28,7 @@ class Dinner extends StatefulWidget {
 class _DinnerState extends State<Dinner> {
   @override
   Widget build(BuildContext context) {
+    print(widget.callingText);
     return Scaffold(
         appBar: AppBar(
           title: Text("${widget.callingText}"),

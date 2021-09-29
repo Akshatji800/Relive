@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:hexcolor/hexcolor.dart';
 import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
-import 'package:mental_health/services/database.dart';
+import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 import '../fitness_app_theme.dart';
 
 double alldatacalories= 0;

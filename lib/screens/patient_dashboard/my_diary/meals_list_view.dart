@@ -5,8 +5,8 @@ import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
 import 'package:mental_health/screens/patient_dashboard/Food_Tracking/dinner.dart';
 import 'package:mental_health/screens/patient_dashboard/models/meals_list_data.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:mental_health/services/database.dart';
 import '../fitness_app_theme.dart';
+import 'my_diary_screen.dart';
 
 double calorie1= 0;
 double calorie2= 0;

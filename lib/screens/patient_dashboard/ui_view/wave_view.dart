@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
@@ -135,7 +136,10 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    (widget.percentageValue.round() >= 100)?
+                      Icon(Icons.check_circle, color: CupertinoColors.white, size: 30,):
                     Text(
+                    (widget.percentageValue.round() >= 100)? "100":
                       widget.percentageValue.round().toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -149,7 +153,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                     Padding(
                       padding: const EdgeInsets.only(top: 3.0),
                       child: Text(
-                        '%',
+                        (widget.percentageValue.round() >= 100)? "":'%',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: FitnessAppTheme.fontName,

@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 import 'package:mental_health/services/database.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

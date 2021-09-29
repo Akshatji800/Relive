@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 
-var now = new DateTime.now();
-var formatter = new DateFormat('yyyy-MM-dd');
-String formattedDate = formatter.format(now);
 class DatabaseService {
   final String uid;
   DatabaseService({ required this.uid });
@@ -64,7 +61,7 @@ class DatabaseService {
 
   final CollectionReference waterCollection = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('water_track');
 
-  Future<void> updateWaterData(int glasses,int target,String lastSeen, String time) async {
+  Future<void> updateWaterData(double glasses,double target,String lastSeen, String time) async {
     return await waterCollection.doc(formattedDate).set({
       'consumed(ml)': glasses,
       'target(ml)' : target,

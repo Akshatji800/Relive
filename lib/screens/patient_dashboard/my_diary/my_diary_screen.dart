@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mental_health/screens/patient_dashboard/my_diary/water_view.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/body_measurement.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/glass_view.dart';
@@ -7,6 +8,9 @@ import 'package:mental_health/screens/patient_dashboard/ui_view/title_view.dart'
 import '../fitness_app_theme.dart';
 import 'meals_list_view.dart';
 
+var now = new DateTime.now();
+var formatter = new DateFormat('yyyy-MM-dd');
+String formattedDate = formatter.format(now);
 class MyDiaryScreen extends StatefulWidget {
   const MyDiaryScreen({Key? key, this.animationController}) : super(key: key);
 
@@ -21,6 +25,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+  final df = new DateFormat('dd-MMM-yyyy');
 
   @override
   void initState() {
@@ -53,6 +58,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       }
     });
     super.initState();
+    formattedDate = formatter.format(now);
   }
 
   void addAllListData() {
@@ -215,6 +221,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   }
 
   Widget getAppBarUI() {
+    DateTime added;
     return Column(
       children: <Widget>[
         AnimatedBuilder(
@@ -276,7 +283,11 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 highlightColor: Colors.transparent,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
-                                onTap: () {},
+                                onTap: () {
+                                    added =  DateFormat('yyyy-MM-dd').parse(formattedDate);
+                                    formattedDate = DateFormat('yyyy-MM-dd').format(DateTime(added.year, added.month, added.day-1));
+                                    rebuildAllChildren(this.context);
+                                },
                                 child: Center(
                                   child: Icon(
                                     Icons.keyboard_arrow_left,
@@ -290,28 +301,62 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 left: 8,
                                 right: 8,
                               ),
-                              child: Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Icon(
-                                      Icons.calendar_today,
-                                      color: FitnessAppTheme.grey,
-                                      size: 18,
+                              child: InkWell(
+                                onTap: (){
+                                  showDatePicker(
+                                    context: context,
+                                    builder: (BuildContext context, Widget? child) {
+                                      return Theme(
+                                        data: ThemeData.light().copyWith(
+                                          primaryColor: Colors.cyan,
+                                          accentColor: Colors.cyan,
+                                          colorScheme: ColorScheme.light(primary: Colors.cyan,),
+                                          buttonTheme: ButtonThemeData(
+                                              textTheme: ButtonTextTheme.primary
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                    initialDate: DateFormat('yyyy-MM-dd').parse(formattedDate),
+                                    firstDate: DateTime(2019,1),
+                                    lastDate: DateTime.now(),
+                                  ).then((date) {
+                                    setState(() {
+                                      if(date!= null){
+                                        formattedDate = DateFormat('yyyy-MM-dd').format(date!);
+                                        rebuildAllChildren(this.context);
+                                      }
+                                      else{
+                                        date = DateFormat('yyyy-MM-dd').parse(formattedDate);
+                                        rebuildAllChildren(this.context);
+                                      }
+                                    });
+                                  });
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8),
+                                      child: Icon(
+                                        Icons.calendar_today,
+                                        color: FitnessAppTheme.grey,
+                                        size: 18,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '15 May',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 18,
-                                      letterSpacing: -0.2,
-                                      color: FitnessAppTheme.darkerText,
+                                    Text(
+                                      " "+ DateFormat('yyyy-MM-dd').parse(formattedDate).day.toString() + " " +df.format(DateFormat('yyyy-MM-dd').parse(formattedDate)).substring(3,6),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 18,
+                                        letterSpacing: -0.2,
+                                        color: FitnessAppTheme.darkerText,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -321,11 +366,17 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 highlightColor: Colors.transparent,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(32.0)),
-                                onTap: () {},
+                                onTap: () {
+                                  if(formattedDate != formatter.format(now)){
+                                    added =  DateFormat('yyyy-MM-dd').parse(formattedDate);
+                                    formattedDate = DateFormat('yyyy-MM-dd').format(DateTime(added.year, added.month, added.day+1));
+                                    rebuildAllChildren(this.context);
+                                  }
+                                },
                                 child: Center(
                                   child: Icon(
                                     Icons.keyboard_arrow_right,
-                                    color: FitnessAppTheme.grey,
+                                    color: (formattedDate != formatter.format(now))?FitnessAppTheme.grey: Colors.grey,
                                   ),
                                 ),
                               ),
@@ -342,5 +393,12 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         )
       ],
     );
+  }
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+    (context as Element).visitChildren(rebuild);
   }
 }

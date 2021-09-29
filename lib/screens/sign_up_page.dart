@@ -11,8 +11,8 @@ import 'package:mental_health/utils/google_sign_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late User user;
-int consumed = 0;
-int target = 2000;
+double consumed = 0;
+double target = 2000;
 String WaterFeatureUsedDate = "";
 String WaterFeatureUsedTime = "";
 

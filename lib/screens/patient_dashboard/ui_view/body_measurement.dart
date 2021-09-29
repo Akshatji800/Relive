@@ -2,9 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
-import 'package:mental_health/screens/patient_dashboard/BodyMesurment/BodyM_shared_preferences.dart';
-import 'package:mental_health/screens/patient_dashboard/BodyMesurment/models.dart';
-import 'package:mental_health/services/database.dart';
+import 'package:mental_health/screens/patient_dashboard/my_diary/meals_list_view.dart';
+import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 import '../fitness_app_theme.dart';
 
 late User user;
@@ -20,28 +19,22 @@ class BodyMeasurementView extends StatefulWidget {
 }
 
 class _BodyMeasurementViewState extends State<BodyMeasurementView> {
-  final _preferencesService = PreferencesService();
-  var _height="0";
-  var _weight="0";
-  var _BMW="0";
-  var _BMR="0";
-  var _status="None";
-  var _timeAppeared = "";
+  double height=0;
+  double weight=0;
+  double BMW=0;
+  double BMR=0;
+  String status="None";
+  String timeAppeared = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _populateDetails();
   }
 
   @override
   Widget build(BuildContext context) {
 
     user = auth.currentUser!;
-    FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('body_track').doc(formattedDate).get().then((value){
-      _saveBMData(value.data()!["height(cm)"].toString(),value.data()!["weight(kg)"].toString(),value.data()!["BMW(Body Mass weight)"].toString(),value.data()!["BMR(Body Metabolic Rate)"].toString(),value.data()!["BMW status"].toString(),value.data()!["last seen"].toString());
-      _populateDetails();
-    });
 
     return AnimatedBuilder(
       animation: widget.animationController!,
@@ -54,271 +47,299 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 24, right: 24, top: 16, bottom: 18),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(68.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
-                        offset: Offset(1.1, 1.1),
-                        blurRadius: 10.0),
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(top: 16, left: 16, right: 24),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 4, bottom: 8, top: 16),
-                            child: Text(
-                              'Weight',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: FitnessAppTheme.fontName,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  letterSpacing: -0.1,
-                                  color: FitnessAppTheme.darkText),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('userdata')
+                    .doc(user2.uid)
+                    .collection('body_track')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if(snapshot.hasData){
+                    var sn =snapshot.data!;
+                    height=0;
+                    weight=0;
+                    BMW=0;
+                    BMR=0;
+                    status="None";
+                    timeAppeared = "";
+                    sn.docs.forEach((element) {
+                      if(element.id == formattedDate){
+                        height=element.get("height(cm)").toDouble();
+                        weight=element.get("weight(kg)").toDouble();
+                        BMR=element.get("BMR(Body Metabolic Rate)").toDouble();
+                        BMW=element.get("BMW(Body Mass weight)").toDouble();
+                        status=element.get("BMW status");
+                        timeAppeared=element.get("last seen");
+                    }});
+                  }
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: FitnessAppTheme.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8.0),
+                          bottomLeft: Radius.circular(8.0),
+                          bottomRight: Radius.circular(8.0),
+                          topRight: Radius.circular(68.0)),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: FitnessAppTheme.grey.withOpacity(0.2),
+                            offset: Offset(1.1, 1.1),
+                            blurRadius: 10.0),
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding:
+                          const EdgeInsets.only(top: 16, left: 16, right: 24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 4, bottom: 3),
-                                    child: Text(
-                                      (ConvertDouble(_weight)*2.2).toStringAsFixed(2),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 24,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 2, bottom: 5),
-                                    child: Text(
-                                      'Ibs',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 18,
-                                        letterSpacing: -0.2,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 4, bottom: 8, top: 16),
+                                child: Text(
+                                  'Weight',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      letterSpacing: -0.1,
+                                      color: FitnessAppTheme.darkText),
+                                ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        color: FitnessAppTheme.grey
-                                            .withOpacity(0.5),
-                                        size: 16,
-                                      ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.only(left: 4.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 4, bottom: 3),
                                         child: Text(
-                                          "Last Measured: "+_timeAppeared,
+                                          (weight*2.2).toStringAsFixed(2),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontFamily:
-                                            FitnessAppTheme.fontName,
+                                            fontFamily: FitnessAppTheme.fontName,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 24,
+                                            color: FitnessAppTheme.nearlyDarkBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 2, bottom: 5),
+                                        child: Text(
+                                          'Ibs',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: FitnessAppTheme.fontName,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 8,
-                                            letterSpacing: 0.0,
-                                            color: FitnessAppTheme.grey
-                                                .withOpacity(0.5),
+                                            fontSize: 18,
+                                            letterSpacing: -0.2,
+                                            color: FitnessAppTheme.nearlyDarkBlue,
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 4, bottom: 14),
-                                    child: Text(
-                                      'InBody SmartScale',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                        letterSpacing: 0.0,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.access_time,
+                                            color: FitnessAppTheme.grey
+                                                .withOpacity(0.5),
+                                            size: 16,
+                                          ),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                            child: Text(
+                                              (timeAppeared!="")?
+                                              "Last Measured: "+timeAppeared: "Not measured",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily:
+                                                FitnessAppTheme.fontName,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 8,
+                                                letterSpacing: 0.0,
+                                                color: FitnessAppTheme.grey
+                                                    .withOpacity(0.5),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 4, bottom: 14),
+                                        child: Text(
+                                          'InBody SmartScale',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: FitnessAppTheme.fontName,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                            letterSpacing: 0.0,
+                                            color: FitnessAppTheme.nearlyDarkBlue,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 24, right: 24, top: 8, bottom: 8),
-                      child: Container(
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: FitnessAppTheme.background,
-                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 24, right: 24, top: 8, bottom: 8),
+                          child: Container(
+                            height: 2,
+                            decoration: BoxDecoration(
+                              color: FitnessAppTheme.background,
+                              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 24, right: 24, top: 8, bottom: 16),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 12),
+                                      child:  Text(
+                                        height.toString()+" cm",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          letterSpacing: -0.2,
+                                          color: FitnessAppTheme.darkText,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 6,right: 12),
+                                      child: Text(
+                                        'Height',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color:
+                                          FitnessAppTheme.grey.withOpacity(0.5),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          BMW.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: FitnessAppTheme.fontName,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            letterSpacing: -0.2,
+                                            color: FitnessAppTheme.darkText,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 6),
+                                          child: Text(
+                                            status,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: FitnessAppTheme.fontName,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              color: FitnessAppTheme.grey
+                                                  .withOpacity(0.5),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          BMR.toString(),
+                                          style: TextStyle(
+                                            fontFamily: FitnessAppTheme.fontName,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            letterSpacing: -0.2,
+                                            color: FitnessAppTheme.darkText,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 6),
+                                          child: Text(
+                                            'BMR',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: FitnessAppTheme.fontName,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              color: FitnessAppTheme.grey
+                                                  .withOpacity(0.5),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 24, right: 24, top: 8, bottom: 16),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 12),
-                                  child:  Text(
-                                    _height.toString()+" cm",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      letterSpacing: -0.2,
-                                      color: FitnessAppTheme.darkText,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6,right: 12),
-                                  child: Text(
-                                    'Height',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color:
-                                      FitnessAppTheme.grey.withOpacity(0.5),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      _BMW.toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 6),
-                                      child: Text(
-                                        _status,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          color: FitnessAppTheme.grey
-                                              .withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      _BMR.toString(),
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 6),
-                                      child: Text(
-                                        'BMR',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          color: FitnessAppTheme.grey
-                                              .withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  );
+                }
               ),
             ),
           ),
@@ -332,27 +353,5 @@ class _BodyMeasurementViewState extends State<BodyMeasurementView> {
     } else {
       return double.parse(weight);
     }
-  }
-  void _saveBMData(String Hcm, String Wlbs, String BMeasWt, String BMeasRate, String stat, String time){
-    final newDetails = BodyM(
-      height: Hcm,
-      weight: Wlbs,
-      BMW: BMeasWt,
-      BMR: BMeasRate,
-      Status: stat,
-      Time: time,
-    );
-    _preferencesService.saveFinalDetails(newDetails);
-  }
-  void _populateDetails() async{
-    final details = await _preferencesService.getFinalDetails();
-    setState(() {
-      _height = details.height;
-      _weight = details.weight;
-      _BMW = details.BMW ;
-      _status = details.Status;
-      _BMR = details.BMR;
-      _timeAppeared = details.Time;
-    });
   }
 }
