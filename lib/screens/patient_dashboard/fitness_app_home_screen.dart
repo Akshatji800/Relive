@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mental_health/screens/Settings_Pages/settings.dart';
 import 'package:mental_health/screens/patient_dashboard/training/training_screen.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
+import 'doctor_appointment/screens/doctor_appointment.dart';
 import 'fitness_app_theme.dart';
 import 'models/tabIcon_data.dart';
 import 'my_diary/my_diary_screen.dart';
@@ -121,6 +122,16 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 setState(() {
                   tabBody =
                       TrainingScreen(animationController: animationController);
+                });
+              });
+            } else if (index == 2) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      DoctorAppointment();
                 });
               });
             }
