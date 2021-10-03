@@ -47,6 +47,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
   fl_chart: ^0.40.0
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.3
@@ -84,6 +85,7 @@ flutter:
     - assets/interaction.png
     - assets/report.png
     - assets/fitness_app/
+    - assets/images/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

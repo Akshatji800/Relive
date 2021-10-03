@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mental_health/screens/Settings_Pages/settings.dart';
-import 'package:mental_health/screens/patient_dashboard/training/training_screen.dart';
+import 'package:mental_health/screens/patient_dashboard/training/training_home_screen.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'doctor_appointment/screens/doctor_appointment.dart';
 import 'fitness_app_theme.dart';
@@ -121,7 +121,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      TrainingScreen(animationController: animationController);
+                      TrainingScreen();
                 });
               });
             } else if (index == 2) {
