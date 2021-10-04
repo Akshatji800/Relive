@@ -142,7 +142,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      SettingsPage();
+                      SettingsPage(role: "patient");
                 });
               });
             }

@@ -17,6 +17,18 @@ class DatabaseService {
     });
   }
 
+  Future<void> updateDoctorUserData(String name, String username, String email, String specialization, String hospital, String phone, String about) async {
+    return await myCollection.doc(uid).set({
+      'name': name,
+      'username': username,
+      'email': email,
+      'specialization': specialization,
+      'hospital': hospital,
+      'phone': phone,
+      'about': about,
+    });
+  }
+
   final CollectionReference foodTotalData = FirebaseFirestore.instance.collection('userdata').doc(user.uid).collection('food_track').doc(formattedDate).collection('Total');
 
   Future<void> updateTotalFoodData(String typeOfFood, String calories, String carbo, String protein, String fat, String sugars, String cholesterol) async {

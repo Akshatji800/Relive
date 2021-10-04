@@ -1,10 +1,17 @@
-  
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mental_health/services/user_model.dart';
 
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  FirebaseService();
+
+  Future<UserModel> getUser() async {
+    var firebaseUser = await _auth.currentUser!;
+    return UserModel(firebaseUser.uid, displayName: firebaseUser.email!);
+  }
 
   Future<String?> signInwithGoogle() async {
     try {
@@ -21,6 +28,13 @@ class FirebaseService {
       print(e.message);
       throw e;
     }
+  }
+
+  Future<UserModel> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    var authresult = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    
+    return UserModel(authresult.user!.uid, displayName: authresult.user!.displayName.toString());
   }
 
   Future<void> signOutFromGoogle() async{
