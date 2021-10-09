@@ -396,7 +396,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
         specializationController.text,
         hospitalController.text,
         phoneController.text,
-        aboutController.text);
+        aboutController.text,
+      "doctor",
+    );
   }
 
   void rebuildAll(BuildContext context) {

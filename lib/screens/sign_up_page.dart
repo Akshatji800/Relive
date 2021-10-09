@@ -416,7 +416,6 @@ class _SignUpPageState extends State<SignUpPage> {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((_) async {
         user = auth.currentUser!;
-        await DatabaseService(uid: user.uid).updateUserData(fullname, username, email);
         showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -428,6 +427,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         InkWell(
                           onTap: () async {
+                            await DatabaseService(uid: user.uid).updateUserData(fullname, username, email,"patient");
                             Navigator.pop(context);
                             password = passwordController.text;
                             SharedPreferences prefs =
@@ -455,6 +455,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         InkWell(
                           onTap: () async {
+                            await DatabaseService(uid: user.uid).updateUserData(fullname, username, email, "doctor");
                             Navigator.pop(context);
                             password = passwordController.text;
                             SharedPreferences prefs =

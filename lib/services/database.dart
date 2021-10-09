@@ -9,15 +9,16 @@ class DatabaseService {
   // collection reference
   final CollectionReference myCollection = FirebaseFirestore.instance.collection('userdata');
 
-  Future<void> updateUserData(String name, String username, String email) async {
+  Future<void> updateUserData(String name, String username, String email, String type) async {
     return await myCollection.doc(uid).set({
       'name': name,
       'username': username,
       'email': email,
+      'type': type,
     });
   }
 
-  Future<void> updateDoctorUserData(String name, String username, String email, String specialization, String hospital, String phone, String about) async {
+  Future<void> updateDoctorUserData(String name, String username, String email, String specialization, String hospital, String phone, String about, String type,) async {
     return await myCollection.doc(uid).set({
       'name': name,
       'username': username,
@@ -26,6 +27,7 @@ class DatabaseService {
       'hospital': hospital,
       'phone': phone,
       'about': about,
+      'type': type,
     });
   }
 

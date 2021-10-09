@@ -1,10 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mental_health/screens/patient_dashboard/doctor_appointment/screens/search_result.dart';
 
 import '../constant.dart';
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
+  const SearchBar({Key? key}) : super(key: key);
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  String search_text = "";
+  
+  @override
+  void initState() {
+    super.initState();
+    search_text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -21,12 +35,16 @@ class SearchBar extends StatelessWidget {
             decoration: InputDecoration.collapsed(
               hintText: 'Search for doctors',
             ),
+            onChanged: (value) {
+              search_text = value;
+            },
           ),
         ),
         Align(
           alignment: Alignment.centerRight,
           child: MaterialButton(
-            onPressed: () {},
+            onPressed: () {Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context)
+            => new SearchResult(searchText: search_text)));},
             color:  Colors.cyan,
             padding: EdgeInsets.symmetric(
               horizontal: 10,
