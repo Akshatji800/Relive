@@ -1,10 +1,11 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/components/schedule_card.dart';
+import 'package:mental_health/screens/patient_dashboard/doctor_appointment/screens/token_maker.dart';
 import 'package:mental_health/utils/loadProfilePic.dart';
 import '../constant.dart';
+import 'audio_calling.dart';
 
 //ignore: must_be_immutable
 class DetailScreen extends StatefulWidget {
@@ -114,14 +115,29 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ),
                                   Row(
                                     children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: kBlueColor.withOpacity(0.1),
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: SvgPicture.asset(
-                                          'assets/icons/phone.svg',
+                                      InkWell(
+                                        onTap: () async {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => Scaffold(
+                                                    appBar: AppBar(
+                                                      backgroundColor: Colors.cyan,
+                                                      title:
+                                                      Text("Audio Calling"),
+                                                    ),
+                                                    body: JoinChannelAudio(),
+                                                  )));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: kBlueColor.withOpacity(0.1),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: SvgPicture.asset(
+                                            'assets/icons/phone.svg',
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
@@ -140,14 +156,29 @@ class _DetailScreenState extends State<DetailScreen> {
                                       SizedBox(
                                         width: 16,
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: kOrangeColor.withOpacity(0.1),
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: SvgPicture.asset(
-                                          'assets/icons/video.svg',
+                                      InkWell(
+                                        onTap: () async {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => Scaffold(
+                                                    appBar: AppBar(
+                                                      backgroundColor: Colors.cyan,
+                                                      title:
+                                                      Text("Video Calling"),
+                                                    ),
+                                                    body: TokenMaker(),
+                                                  )));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: kOrangeColor.withOpacity(0.1),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: SvgPicture.asset(
+                                            'assets/icons/video.svg',
+                                          ),
                                         ),
                                       ),
                                     ],
