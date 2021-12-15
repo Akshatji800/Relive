@@ -50,6 +50,7 @@ dependencies:
   agora_rtc_engine: ^4.0.7
   permission_handler: 8.1.6
   carousel_slider: ^4.0.0
+  get: ^4.6.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
@@ -74,6 +75,9 @@ flutter:
   assets:
     - assets/images/sign-in.png
     - assets/icons/
+    - assets/icons/bg.svg
+    - assets/icons/clock.svg
+    - assets/icons/K10_survey.jpg
     - assets/images/detail_illustration.png
     - assets/images/doctor1.png
     - assets/images/doctor2.png

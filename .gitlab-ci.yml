@@ -1,4 +1,4 @@
-image: cirrusci/flutter:2.2.3
+image: cirrusci/flutter:stable
 
 stages:
   - build
@@ -10,7 +10,6 @@ before_script:
   - cat .env
   - flutter pub get
   - flutter clean
-  - flutter analyze
 
 build:apk:
   stage: build

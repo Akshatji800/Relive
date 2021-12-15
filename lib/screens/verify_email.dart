@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mental_health/screens/dashboard_doctor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mental_health/screens/sign_up_page.dart';
-
-import 'patient_dashboard/fitness_app_home_screen.dart';
+import 'k_ten_scale/ktenscale.dart';
 
 late User user;
 class VerifyScreen extends StatefulWidget {
@@ -82,7 +81,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
             MaterialPageRoute(builder: (context) => DoctorDashBoard()));
       } else if (prefs.getString('login_as') == "patient") {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()));
+            context, MaterialPageRoute(builder: (context) => KtenScale()));
       }
     }
   }
