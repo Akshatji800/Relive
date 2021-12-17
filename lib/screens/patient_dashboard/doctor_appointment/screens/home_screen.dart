@@ -7,6 +7,8 @@ import '../constant.dart';
 import 'doctor_model.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -21,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Doctor\'s Appointment',
           style: TextStyle(color: Colors.white),
         ),
@@ -35,10 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
                   'Find Your Desired\nDoctor',
@@ -49,17 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: SearchBar(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
                   'Categories',
@@ -70,14 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               buildCategoryList(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
                   'Top Doctors',
@@ -88,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               buildDoctorList(),
@@ -104,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             width: 30,
           ),
           CategoryCard(
@@ -113,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             kOrangeColor,
             'Psychiatrist'
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           CategoryCard(
@@ -122,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
             kBlueColor,
             'Dental'
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           CategoryCard(
@@ -131,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
             kYellowColor,
             'Heart Surgeon'
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           CategoryCard(
@@ -140,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
             kOrangeColor,
             'Eye Specialist'
           ),
-          SizedBox(
+          const SizedBox(
             width: 30,
           ),
         ],
@@ -155,18 +157,19 @@ class _HomeScreenState extends State<HomeScreen> {
       stream: FirebaseFirestore.instance.collection('userdata').snapshots(),
       builder: (context, snapshot) {
         if(snapshot.data != null){
-          snapshot.data!.docs.forEach((element) {
+          for (var element in snapshot.data!.docs) {
             try{
               if(element['type'] == "doctor"){
                 doctors.add(DoctorModel(element.id ,element['name'], element['specialization'],
                     element['phone'], element['hospital'], element['about']));
               }
             }catch (e){
+              continue;
             }
-          });
+          }
         }
           return Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 30,
               ),
               child: Column(
@@ -185,12 +188,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             (index%2==0) ? kBlueColor: kYellowColor,
                             doctors[index].bio,
                       ),
-                          SizedBox(height: 10,)
-                        ]) : ([CircularProgressIndicator()]),
+                          const SizedBox(height: 10,)
+                        ]) : ([const CircularProgressIndicator()]),
                       );
                     },
                   ),
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                 ],
               )
           );
@@ -200,16 +203,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getDoctors() async{
     setState(() {});
-    await FirebaseFirestore.instance.collection('userdata').snapshots().listen((event) {
-      event.docs.forEach((element) async {
+    FirebaseFirestore.instance.collection('userdata').snapshots().listen((event) {
+      for (var element in event.docs) {
         try{
             if(element['type'] == "doctor"){
               doctors.add(DoctorModel(element.id ,element['name'], element['specialization'],
                   element['phone'], element['hospital'], element['about']));
           }
         }catch (e){
+          continue;
         }
-      });
+      }
     });
   }
 }

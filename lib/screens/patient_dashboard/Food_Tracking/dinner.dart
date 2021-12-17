@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/Settings_Pages/new_password.dart';
 import 'package:mental_health/screens/patient_dashboard/my_diary/meals_list_view.dart';
 import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 import 'package:mental_health/services/database.dart';
@@ -10,12 +8,12 @@ import 'add_new_food.dart';
 import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
 
-double TCalorie = 0;
-double TCarbs = 0;
-double TProtein = 0;
-double TFat = 0;
-double TSugars = 0;
-double TCholesterol = 0;
+double tCalorie = 0;
+double tCarbs = 0;
+double tProtein = 0;
+double tFat = 0;
+double tSugars = 0;
+double tCholesterol = 0;
 //ignore: must_be_immutable
 class Dinner extends StatefulWidget {
   String callingText;
@@ -28,35 +26,34 @@ class Dinner extends StatefulWidget {
 class _DinnerState extends State<Dinner> {
   @override
   Widget build(BuildContext context) {
-    print(widget.callingText);
     return Scaffold(
         appBar: AppBar(
-          title: Text("${widget.callingText}"),
+          title: Text(widget.callingText),
           backgroundColor: Colors.cyan,
           elevation: 1,
           actions: <Widget>[
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
               onPressed: () {
-                if("${widget.callingText}" == 'dinner') {
+                if(widget.callingText == 'dinner') {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           AddNewFoodPage(callingText: "dinner",)));
                 }
-                if("${widget.callingText}" == 'lunch') {
+                if(widget.callingText == 'lunch') {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           AddNewFoodPage(callingText: "lunch",)));
                 }
-                if("${widget.callingText}" == 'snack') {
+                if(widget.callingText == 'snack') {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           AddNewFoodPage(callingText: "snack",)));
                 }
-                if("${widget.callingText}" == 'breakfast') {
+                if(widget.callingText == 'breakfast') {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           AddNewFoodPage(callingText: "breakfast",)));
@@ -65,54 +62,52 @@ class _DinnerState extends State<Dinner> {
             )
           ],
         ),
-        body: Container(
-          child: Column(children: <Widget>[
-            BarChartSample1(),
-            StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('userdata')
-                    .doc(user.uid)
-                    .collection('food_track')
-                    .doc(formattedDate)
-                    .collection('${widget.callingText}')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) return new Text("There is no data");
-                  if (snapshot.hasData) {
-                    TCalorie = 0;
-                    TCarbs = 0;
-                    TProtein = 0;
-                    TFat = 0;
-                    TSugars = 0;
-                    TCholesterol = 0;
-                    for (var i = 0; i < snapshot.data!.docs.length; i++) {
-                      TCalorie = TCalorie +
-                          double.parse(snapshot.data!.docs[i]
-                          [snapshot.data!.docs[i].id]["Total Calories"]);
-                      TCarbs = TCarbs +
-                          double.parse(snapshot.data!.docs[i]
-                          [snapshot.data!.docs[i].id]["Carbohydrate"]);
-                      TProtein = TProtein +
-                          double.parse(snapshot.data!.docs[i]
-                          [snapshot.data!.docs[i].id]["Protein"]);
-                      TFat = TFat +
-                          double.parse(snapshot.data!.docs[i]
-                          [snapshot.data!.docs[i].id]["Fat"]);
-                      TSugars = TSugars +
-                          double.parse(snapshot.data!.docs[i]
-                          [snapshot.data!.docs[i].id]["Sugars"]);
-                      TCholesterol = TCholesterol +
-                          double.parse(snapshot.data!.docs[i]
-                          [snapshot.data!.docs[i].id]["Cholesterol"]);
+        body: Column(children: <Widget>[
+          BarChartSample1(),
+          StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('userdata')
+                  .doc(user.uid)
+                  .collection('food_track')
+                  .doc(formattedDate)
+                  .collection(widget.callingText)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return const Text("There is no data");
+                if (snapshot.hasData) {
+                  tCalorie = 0;
+                  tCarbs = 0;
+                  tProtein = 0;
+                  tFat = 0;
+                  tSugars = 0;
+                  tCholesterol = 0;
+                  for (var i = 0; i < snapshot.data!.docs.length; i++) {
+                    tCalorie = tCalorie +
+                        double.parse(snapshot.data!.docs[i]
+                        [snapshot.data!.docs[i].id]["Total Calories"]);
+                    tCarbs = tCarbs +
+                        double.parse(snapshot.data!.docs[i]
+                        [snapshot.data!.docs[i].id]["Carbohydrate"]);
+                    tProtein = tProtein +
+                        double.parse(snapshot.data!.docs[i]
+                        [snapshot.data!.docs[i].id]["Protein"]);
+                    tFat = tFat +
+                        double.parse(snapshot.data!.docs[i]
+                        [snapshot.data!.docs[i].id]["Fat"]);
+                    tSugars = tSugars +
+                        double.parse(snapshot.data!.docs[i]
+                        [snapshot.data!.docs[i].id]["Sugars"]);
+                    tCholesterol = tCholesterol +
+                        double.parse(snapshot.data!.docs[i]
+                        [snapshot.data!.docs[i].id]["Cholesterol"]);
 
-                    }
-                    DatabaseService(uid: user.uid).updateTotalFoodData("${widget.callingText}",TCalorie.toString(), TCarbs.toString(), TProtein.toString(), TFat.toString(), TSugars.toString(), TCholesterol.toString());
-                  };
-                  return getExpenseItems(snapshot);
-                }),
-          ]),
-        ));
+                  }
+                  DatabaseService(uid: user.uid).updateTotalFoodData(widget.callingText,tCalorie.toString(), tCarbs.toString(), tProtein.toString(), tFat.toString(), tSugars.toString(), tCholesterol.toString());
+                }
+                return getExpenseItems(snapshot);
+              }),
+        ]));
   }
 }
 
@@ -134,7 +129,7 @@ getExpenseItems(AsyncSnapshot<QuerySnapshot> snapshot) {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text(
                         "Food",
                         style: TextStyle(
@@ -184,62 +179,62 @@ getExpenseItems(AsyncSnapshot<QuerySnapshot> snapshot) {
                   Container(
                       height: 1,
                       width: 750,
-                      decoration: BoxDecoration(color: Colors.black)),
+                      decoration: const BoxDecoration(color: Colors.black)),
                   for (var i = 0; i < snapshot.data!.docs.length; i++)
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             width: 60,
                             child: Text(
-                              "${snapshot.data!.docs[i].id}",
+                              snapshot.data!.docs[i].id,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 50),
-                          Container(
+                          const SizedBox(width: 50),
+                          SizedBox(
                             width: 60,
                             child: Text(
                               "${snapshot.data!.docs[i][snapshot.data!.docs[i].id]["Total Calories"]}",
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 50),
-                          Container(
+                          const SizedBox(width: 50),
+                          SizedBox(
                             width: 60,
                             child: Text(
                               "${snapshot.data!.docs[i][snapshot.data!.docs[i].id]["Carbohydrate"]}",
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 50),
-                          Container(
+                          const SizedBox(width: 50),
+                          SizedBox(
                             width: 60,
                             child: Text(
                               "${snapshot.data!.docs[i][snapshot.data!.docs[i].id]["Protein"]}",
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 50),
-                          Container(
+                          const SizedBox(width: 50),
+                          SizedBox(
                             width: 60,
                             child: Text(
                               "${snapshot.data!.docs[i][snapshot.data!.docs[i].id]["Fat"]}",
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 50),
-                          Container(
+                          const SizedBox(width: 50),
+                          SizedBox(
                             width: 60,
                             child: Text(
                               "${snapshot.data!.docs[i][snapshot.data!.docs[i].id]["Sugars"]}",
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 50),
-                          Container(
+                          const SizedBox(width: 50),
+                          SizedBox(
                             width: 60,
                             child: Text(
                               "${snapshot.data!.docs[i][snapshot.data!.docs[i].id]["Cholesterol"]}",
@@ -268,6 +263,8 @@ class BarChartSample1 extends StatefulWidget {
     Colors.pink,
     Colors.redAccent,
   ];
+
+  BarChartSample1({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => BarChartSample1State();
@@ -299,7 +296,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       'Nutrients Intake Data',
                       style: TextStyle(
                           color: Colors.black,
@@ -324,8 +321,8 @@ class BarChartSample1State extends State<BarChartSample1> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.topRight,
                 ),
@@ -353,8 +350,8 @@ class BarChartSample1State extends State<BarChartSample1> {
           colors: isTouched ? [Colors.yellow] : [barColor],
           width: width,
           borderSide: isTouched
-              ? BorderSide(color: Colors.yellow, width: 1)
-              : BorderSide(color: Colors.white, width: 0),
+              ? const BorderSide(color: Colors.yellow, width: 1)
+              : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             y: 100,
@@ -369,17 +366,17 @@ class BarChartSample1State extends State<BarChartSample1> {
   List<BarChartGroupData> showingGroups() => List.generate(6, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, double.parse(((TCalorie/RCalorie)*100).toStringAsFixed(2))>100? 100: double.parse(((TCalorie/RCalorie)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
+            return makeGroupData(0, double.parse(((tCalorie/rCalorie)*100).toStringAsFixed(2))>100? 100: double.parse(((tCalorie/rCalorie)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, double.parse(((TCarbs/RCarbs)*100).toStringAsFixed(2))>100? 100: double.parse(((TCarbs/RCarbs)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
+            return makeGroupData(1, double.parse(((tCarbs/rCarbs)*100).toStringAsFixed(2))>100? 100: double.parse(((tCarbs/rCarbs)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, double.parse(((TProtein/RProtein)*100).toStringAsFixed(2))>100? 100:double.parse(((TProtein/RProtein)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
+            return makeGroupData(2, double.parse(((tProtein/rProtein)*100).toStringAsFixed(2))>100? 100:double.parse(((tProtein/rProtein)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, double.parse(((TFat/RFat)*100).toStringAsFixed(2))>100? 100:double.parse(((TFat/RFat)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
+            return makeGroupData(3, double.parse(((tFat/rFat)*100).toStringAsFixed(2))>100? 100:double.parse(((tFat/rFat)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, double.parse(((TSugars/RSugars)*100).toStringAsFixed(2))>100? 100:double.parse(((TSugars/RSugars)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
+            return makeGroupData(4, double.parse(((tSugars/rSugars)*100).toStringAsFixed(2))>100? 100:double.parse(((tSugars/rSugars)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, double.parse(((TCholesterol/RCholesterol)*100).toStringAsFixed(2))>100? 100:double.parse(((TCholesterol/RCholesterol)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
+            return makeGroupData(5, double.parse(((tCholesterol/rCholesterol)*100).toStringAsFixed(2))>100? 100:double.parse(((tCholesterol/rCholesterol)*100).toStringAsFixed(2)), isTouched: i == touchedIndex);
           default:
             return throw Error();
         }
@@ -416,7 +413,7 @@ class BarChartSample1State extends State<BarChartSample1> {
               }
               return BarTooltipItem(
                 weekDay + '\n',
-                TextStyle(
+                const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -424,7 +421,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                 children: <TextSpan>[
                   TextSpan(
                     text: (rod.y - 1).toString() + '%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.yellow,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,

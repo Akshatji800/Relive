@@ -6,7 +6,7 @@ class Question {
   Question({required this.id, required this.question, required this.answer, required this.options});
 }
 
-const List sample_data = [
+const List sampleData = [
   {
     "id": 1,
     "question":

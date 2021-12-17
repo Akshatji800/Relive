@@ -17,28 +17,28 @@ class _TrainingScreenState extends State<TrainingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
-        title: Text(
+        title: const Text(
           "Training",
           style: TextStyle(color: Colors.white),
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
           ),
           Icon(Platform.isAndroid ? Icons.more_vert : Icons.more_horiz,color: Colors.white,),
-          SizedBox(width: 10,)
+          const SizedBox(width: 10,)
         ],
       ),
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
             child: Column(
-              children: <Widget>[
+              children: const <Widget>[
                 VideoSuggestions(),
                 DiffStyles(),
                 Courses(),

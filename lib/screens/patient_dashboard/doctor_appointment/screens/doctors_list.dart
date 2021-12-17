@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/components/doctor_card.dart';
-
 import '../constant.dart';
 import 'doctor_model.dart';
 
@@ -27,7 +25,7 @@ class _DoctorsListState extends State<DoctorsList> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -35,20 +33,21 @@ class _DoctorsListState extends State<DoctorsList> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('userdata').snapshots(),
             builder: (context, snapshot) {
               if(snapshot.data != null){
-                snapshot.data!.docs.forEach((element) {
+                for (var element in snapshot.data!.docs) {
                   try{
                     if(element['type'] == "doctor" && element['specialization']==widget.role){
                       doctorsCategory.add(DoctorModel(element.id ,element['name'], element['specialization'],
                           element['phone'], element['hospital'], element['about']));
                     }
                   }catch (e){
+                    continue;
                   }
-                });
+                }
               }
               return Column(
                 children: [
@@ -66,12 +65,12 @@ class _DoctorsListState extends State<DoctorsList> {
                             (index%2==0) ? kBlueColor: kYellowColor,
                             doctorsCategory[index].bio,
                           ),
-                          SizedBox(height: 10,)
-                        ]) : ([CircularProgressIndicator()]),
+                          const SizedBox(height: 10,)
+                        ]) : ([const CircularProgressIndicator()]),
                       );
                     },
                   ),
-                  SizedBox(height: 70),
+                  const SizedBox(height: 70),
                 ],
               );
             }

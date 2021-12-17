@@ -9,7 +9,7 @@ class FirebaseService {
   FirebaseService();
 
   Future<UserModel> getUser() async {
-    var firebaseUser = await _auth.currentUser!;
+    var firebaseUser = _auth.currentUser!;
     return UserModel(firebaseUser.uid, displayName: firebaseUser.email!);
   }
 
@@ -24,9 +24,8 @@ class FirebaseService {
         idToken: googleSignInAuthentication.idToken,
       );
       await _auth.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      throw e;
+    } on FirebaseAuthException {
+      rethrow;
     }
   }
 

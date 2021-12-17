@@ -10,6 +10,7 @@ before_script:
   - cat .env
   - flutter pub get
   - flutter clean
+  - flutter analyze
 
 build:apk:
   stage: build

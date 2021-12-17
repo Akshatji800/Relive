@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
-import 'package:mental_health/screens/k_ten_scale/models/Questions.dart';
+import 'package:mental_health/screens/k_ten_scale/models/questions.dart';
 import 'package:mental_health/screens/k_ten_scale/screens/score/score_screen.dart';
 
 // We use get package for our state management
@@ -13,12 +12,12 @@ class QuestionController extends GetxController
   late AnimationController _animationController;
   late Animation _animation;
   // so that we can access our animation outside
-  Animation get animation => this._animation;
+  Animation get animation => _animation;
 
   late PageController _pageController;
-  PageController get pageController => this._pageController;
+  PageController get pageController => _pageController;
 
-  List<Question> _questions = sample_data
+  final List<Question> _questions = sampleData
       .map(
         (question) => Question(
             id: question['id'],
@@ -27,33 +26,33 @@ class QuestionController extends GetxController
             answer: question['answer_index']),
       )
       .toList();
-  List<Question> get questions => this._questions;
+  List<Question> get questions => _questions;
 
   bool _isAnswered = false;
-  bool get isAnswered => this._isAnswered;
+  bool get isAnswered => _isAnswered;
 
   late int _correctAns;
-  int get correctAns => this._correctAns;
+  int get correctAns => _correctAns;
 
   late int _selectedAns;
-  int get selectedAns => this._selectedAns;
+  int get selectedAns => _selectedAns;
 
   // for more about obs please check documentation
-  RxInt _questionNumber = 1.obs;
-  RxInt get questionNumber => this._questionNumber;
+  final RxInt _questionNumber = 1.obs;
+  RxInt get questionNumber => _questionNumber;
 
   int _numOffiveScoreAns = 0;
   int _numOffourScoreAns = 0;
   int _numOfthreeScoreAns = 0;
   int _numOftwoScoreAns = 0;
   int _numOfoneScoreAns = 0;
-  int get numOffiveScoreAns => this._numOffiveScoreAns;
-  int get numOffourScoreAns => this._numOffourScoreAns;
-  int get numOfthreeScoreAns => this._numOfthreeScoreAns;
-  int get numOftwoScoreAns => this._numOftwoScoreAns;
-  int get numOfoneScoreAns => this._numOfoneScoreAns;
-  int _numOfCorrectAns = 0;
-  int get numOfCorrectAns => this._numOfCorrectAns;
+  int get numOffiveScoreAns => _numOffiveScoreAns;
+  int get numOffourScoreAns => _numOffourScoreAns;
+  int get numOfthreeScoreAns => _numOfthreeScoreAns;
+  int get numOftwoScoreAns => _numOftwoScoreAns;
+  int get numOfoneScoreAns => _numOfoneScoreAns;
+  final int _numOfCorrectAns = 0;
+  int get numOfCorrectAns => _numOfCorrectAns;
 
 
   // called immediately after the widget is allocated memory
@@ -62,7 +61,7 @@ class QuestionController extends GetxController
     // Our animation duration is 60 s
     // so our plan is to fill the progress bar within 60s
     _animationController =
-        AnimationController(duration: Duration(seconds: 600), vsync: this);
+        AnimationController(duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
       ..addListener(() {
         // update like setState
@@ -100,7 +99,7 @@ class QuestionController extends GetxController
     update();
 
     // Once user select an ans after 3s it will go to the next qn
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       nextQuestion();
     });
     scoretotal = numOffiveScoreAns*5 + numOffourScoreAns*4 + numOfthreeScoreAns*3 + numOftwoScoreAns*2 + numOfoneScoreAns*1;
@@ -110,7 +109,7 @@ class QuestionController extends GetxController
     if (_questionNumber.value != _questions.length) {
       _isAnswered = false;
       _pageController.nextPage(
-          duration: Duration(milliseconds: 250), curve: Curves.ease);
+          duration: const Duration(milliseconds: 250), curve: Curves.ease);
 
       // Reset the counter
       _animationController.reset();
@@ -120,7 +119,7 @@ class QuestionController extends GetxController
       _animationController.forward().whenComplete(nextQuestion);
     } else {
       // Get package provide us simple way to navigate another page
-      Get.to(ScoreScreen());
+      Get.to(const ScoreScreen());
     }
   }
 

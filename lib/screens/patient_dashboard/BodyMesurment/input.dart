@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mental_health/screens/patient_dashboard/BodyMesurment/AimPage.dart';
+import 'package:mental_health/screens/patient_dashboard/BodyMesurment/aim_page.dart';
 const Color inactiveCard = Color(0xFFE0F7FA);
 const Color activeCard = Colors.white;
 
 class InputPage extends StatefulWidget {
+  const InputPage({Key? key}) : super(key: key);
+
 
   @override
   _InputPageState createState() => _InputPageState();
@@ -38,18 +40,18 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Body Mesurement"),
+        title: const Text("Body Mesurement"),
         // centerTitle: true,
 //        backgroundColor: Color(0xFF313131),
         backgroundColor:  Colors.cyan,
       ),
-      backgroundColor: Color(0xFFF2F3F8),
+      backgroundColor: const Color(0xFFF2F3F8),
       body: ListView(
         children: <Widget>[
           Container(
             // padding: EdgeInsets.all(10),
             height: 210,
-            margin: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
             // constraints: BoxConstraints(minWidth: 50,maxWidth: 50),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
@@ -62,91 +64,87 @@ class _InputPageState extends State<InputPage> {
                     borderRadius: BorderRadius.circular(5.0),
                     color: Colors.cyan[200]
                   ),
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text("Note: ",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
                       Text("Enter the following details below to find the Body Mass Index",style: TextStyle(color: Colors.white),),
                     ],
                   ),
                 ),
-                SizedBox(height:12,),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              print("FEMALE");
-                              updateGenderSelected(2);
-                            });
-                          },
-                          child: Container(
-                            width: 50,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              color: femaleCard,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.black45
-                                        .withOpacity(0.2),
-                                    offset: const Offset(1.1, 4.0),
-                                    blurRadius: 8.0),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.venus,color: Colors.cyan,size: 100,),
-                                SizedBox(height: 5,),
-                                Text("FEMALE",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
+                const SizedBox(height:12,),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            updateGenderSelected(2);
+                          });
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 130,
+                          decoration: BoxDecoration(
+                            color: femaleCard,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.black45
+                                      .withOpacity(0.2),
+                                  offset: const Offset(1.1, 4.0),
+                                  blurRadius: 8.0),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              const Icon(FontAwesomeIcons.venus,color: Colors.cyan,size: 100,),
+                              const SizedBox(height: 5,),
+                              Text("FEMALE",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
 
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              print("MALE");
-                              updateGenderSelected(1);
-                            });
-                          },
-                          child: Container(
-                            width: 50,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              color: maleCard,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.black45
-                                        .withOpacity(0.2),
-                                    offset: const Offset(1.1, 4.0),
-                                    blurRadius: 8.0),
-                              ],
-                            ),
+                    ),
+                    const SizedBox(width: 10,),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            updateGenderSelected(1);
+                          });
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 130,
+                          decoration: BoxDecoration(
+                            color: maleCard,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.black45
+                                      .withOpacity(0.2),
+                                  offset: const Offset(1.1, 4.0),
+                                  blurRadius: 8.0),
+                            ],
+                          ),
 
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.mars,color: Colors.cyan,size: 100,),
-                                SizedBox(height: 5,),
-                                Text("MALE",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              const Icon(FontAwesomeIcons.mars,color: Colors.cyan,size: 100,),
+                              const SizedBox(height: 5,),
+                              Text("MALE",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
 
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
 
               ],
@@ -158,7 +156,7 @@ class _InputPageState extends State<InputPage> {
               Expanded(
                 child: Container(
                   height: 165,
-                  margin: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
                   decoration: BoxDecoration(
                     color: activeCard,
                     borderRadius: BorderRadius.circular(20),
@@ -173,8 +171,8 @@ class _InputPageState extends State<InputPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 4,),
-                      Text(
+                      const SizedBox(height: 4,),
+                      const Text(
                         'HEIGHT',
                         style: TextStyle(
                           fontSize: 22,
@@ -182,8 +180,8 @@ class _InputPageState extends State<InputPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                      SizedBox(height: 4,),
+                      const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                      const SizedBox(height: 4,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -191,13 +189,13 @@ class _InputPageState extends State<InputPage> {
                         children: <Widget>[
                           Text(
                             _height.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 30,
                               color: Colors.black54,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'cm',
                             style: TextStyle(
                                 fontSize: 14,
@@ -207,7 +205,7 @@ class _InputPageState extends State<InputPage> {
 
                         ],
                       ),
-                      SizedBox(height: 2,),
+                      const SizedBox(height: 2,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -215,13 +213,13 @@ class _InputPageState extends State<InputPage> {
                         children: <Widget>[
                           Text(
                             heightF.toStringAsFixed(2),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 30,
                               color: Colors.black54,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Ft',
                             style: TextStyle(
                                 fontSize: 14,
@@ -232,8 +230,8 @@ class _InputPageState extends State<InputPage> {
                       ),
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
-                          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                          overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                          overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                           // activeTrackColor: Color(0xffC38FFF),
                           // thumbColor: Color(0xffC38FFF),
                           // inactiveTrackColor: Color(0x55C38FFF),
@@ -266,7 +264,7 @@ class _InputPageState extends State<InputPage> {
               Container(
                 height: 150,
                 width: 280,
-                margin: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
 
@@ -293,8 +291,8 @@ class _InputPageState extends State<InputPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            SizedBox(height: 15,),
-                            Text(
+                            const SizedBox(height: 15,),
+                            const Text(
                               'Weight',
                               style: TextStyle(
                                 fontSize: 20,
@@ -302,12 +300,12 @@ class _InputPageState extends State<InputPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 5,),
-                            Divider(height: 1,color: Colors.black,indent: 25,endIndent: 25,),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 5,),
+                            const Divider(height: 1,color: Colors.black,indent: 25,endIndent: 25,),
+                            const SizedBox(height: 10,),
                             Text(
                               _weight.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 35,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w900,
@@ -318,7 +316,7 @@ class _InputPageState extends State<InputPage> {
                               children: <Widget>[
                                 IconButton(
                                   icon: CircleAvatar(
-                                    child: Icon(FontAwesomeIcons.minus,color: Colors.black,),
+                                    child: const Icon(FontAwesomeIcons.minus,color: Colors.black,),
                                     radius: 30.0,
                                     backgroundColor: Colors.grey[200],
                                   ),
@@ -328,12 +326,12 @@ class _InputPageState extends State<InputPage> {
                                     });
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 IconButton(
                                   icon: CircleAvatar(
-                                    child: Icon(FontAwesomeIcons.plus,color: Colors.black,),
+                                    child: const Icon(FontAwesomeIcons.plus,color: Colors.black,),
                                     radius: 30.0,
                                     backgroundColor: Colors.grey[200],
                                   ),
@@ -345,12 +343,12 @@ class _InputPageState extends State<InputPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 2,),
+                            const SizedBox(height: 2,),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(width:10 ,),
+                    const SizedBox(width:10 ,),
                     Expanded(
                       child: Container(
                         height: 150,
@@ -369,8 +367,8 @@ class _InputPageState extends State<InputPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            SizedBox(height: 15,),
-                            Text(
+                            const SizedBox(height: 15,),
+                            const Text(
                               "Age",
                               style: TextStyle(
                                 fontSize: 20,
@@ -378,12 +376,12 @@ class _InputPageState extends State<InputPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 5,),
-                            Divider(height: 1,color: Colors.black,indent: 25,endIndent: 25,),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 5,),
+                            const Divider(height: 1,color: Colors.black,indent: 25,endIndent: 25,),
+                            const SizedBox(height: 10,),
                             Text(
                               age.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 35,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w900,
@@ -394,7 +392,7 @@ class _InputPageState extends State<InputPage> {
                               children: <Widget>[
                                 IconButton(
                                   icon: CircleAvatar(
-                                    child: Icon(FontAwesomeIcons.minus,color: Colors.black,),
+                                    child: const Icon(FontAwesomeIcons.minus,color: Colors.black,),
                                     radius: 30.0,
                                     backgroundColor: Colors.grey[200],
                                   ),
@@ -404,12 +402,12 @@ class _InputPageState extends State<InputPage> {
                                     });
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 IconButton(
                                   icon: CircleAvatar(
-                                    child: Icon(FontAwesomeIcons.plus,color: Colors.black,),
+                                    child: const Icon(FontAwesomeIcons.plus,color: Colors.black,),
                                     radius: 30.0,
                                     backgroundColor: Colors.grey[200],
                                   ),
@@ -421,7 +419,7 @@ class _InputPageState extends State<InputPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 2,),
+                            const SizedBox(height: 2,),
                           ],
                         ),
                       ),
@@ -446,9 +444,9 @@ class _InputPageState extends State<InputPage> {
             },
             child: Container(
               height: 50,
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(horizontal: 50,vertical: 10),
-              constraints: BoxConstraints(minWidth: 50,maxWidth: 50),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+              constraints: const BoxConstraints(minWidth: 50,maxWidth: 50),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color: Colors.cyan,
@@ -461,7 +459,7 @@ class _InputPageState extends State<InputPage> {
                 ],
               ),
               child: Column(
-                children: <Widget>[
+                children: const <Widget>[
                   Text(
                     'Next',
                     style: TextStyle(
@@ -476,7 +474,7 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
         ],
       ),
     );

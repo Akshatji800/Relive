@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InteractionPage extends StatefulWidget {
+  const InteractionPage({Key? key}) : super(key: key);
+
   @override
   DoctorDashBoardState createState() => DoctorDashBoardState();
 }
@@ -11,7 +12,7 @@ class DoctorDashBoardState extends State<InteractionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Interaction',
           style: TextStyle(color: Colors.white),
         ),
@@ -21,7 +22,7 @@ class DoctorDashBoardState extends State<InteractionPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),

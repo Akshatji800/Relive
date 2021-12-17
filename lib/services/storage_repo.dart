@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:mental_health/services/firebase_Service.dart';
+import 'package:mental_health/services/firebase_service.dart';
 
 import 'locator.dart';
 
 class StorageRepo{
   FirebaseStorage storage= FirebaseStorage.instanceFor(bucket: "gs://mental-health-e175a.appspot.com");
 
-  FirebaseService _firebaseService = locator.get<FirebaseService>();
+  final FirebaseService _firebaseService = locator.get<FirebaseService>();
 
   Future<String> uploadFile(File file) async{
     var user = await _firebaseService.getUser();

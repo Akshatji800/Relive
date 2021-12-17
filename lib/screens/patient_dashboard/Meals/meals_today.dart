@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/Settings_Pages/new_password.dart';
 import 'package:mental_health/services/database.dart';
 
 late User users;
@@ -14,14 +14,14 @@ var rCholesterol=0.3;
 const Color inactiveCard = Color(0xFFE0F7FA);
 const Color activeCard = Colors.white;
 
-class meals extends StatefulWidget {
-  const meals({Key? key}) : super(key: key);
+class Meals extends StatefulWidget {
+  const Meals({Key? key}) : super(key: key);
 
   @override
-  _mealsState createState() => _mealsState();
+  _MealsState createState() => _MealsState();
 }
 
-class _mealsState extends State<meals> {
+class _MealsState extends State<Meals> {
   Color breakfastCard = activeCard,
       lunchCard = activeCard,
       snackCard = activeCard,
@@ -60,18 +60,18 @@ class _mealsState extends State<meals> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Set Goals"),
+        title: const Text("Set Goals"),
         // centerTitle: true,
 //        backgroundColor: Color(0xFF313131),
         backgroundColor:  Colors.cyan,
       ),
-      backgroundColor: Color(0xFFF2F3F8),
+      backgroundColor: const Color(0xFFF2F3F8),
       body: ListView(
         children: <Widget>[
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
               // constraints: BoxConstraints(minWidth: 50,maxWidth: 50),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
@@ -84,166 +84,162 @@ class _mealsState extends State<meals> {
                         borderRadius: BorderRadius.circular(5.0),
                         color: Colors.cyan[200]
                     ),
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Text("Note: ",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
                         Text("First select an option to change the nutrient goal of that type",style: TextStyle(color: Colors.white),),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20,),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                updateFoodTypeSelected(1);
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                color: breakfastCard,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Colors.black45
-                                          .withOpacity(0.2),
-                                      offset: const Offset(1.1, 4.0),
-                                      blurRadius: 8.0),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset('assets/fitness_app/breakfast.png', height: 100, width: 120,),
-                                  SizedBox(height: 5,),
-                                  Text("BREAKFAST",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
+                  const SizedBox(height: 20,),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              updateFoodTypeSelected(1);
+                            });
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 130,
+                            decoration: BoxDecoration(
+                              color: breakfastCard,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.black45
+                                        .withOpacity(0.2),
+                                    offset: const Offset(1.1, 4.0),
+                                    blurRadius: 8.0),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset('assets/fitness_app/breakfast.png', height: 100, width: 120,),
+                                const SizedBox(height: 5,),
+                                Text("BREAKFAST",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
 
-                                ],
-                              ),
+                              ],
                             ),
                           ),
                         ),
-                        SizedBox(width: 10,),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                updateFoodTypeSelected(2);
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                color: lunchCard,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Colors.black45
-                                          .withOpacity(0.2),
-                                      offset: const Offset(1.1, 4.0),
-                                      blurRadius: 8.0),
-                                ],
-                              ),
+                      ),
+                      const SizedBox(width: 10,),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              updateFoodTypeSelected(2);
+                            });
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 130,
+                            decoration: BoxDecoration(
+                              color: lunchCard,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.black45
+                                        .withOpacity(0.2),
+                                    offset: const Offset(1.1, 4.0),
+                                    blurRadius: 8.0),
+                              ],
+                            ),
 
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset('assets/fitness_app/lunch.png', height: 100, width: 120,),
-                                  SizedBox(height: 5,),
-                                  Text("LUNCH",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset('assets/fitness_app/lunch.png', height: 100, width: 120,),
+                                const SizedBox(height: 5,),
+                                Text("LUNCH",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
 
-                                ],
-                              ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height:20,),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                updateFoodTypeSelected(3);
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                color: snackCard,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Colors.black45
-                                          .withOpacity(0.2),
-                                      offset: const Offset(1.1, 4.0),
-                                      blurRadius: 8.0),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset('assets/fitness_app/snack.png', height: 100, width: 120,),
-                                  SizedBox(height: 5,),
-                                  Text("SNACK",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
+                  const SizedBox(height:20,),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              updateFoodTypeSelected(3);
+                            });
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 130,
+                            decoration: BoxDecoration(
+                              color: snackCard,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.black45
+                                        .withOpacity(0.2),
+                                    offset: const Offset(1.1, 4.0),
+                                    blurRadius: 8.0),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset('assets/fitness_app/snack.png', height: 100, width: 120,),
+                                const SizedBox(height: 5,),
+                                Text("SNACK",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
 
-                                ],
-                              ),
+                              ],
                             ),
                           ),
                         ),
-                        SizedBox(width: 10,),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                updateFoodTypeSelected(4);
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                color: dinnerCard,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Colors.black45
-                                          .withOpacity(0.2),
-                                      offset: const Offset(1.1, 4.0),
-                                      blurRadius: 8.0),
-                                ],
-                              ),
+                      ),
+                      const SizedBox(width: 10,),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              updateFoodTypeSelected(4);
+                            });
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 130,
+                            decoration: BoxDecoration(
+                              color: dinnerCard,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.black45
+                                        .withOpacity(0.2),
+                                    offset: const Offset(1.1, 4.0),
+                                    blurRadius: 8.0),
+                              ],
+                            ),
 
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset('assets/fitness_app/dinner.png', height: 100, width: 120,),
-                                  SizedBox(height: 5,),
-                                  Text("DINNER",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset('assets/fitness_app/dinner.png', height: 100, width: 120,),
+                                const SizedBox(height: 5,),
+                                Text("DINNER",style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold),)
 
-                                ],
-                              ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -252,7 +248,7 @@ class _mealsState extends State<meals> {
                       Expanded(
                         child: Container(
                           height: 150,
-                          margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                           decoration: BoxDecoration(
                             color: activeCard,
                             borderRadius: BorderRadius.circular(20),
@@ -267,8 +263,8 @@ class _mealsState extends State<meals> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 4,),
-                              Text(
+                              const SizedBox(height: 4,),
+                              const Text(
                                 'TOTAL CALORIES',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -276,8 +272,8 @@ class _mealsState extends State<meals> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                              SizedBox(height: 4,),
+                              const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                              const SizedBox(height: 4,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -285,16 +281,16 @@ class _mealsState extends State<meals> {
                                 children: <Widget>[
                                   Text(
                                     rCalories.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black54,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'kcal',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -306,8 +302,8 @@ class _mealsState extends State<meals> {
                               ),
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                                   activeTrackColor: Colors.cyan,
                                   thumbColor: Colors.cyan,
                                   inactiveTrackColor: Colors.black45,
@@ -330,7 +326,7 @@ class _mealsState extends State<meals> {
 
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -339,7 +335,7 @@ class _mealsState extends State<meals> {
                       Expanded(
                         child: Container(
                           height: 150,
-                          margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                           decoration: BoxDecoration(
                             color: activeCard,
                             borderRadius: BorderRadius.circular(20),
@@ -354,8 +350,8 @@ class _mealsState extends State<meals> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 4,),
-                              Text(
+                              const SizedBox(height: 4,),
+                              const Text(
                                 'TOTAL CARBOHYDRATE',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -363,8 +359,8 @@ class _mealsState extends State<meals> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                              SizedBox(height: 4,),
+                              const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                              const SizedBox(height: 4,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -372,16 +368,16 @@ class _mealsState extends State<meals> {
                                 children: <Widget>[
                                   Text(
                                     rCarbohydrate.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black54,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'grams',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -393,8 +389,8 @@ class _mealsState extends State<meals> {
                               ),
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                                   // activeTrackColor: Color(0xffC38FFF),
                                   // thumbColor: Color(0xffC38FFF),
                                   // inactiveTrackColor: Color(0x55C38FFF),
@@ -420,7 +416,7 @@ class _mealsState extends State<meals> {
 
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -429,7 +425,7 @@ class _mealsState extends State<meals> {
                       Expanded(
                         child: Container(
                           height: 150,
-                          margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                           decoration: BoxDecoration(
                             color: activeCard,
                             borderRadius: BorderRadius.circular(20),
@@ -444,8 +440,8 @@ class _mealsState extends State<meals> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 4,),
-                              Text(
+                              const SizedBox(height: 4,),
+                              const Text(
                                 'TOTAL PROTEIN',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -453,8 +449,8 @@ class _mealsState extends State<meals> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                              SizedBox(height: 4,),
+                              const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                              const SizedBox(height: 4,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -462,16 +458,16 @@ class _mealsState extends State<meals> {
                                 children: <Widget>[
                                   Text(
                                     rProtein.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black54,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'grams',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -483,8 +479,8 @@ class _mealsState extends State<meals> {
                               ),
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                                   activeTrackColor: Colors.cyan,
                                   thumbColor: Colors.cyan,
                                   inactiveTrackColor: Colors.black45,
@@ -507,7 +503,7 @@ class _mealsState extends State<meals> {
 
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -516,7 +512,7 @@ class _mealsState extends State<meals> {
                       Expanded(
                         child: Container(
                           height: 150,
-                          margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                           decoration: BoxDecoration(
                             color: activeCard,
                             borderRadius: BorderRadius.circular(20),
@@ -531,8 +527,8 @@ class _mealsState extends State<meals> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 4,),
-                              Text(
+                              const SizedBox(height: 4,),
+                              const Text(
                                 'TOTAL FAT',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -540,8 +536,8 @@ class _mealsState extends State<meals> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                              SizedBox(height: 4,),
+                              const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                              const SizedBox(height: 4,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -549,16 +545,16 @@ class _mealsState extends State<meals> {
                                 children: <Widget>[
                                   Text(
                                     rFat.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black54,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'grams',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -570,8 +566,8 @@ class _mealsState extends State<meals> {
                               ),
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                                   activeTrackColor: Colors.cyan,
                                   thumbColor: Colors.cyan,
                                   inactiveTrackColor: Colors.black45,
@@ -594,7 +590,7 @@ class _mealsState extends State<meals> {
 
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -603,7 +599,7 @@ class _mealsState extends State<meals> {
                       Expanded(
                         child: Container(
                           height: 150,
-                          margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                           decoration: BoxDecoration(
                             color: activeCard,
                             borderRadius: BorderRadius.circular(20),
@@ -618,8 +614,8 @@ class _mealsState extends State<meals> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 4,),
-                              Text(
+                              const SizedBox(height: 4,),
+                              const Text(
                                 'TOTAL SUGARS',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -627,8 +623,8 @@ class _mealsState extends State<meals> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                              SizedBox(height: 4,),
+                              const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                              const SizedBox(height: 4,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -636,16 +632,16 @@ class _mealsState extends State<meals> {
                                 children: <Widget>[
                                   Text(
                                     rSugars.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black54,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
+                                  const Text(
                                     'grams',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -657,8 +653,8 @@ class _mealsState extends State<meals> {
                               ),
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                                   activeTrackColor: Colors.cyan,
                                   thumbColor: Colors.cyan,
                                   inactiveTrackColor: Colors.black45,
@@ -681,7 +677,7 @@ class _mealsState extends State<meals> {
 
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -690,7 +686,7 @@ class _mealsState extends State<meals> {
                       Expanded(
                         child: Container(
                           height: 150,
-                          margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                           decoration: BoxDecoration(
                             color: activeCard,
                             borderRadius: BorderRadius.circular(20),
@@ -705,8 +701,8 @@ class _mealsState extends State<meals> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 4,),
-                              Text(
+                              const SizedBox(height: 4,),
+                              const Text(
                                 'TOTAL CHOLESTEROL',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -714,8 +710,8 @@ class _mealsState extends State<meals> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
-                              SizedBox(height: 4,),
+                              const Divider(height: 1,color: Colors.black,indent: 35,endIndent: 35,),
+                              const SizedBox(height: 4,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -723,13 +719,13 @@ class _mealsState extends State<meals> {
                                 children: <Widget>[
                                   Text(
                                     rCholesterol.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black54,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     'grams',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -741,8 +737,8 @@ class _mealsState extends State<meals> {
                               ),
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
                                   activeTrackColor: Colors.cyan,
                                   thumbColor: Colors.cyan,
                                   inactiveTrackColor: Colors.black45,
@@ -776,9 +772,9 @@ class _mealsState extends State<meals> {
             },
             child: Container(
               height: 50,
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(horizontal: 50,vertical: 10),
-              constraints: BoxConstraints(minWidth: 50,maxWidth: 50),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+              constraints: const BoxConstraints(minWidth: 50,maxWidth: 50),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color: Colors.cyan,
@@ -791,7 +787,7 @@ class _mealsState extends State<meals> {
                 ],
               ),
               child: Column(
-                children: <Widget>[
+                children: const <Widget>[
                   Text(
                     'Save',
                     style: TextStyle(

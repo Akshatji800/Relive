@@ -5,12 +5,14 @@ import 'package:mental_health/screens/k_ten_scale/screens/quiz/quiz_screen.dart'
 import '../../constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
-        title: Center(
+        title: const Center(
           child: Text(
             'Welcome to the survey',
             style: TextStyle(color: Colors.white),
@@ -19,18 +21,23 @@ class WelcomeScreen extends StatelessWidget {
         elevation: 1,
       ),
       body: Stack(
+        fit: StackFit.expand,
         children: [
           SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
-          Image.asset("assets/icons/K10_survey.jpg"),
+          Column(
+            children: [
+              Image.asset("assets/icons/K10_survey.jpg"),
+            ],
+          ),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Spacer(flex: 2),
-                  SizedBox(
-                    height: 40,
+                  const Spacer(flex: 2),
+                  const SizedBox(
+                    height: 30,
                   ),//2/6
                   Center(
                     child: Text(
@@ -39,20 +46,20 @@ class WelcomeScreen extends StatelessWidget {
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(height: 25,),
-                  Center(child: Text("This will help you to analyze your mental-health in a better way",
+                  const SizedBox(height: 25,),
+                  const Center(child: Text("This will help you to analyze your mental-health in a better way",
                       style:TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.normal))),
-                  Spacer(), // 1/6
+                  const Spacer(), // 1/6
                   InkWell(
-                    onTap: () => Get.to(QuizScreen()),
+                    onTap: () => Get.to(const QuizScreen()),
                     child: Container(
                       width: double.infinity,
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(kDefaultPadding * 0.75), // 15
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(kDefaultPadding * 0.75), // 15
+                      decoration: const BoxDecoration(
                         gradient: kPrimaryGradient,
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
@@ -65,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(), // it will take 2/6 spaces
+                  const Spacer(), // it will take 2/6 spaces
                 ],
               ),
             ),

@@ -1,7 +1,4 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/sign_in_page.dart';
 import 'package:mental_health/screens/verify_email.dart';
@@ -13,21 +10,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 late User user;
 double consumed = 0;
 double target = 2000;
-String WaterFeatureUsedDate = "";
-String WaterFeatureUsedTime = "";
+String waterFeatureUsedDate = "";
+String waterFeatureUsedTime = "";
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
   late String email, password, username, fullname;
-  String error_message = "";
-  bool _validate_pass = false;
-  bool _validate_email = false;
-  bool _validate_username = false;
-  bool _validate_fullname = false;
+  String errorMessage = "";
+  bool _validatePass = false;
+  bool _validateEmail = false;
+  bool _validateUsername = false;
+  bool _validateFullname = false;
   final auth = FirebaseAuth.instance;
   bool _passwordVisible = true;
   final passwordController = TextEditingController();
@@ -55,18 +54,18 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text(
                         "Create Your Account",
                         style: TextStyle(
@@ -92,10 +91,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
             ),
-            SizedBox(height: 13),
+            const SizedBox(height: 13),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60),
@@ -108,194 +107,190 @@ class _SignUpPageState extends State<SignUpPage> {
                     ]),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       children: <Widget>[
-                        SizedBox(
+                        const SizedBox(
                           height: 2,
                         ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 5,
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(0),
-                                        child: TextFormField(
-                                          controller: fullnameController,
-                                          keyboardType: TextInputType.text,
-                                          decoration: InputDecoration(
-                                              prefixIcon: Icon(Icons.person),
-                                              hintText: "Enter your full name",
-                                              hintStyle: TextStyle(
-                                                  color: Colors.black45),
-                                              border: InputBorder.none),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                !_validate_fullname
-                                    ? Container()
-                                    : Text(
-                                        "Field cannot be Empty",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        child: TextFormField(
-                                          controller: usernameController,
-                                          keyboardType: TextInputType.text,
-                                          decoration: InputDecoration(
-                                              prefixIcon: Icon(Icons.person),
-                                              hintText: "Enter your username",
-                                              hintStyle: TextStyle(
-                                                  color: Colors.black45),
-                                              border: InputBorder.none),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                !_validate_username
-                                    ? Container()
-                                    : Text(
-                                        "Field cannot be Empty",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(0),
-                                        child: TextField(
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          decoration: InputDecoration(
-                                            prefixIcon: Icon(Icons.mail),
-                                            hintText: "Enter your mail id",
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: const EdgeInsets.all(0),
+                                      child: TextFormField(
+                                        controller: fullnameController,
+                                        keyboardType: TextInputType.text,
+                                        decoration: const InputDecoration(
+                                            prefixIcon: Icon(Icons.person),
+                                            hintText: "Enter your full name",
                                             hintStyle: TextStyle(
                                                 color: Colors.black45),
-                                            border: InputBorder.none,
-                                          ),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              email = value.trim();
-                                            });
-                                          },
+                                            border: InputBorder.none),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              !_validateFullname
+                                  ? Container()
+                                  : const Text(
+                                      "Field cannot be Empty",
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    TextFormField(
+                                      controller: usernameController,
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                          prefixIcon: Icon(Icons.person),
+                                          hintText: "Enter your username",
+                                          hintStyle: TextStyle(
+                                              color: Colors.black45),
+                                          border: InputBorder.none),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              !_validateUsername
+                                  ? Container()
+                                  : const Text(
+                                      "Field cannot be Empty",
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: const EdgeInsets.all(0),
+                                      child: TextField(
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Icons.mail),
+                                          hintText: "Enter your mail id",
+                                          hintStyle: TextStyle(
+                                              color: Colors.black45),
+                                          border: InputBorder.none,
                                         ),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            email = value.trim();
+                                          });
+                                        },
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                !_validate_email
-                                    ? Container()
-                                    : Text(
-                                        "$error_message",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                SizedBox(
-                                  height: 5,
+                              ),
+                              !_validateEmail
+                                  ? Container()
+                                  : Text(
+                                      errorMessage,
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(0),
-                                        child: TextFormField(
-                                          controller: passwordController,
-                                          keyboardType: TextInputType.text,
-                                          obscureText: !_passwordVisible,
-                                          decoration: InputDecoration(
-                                            prefixIcon: Icon(Icons.lock),
-                                            hintText: 'Enter your password',
-                                            hintStyle: TextStyle(
-                                                color: Colors.black45),
-                                            border: InputBorder.none,
-                                            suffixIcon: IconButton(
-                                              icon: Icon(
-                                                // Based on passwordVisible state choose the icon
-                                                _passwordVisible
-                                                    ? Icons.visibility
-                                                    : Icons.visibility_off,
-                                                color: Colors.black45,
-                                              ),
-                                              onPressed: () {
-                                                // Update the state i.e. toogle the state of passwordVisible variable
-                                                setState(() {
-                                                  _passwordVisible =
-                                                      !_passwordVisible;
-                                                });
-                                              },
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: const EdgeInsets.all(0),
+                                      child: TextFormField(
+                                        controller: passwordController,
+                                        keyboardType: TextInputType.text,
+                                        obscureText: !_passwordVisible,
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(Icons.lock),
+                                          hintText: 'Enter your password',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.black45),
+                                          border: InputBorder.none,
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              // Based on passwordVisible state choose the icon
+                                              _passwordVisible
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Colors.black45,
                                             ),
+                                            onPressed: () {
+                                              // Update the state i.e. toogle the state of passwordVisible variable
+                                              setState(() {
+                                                _passwordVisible =
+                                                    !_passwordVisible;
+                                              });
+                                            },
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                !_validate_pass
-                                    ? Container()
-                                    : Text(
-                                        "$error_message",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                              ],
-                            ),
+                              ),
+                              !_validatePass
+                                  ? Container()
+                                  : Text(
+                                      errorMessage,
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                            ],
                           ),
                         ),
                         GestureDetector(
@@ -304,36 +299,36 @@ class _SignUpPageState extends State<SignUpPage> {
                             username = usernameController.text;
                             fullname = fullnameController.text;
                             setState(() {
-                              if (username.length > 0) {
-                                _validate_username = false;
-                                if (fullname.length > 0) {
-                                  _validate_fullname = false;
+                              if (username.isNotEmpty) {
+                                _validateUsername = false;
+                                if (fullname.isNotEmpty) {
+                                  _validateFullname = false;
                                   _signup(email, password);
                                 }
                               } else {
-                                if (username.length == 0) {
-                                  _validate_username = true;
+                                if (username.isEmpty) {
+                                  _validateUsername = true;
                                 }
-                                if (fullname.length == 0) {
-                                  _validate_fullname = true;
+                                if (fullname.isEmpty) {
+                                  _validateFullname = true;
                                 }
                               }
                             });
                           },
                           child: Container(
                             height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 75),
+                            margin: const EdgeInsets.symmetric(horizontal: 75),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.cyan.shade500,
                                 border: Border.all(color: Colors.black12),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Colors.black26,
                                       spreadRadius: 1,
                                       blurRadius: 4)
                                 ]),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 "Sign up",
                                 style: TextStyle(
@@ -343,39 +338,37 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Already have an account?"),
-                              SizedBox(width: 10),
+                              const Text("Already have an account?"),
+                              const SizedBox(width: 10),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignInPage()));
+                                          builder: (context) => const SignInPage()));
                                 },
-                                child: Container(
-                                  child: Text("Sign in",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.cyan.shade500,
-                                      )),
-                                ),
+                                child: Text("Sign in",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.cyan.shade500,
+                                    )),
                               )
                             ]),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         buildRowDivider(size: size),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         GoogleSignIn(buttonText: "Sign up with Google"),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -393,7 +386,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget buildRowDivider({required Size size}) {
     return SizedBox(
       width: size.width * 0.8,
-      child: Row(children: <Widget>[
+      child: Row(children: const <Widget>[
         Expanded(child: Divider(color: Colors.grey)),
         Padding(
             padding: EdgeInsets.only(left: 8.0, right: 8.0),
@@ -420,7 +413,7 @@ class _SignUpPageState extends State<SignUpPage> {
             context: context,
             builder: (BuildContext context) => AlertDialog(
                   title: const Text('Select Role As:'),
-                  content: Container(
+                  content: SizedBox(
                     height: 200,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -436,7 +429,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => VerifyScreen()));
+                                    builder: (context) => const VerifyScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -444,10 +437,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
                                 child: Center(
-                                  child: const Text('Patient'),
+                                  child: Text('Patient'),
                                 ),
                               ),
                             ),
@@ -464,7 +457,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => VerifyScreen()));
+                                    builder: (context) => const VerifyScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -472,10 +465,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
                                 child: Center(
-                                  child: const Text('Doctor'),
+                                  child: Text('Doctor'),
                                 ),
                               ),
                             ),
@@ -487,20 +480,20 @@ class _SignUpPageState extends State<SignUpPage> {
                 ));
       });
     } on FirebaseAuthException catch (error) {
-      error_message = error.message.toString();
+      errorMessage = error.message.toString();
       setState(() {
-        if (error_message == "Password should be at least 6 characters") {
-          _validate_pass = true;
-          _validate_email = false;
+        if (errorMessage == "Password should be at least 6 characters") {
+          _validatePass = true;
+          _validateEmail = false;
         } else {
-          if (error_message == "The email address is badly formatted.") {
-            error_message = "Invalid email";
-            _validate_email = true;
-            _validate_pass = false;
+          if (errorMessage == "The email address is badly formatted.") {
+            errorMessage = "Invalid email";
+            _validateEmail = true;
+            _validatePass = false;
           } else {
-            Fluttertoast.showToast(msg: error_message, gravity: ToastGravity.TOP);
-            _validate_email = false;
-            _validate_pass = false;
+            Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.TOP);
+            _validateEmail = false;
+            _validatePass = false;
           }
         }
       });

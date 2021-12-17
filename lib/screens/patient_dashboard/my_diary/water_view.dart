@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/Settings_Pages/new_password.dart';
 import 'package:mental_health/screens/patient_dashboard/ui_view/wave_view.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../fitness_app_theme.dart';
@@ -10,8 +10,8 @@ import 'my_diary_screen.dart';
 late User user;
 double waterconsumed=1;
 double watertarget=2000;
-String last_seen="";
-String last_date="";
+String lastSeen="";
+String lastDate="";
 class WaterView extends StatefulWidget {
   const WaterView(
       {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
@@ -61,17 +61,17 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                   if(snapshot.hasData){
                     waterconsumed=0;
                     watertarget=2000;
-                    last_seen="";
-                    last_date="";
+                    lastSeen="";
+                    lastDate="";
                     var sn =snapshot.data!;
-                    sn.docs.forEach((element) {
+                    for (var element in sn.docs) {
                       if(element.id == formattedDate){
                         waterconsumed=element.get("consumed(ml)").toDouble();
                         watertarget=element.get("target(ml)").toDouble();
-                        last_date=element.get("last seen");
-                        last_seen=element.get("time");
-;                      }
-                    });
+                        lastDate=element.get("last seen");
+                        lastSeen=element.get("time");
+}
+                    }
                   }
                   return Container(
                     decoration: BoxDecoration(
@@ -110,7 +110,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                           child: Text(
                                             waterconsumed.toString(),
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontFamily: FitnessAppTheme.fontName,
                                               fontWeight: FontWeight.w600,
                                               fontSize: 32,
@@ -118,8 +118,8 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
+                                        const Padding(
+                                          padding: EdgeInsets.only(
                                               left: 8, bottom: 8),
                                           child: Text(
                                             'ml',
@@ -141,7 +141,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                       child: Text(
                                         'of daily goal '+(watertarget*1/1000).toString()+'L',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
@@ -157,9 +157,9 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                       left: 4, right: 4, top: 8, bottom: 16),
                                   child: Container(
                                     height: 2,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: FitnessAppTheme.background,
-                                      borderRadius: const BorderRadius.all(
+                                      borderRadius: BorderRadius.all(
                                           Radius.circular(4.0)),
                                     ),
                                   ),
@@ -188,8 +188,8 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                             padding:
                                                 const EdgeInsets.only(left: 4.0),
                                             child: Text(
-                                              (formattedDate != formatter.format(now))? 'Last drink ' + last_date  :
-                                              'Last drink '+last_seen,
+                                              (formattedDate != formatter.format(now))? 'Last drink ' + lastDate  :
+                                              'Last drink '+lastSeen,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily:

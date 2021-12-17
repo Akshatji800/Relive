@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="375" height="812" viewBox="0 0 375 812">
   <defs>
     <clipPath id="clip-path">
-      <rect id="Rectangle_1" data-name="Rectangle 1" width="375" height="812" fill="#fff" stroke="#707070" stroke-width="1"/>
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="500" height="1000" fill="#fff" stroke="#707070" stroke-width="1"/>
     </clipPath>
     <clipPath id="clip-_02_login">
-      <rect width="375" height="812"/>
+      <rect width="500" height="1000"/>
     </clipPath>
   </defs>
   <g id="_02_login" data-name="02_login" clip-path="url(#clip-_02_login)">

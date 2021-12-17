@@ -1,13 +1,13 @@
 import 'dart:io';
-import 'package:mental_health/services/firebase_Service.dart';
+import 'package:mental_health/services/firebase_service.dart';
 import 'package:mental_health/services/storage_repo.dart';
 import 'package:mental_health/services/user_model.dart';
 import 'locator.dart';
 
 class UserController {
   UserModel? _currentUser;
-  FirebaseService _authRepo = locator.get<FirebaseService>();
-  StorageRepo _storageRepo = locator.get<StorageRepo>();
+  final FirebaseService _authRepo = locator.get<FirebaseService>();
+  final StorageRepo _storageRepo = locator.get<StorageRepo>();
   Future? init;
 
   UserController() {

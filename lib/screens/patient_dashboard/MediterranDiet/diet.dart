@@ -12,7 +12,7 @@ class _DietState extends State<Diet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Diet"),
+        title: const Text("Diet"),
       ),
     );
   }

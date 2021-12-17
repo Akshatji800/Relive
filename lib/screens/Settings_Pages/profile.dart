@@ -1,19 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AboutUsPage extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 
-class _SettingsPageState extends State<AboutUsPage> {
+class _SettingsPageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'About us',
+        title: const Text(
+          'Profile',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.cyan,
@@ -22,7 +23,7 @@ class _SettingsPageState extends State<AboutUsPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),

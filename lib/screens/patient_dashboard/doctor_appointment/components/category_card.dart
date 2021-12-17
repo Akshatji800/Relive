@@ -1,27 +1,25 @@
-
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/screens/doctors_list.dart';
-
 import '../constant.dart';
 
 //ignore: must_be_immutable
 class CategoryCard extends StatelessWidget {
-  var _title;
-  var _imageUrl;
-  var _bgColor;
-  var _category;
+  final dynamic _title;
+  final dynamic _imageUrl;
+  final dynamic _bgColor;
+  final dynamic _category;
 
-  CategoryCard(this._title, this._imageUrl, this._bgColor, this._category);
+  const CategoryCard(this._title, this._imageUrl, this._bgColor, this._category, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 130,
       height: 160,
       child: InkWell(
         onTap: () {
           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context)
-          => new DoctorsList(role: _category)));
+          => DoctorsList(role: _category)));
         },
         child: Stack(
           children: <Widget>[
@@ -32,7 +30,7 @@ class CategoryCard extends StatelessWidget {
               child: Container(
                 width: 110,
                 height: 137,
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 16,
                 ),

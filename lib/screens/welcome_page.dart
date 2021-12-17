@@ -4,6 +4,8 @@ import 'package:mental_health/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class WelcomePage extends StatelessWidget {
               children: [
                 Image.asset("assets/images/ReliveLogo.png",
                     width: double.infinity, height: 75),
-                Text(
+                const Text(
                   Constants.textIntroDesc1,
                   style: TextStyle(
                       color: Colors.blueAccent,
@@ -36,11 +38,11 @@ class WelcomePage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            GetStarted(),
-            SizedBox(
+            const GetStarted(),
+            const SizedBox(
               height: 2,
             ),
           ],
@@ -51,6 +53,8 @@ class WelcomePage extends StatelessWidget {
 }
 
 class GetStarted extends StatefulWidget {
+  const GetStarted({Key? key}) : super(key: key);
+
   @override
   _GetStartedState createState() => _GetStartedState();
 }
@@ -72,14 +76,14 @@ class _GetStartedState extends State<GetStarted> {
                 setState(() {
                   isLoading = true;
                   Timer(
-                      Duration(milliseconds: 500),
+                      const Duration(milliseconds: 500),
                       () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SignInPage())));
+                          builder: (context) => const SignInPage())));
                 });
               },
-              label: Text(
+              label: const Text(
                 Constants.textStart,
                 style: TextStyle(
                     color: Colors.white,
@@ -94,8 +98,8 @@ class _GetStartedState extends State<GetStarted> {
                       borderRadius: BorderRadius.all(Radius.circular(50)))),
             ),
           )
-        : CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+        : const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
           );
   }
 }

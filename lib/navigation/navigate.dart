@@ -6,9 +6,9 @@ import 'package:mental_health/screens/sign_up_page.dart';
 
 class Navigate {
   static Map<String, Widget Function(BuildContext)> routes =   {
-    '/initial-screen' : (context) => Splashscreen(),
-    '/sign-in' : (context) => SignInPage(),
-    '/sign-up' : (context) => SignUpPage(),
-    '/home'  : (context) => FitnessAppHomeScreen(),
+    '/initial-screen' : (context) => const Splashscreen(),
+    '/sign-in' : (context) => const SignInPage(),
+    '/sign-up' : (context) => const SignUpPage(),
+    '/home'  : (context) => const FitnessAppHomeScreen(),
   };
 }

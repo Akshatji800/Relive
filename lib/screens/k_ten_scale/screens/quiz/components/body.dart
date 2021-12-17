@@ -15,15 +15,16 @@ class Body extends StatelessWidget {
     // So that we have acccess our controller
     QuestionController _questionController = Get.put(QuestionController());
     return Stack(
+      fit: StackFit.expand,
       children: [
         SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
         SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              const Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    EdgeInsets.symmetric(horizontal: kDefaultPadding),
               ),
               Padding(
                 padding:
@@ -50,12 +51,12 @@ class Body extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(thickness: 1.5, color: kSecondaryColor),
-              SizedBox(height: kDefaultPadding),
+              const Divider(thickness: 1.5, color: kSecondaryColor),
+              const SizedBox(height: kDefaultPadding),
               Expanded(
                 child: PageView.builder(
                   // Block swipe to next qn
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
                   itemCount: _questionController.questions.length,
@@ -63,6 +64,7 @@ class Body extends StatelessWidget {
                       question: _questionController.questions[index]),
                 ),
               ),
+              const SizedBox(height: kDefaultPadding),
             ],
           ),
         )

@@ -57,30 +57,30 @@ class _VideoSuggestionsState extends State<VideoSuggestions> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 115,),
+                    const SizedBox(height: 115,),
                     Container(
                       height: 55,
                       width: 400,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.black38,
-                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:Radius.circular(20) )
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:Radius.circular(20) )
                       ),
                       child: Row(
                         children: <Widget>[
-                          SizedBox(width: 10,),
-                          Icon(Icons.alarm,size: 20,color: Colors.white,),
-                          Text("5 min",style: TextStyle(color: Colors.white),),
-                          SizedBox(width: 100,),
+                          const SizedBox(width: 10,),
+                          const Icon(Icons.alarm,size: 20,color: Colors.white,),
+                          const Text("5 min",style: TextStyle(color: Colors.white),),
+                          const SizedBox(width: 100,),
                           Container(
                             height: 45,
                             width: 45,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: const BorderRadius.all(Radius.circular(50))
+                                borderRadius: BorderRadius.all(Radius.circular(50))
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
+                              children: const <Widget>[
                                 Icon(Icons.play_arrow,size: 30,)
                               ],
                             ),
@@ -102,12 +102,12 @@ class _VideoSuggestionsState extends State<VideoSuggestions> {
             return Container(
               width: 10.0,
               height: 10.0,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: _currentIndex == index
-                    ? Color.fromRGBO(0, 0, 0, 0.8)
-                    : Color.fromRGBO(0, 0, 0, 0.3),
+                    ? const Color.fromRGBO(0, 0, 0, 0.8)
+                    : const Color.fromRGBO(0, 0, 0, 0.3),
               ),
             );
           }).toList(),

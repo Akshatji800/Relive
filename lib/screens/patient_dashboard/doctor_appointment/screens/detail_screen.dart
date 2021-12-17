@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/components/schedule_card.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/screens/token_maker.dart';
-import 'package:mental_health/utils/loadProfilePic.dart';
+import 'package:mental_health/utils/load_profile_pic.dart';
 import '../constant.dart';
 import 'audio_calling.dart';
 
 //ignore: must_be_immutable
 class DetailScreen extends StatefulWidget {
-  var _name;
-  var _description;
-  var _uid;
-  var _bio;
+  final dynamic _name;
+  final dynamic _description;
+  final dynamic _uid;
+  final dynamic _bio;
 
-  DetailScreen(this._name, this._description, this._uid, this._bio);
+  const DetailScreen(this._name, this._description, this._uid, this._bio, {Key? key}) : super(key: key);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -30,7 +30,7 @@ class _DetailScreenState extends State<DetailScreen> {
           builder: (context, AsyncSnapshot<Uint8List?> snapshot) {
             return Container(
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/detail_illustration.png'),
                   alignment: Alignment.topCenter,
@@ -39,11 +39,11 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 30,
                     ),
                     child: Row(
@@ -72,12 +72,12 @@ class _DetailScreenState extends State<DetailScreen> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: kBackgroundColor,
-                      borderRadius: BorderRadius.vertical(
+                      borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(30),
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -87,7 +87,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 radius: 50,
                                 backgroundImage: Image.memory(snapshot.data!).image,
                               ) : Image.asset('assets/images/doctor1.png', scale: 5,),
-                              SizedBox(
+                              const SizedBox(
                                 width: 20,
                               ),
                               Column(
@@ -101,7 +101,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       color: kTitleTextColor,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Text(
@@ -110,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       color: kTitleTextColor.withOpacity(0.7),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Row(
@@ -124,13 +124,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                                     appBar: AppBar(
                                                       backgroundColor: Colors.cyan,
                                                       title:
-                                                      Text("Audio Calling"),
+                                                      const Text("Audio Calling"),
                                                     ),
-                                                    body: JoinChannelAudio(),
+                                                    body: const JoinChannelAudio(),
                                                   )));
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.all(10),
+                                          padding: const EdgeInsets.all(10),
                                           decoration: BoxDecoration(
                                             color: kBlueColor.withOpacity(0.1),
                                             borderRadius: BorderRadius.circular(10),
@@ -140,11 +140,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 16,
                                       ),
                                       Container(
-                                        padding: EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
                                           color: kYellowColor.withOpacity(0.1),
                                           borderRadius: BorderRadius.circular(10),
@@ -153,7 +153,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                           'assets/icons/chat.svg',
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 16,
                                       ),
                                       InkWell(
@@ -165,13 +165,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                                     appBar: AppBar(
                                                       backgroundColor: Colors.cyan,
                                                       title:
-                                                      Text("Video Calling"),
+                                                      const Text("Video Calling"),
                                                     ),
-                                                    body: TokenMaker(),
+                                                    body: const TokenMaker(),
                                                   )));
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.all(10),
+                                          padding: const EdgeInsets.all(10),
                                           decoration: BoxDecoration(
                                             color: kOrangeColor.withOpacity(0.1),
                                             borderRadius: BorderRadius.circular(10),
@@ -187,7 +187,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           Text(
@@ -198,7 +198,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               color: kTitleTextColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -208,7 +208,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               color: kTitleTextColor.withOpacity(0.7),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Text(
@@ -219,7 +219,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               color: kTitleTextColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           ScheduleCard(
@@ -229,7 +229,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             'Jan',
                             kBlueColor,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           ScheduleCard(
@@ -239,7 +239,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             'Jan',
                             kYellowColor,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           ScheduleCard(
@@ -249,7 +249,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             'Jan',
                             kOrangeColor,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                         ],

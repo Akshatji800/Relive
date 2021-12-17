@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:mental_health/screens/patient_dashboard/BodyMesurment/Caliculate.dart';
-import 'package:mental_health/screens/patient_dashboard/BodyMesurment/Result.dart';
+import 'package:mental_health/screens/patient_dashboard/BodyMesurment/calculate.dart';
+import 'package:mental_health/screens/patient_dashboard/BodyMesurment/result.dart';
 
 const Color inactiveCard =  Color(0xFFFFFFFF);
 var exerciseList = [
@@ -23,11 +22,11 @@ class AimPage extends StatefulWidget {
   final int height, weight, age;
   final String gender;
 
-  AimPage(
-      {required this.height,
+  const AimPage(
+      {Key? key, required this.height,
         required this.weight,
         required this.age,
-        required this.gender});
+        required this.gender}) : super(key: key);
 
   @override
   _AimPageState createState() => _AimPageState();
@@ -52,22 +51,22 @@ class _AimPageState extends State<AimPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Goals"),
+        title: const Text("Goals"),
         backgroundColor:  Colors.cyan,
       ),
-      backgroundColor: Color(0xFFF2F3F8),
+      backgroundColor: const Color(0xFFF2F3F8),
       body: ListView(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
                 color: Colors.cyan[200]
             ),
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+              children: const <Widget>[
                 Text("Note: ",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
                 Text("Choose the following option to know your goals on your health for this week",style: TextStyle(color: Colors.white),),
               ],
@@ -78,7 +77,7 @@ class _AimPageState extends State<AimPage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16,vertical: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 5),
                   height: 350,
                   width: 200,
                   decoration: BoxDecoration(
@@ -96,7 +95,7 @@ class _AimPageState extends State<AimPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Exercise Scale",
+                      const Text("Exercise Scale",
                           style: TextStyle(
                               fontSize: 25,
                               fontFamily: 'Roboto',
@@ -104,9 +103,9 @@ class _AimPageState extends State<AimPage> {
                               fontWeight: FontWeight.bold
                           )
                       ),
-                      Divider(height: 2,thickness: 1,color: Colors.grey,indent: 25,endIndent: 25,),
+                      const Divider(height: 2,thickness: 1,color: Colors.grey,indent: 25,endIndent: 25,),
                       ListTile(
-                        title: Text(exerciseList[0],style: TextStyle(fontSize: 18),),
+                        title: Text(exerciseList[0],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: exerciseList[0],
                           groupValue: _activity,
@@ -118,7 +117,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(exerciseList[1],style: TextStyle(fontSize: 18),),
+                        title: Text(exerciseList[1],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: exerciseList[1],
                           groupValue: _activity,
@@ -130,7 +129,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(exerciseList[2],style: TextStyle(fontSize: 18),),
+                        title: Text(exerciseList[2],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: exerciseList[2],
                           groupValue: _activity,
@@ -142,7 +141,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(exerciseList[3],style: TextStyle(fontSize: 18),),
+                        title: Text(exerciseList[3],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: exerciseList[3],
                           groupValue: _activity,
@@ -154,7 +153,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(exerciseList[4],style: TextStyle(fontSize: 18),),
+                        title: Text(exerciseList[4],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: exerciseList[4],
                           groupValue: _activity,
@@ -178,7 +177,7 @@ class _AimPageState extends State<AimPage> {
                 child: Container(
                   height: 350,
                   width: 150,
-                  margin: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
                   decoration: BoxDecoration(
                     color: inactiveCard,
                     borderRadius: BorderRadius.circular(20.0),
@@ -194,7 +193,7 @@ class _AimPageState extends State<AimPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
+                      const Text(
                         "Calorie Goal",
                         style: TextStyle(
                             fontSize: 25,
@@ -202,9 +201,9 @@ class _AimPageState extends State<AimPage> {
                             color: Colors.cyan,
                             fontWeight: FontWeight.bold),
                       ),
-                      Divider(height: 2,thickness: 1,color: Colors.grey,indent: 25,endIndent: 25,),
+                      const Divider(height: 2,thickness: 1,color: Colors.grey,indent: 25,endIndent: 25,),
                       ListTile(
-                        title: Text(goalList[0],style: TextStyle(fontSize: 18),),
+                        title: Text(goalList[0],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: goalList[0],
                           groupValue: _goal,
@@ -216,7 +215,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(goalList[1],style: TextStyle(fontSize: 18),),
+                        title: Text(goalList[1],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: goalList[1],
                           groupValue: _goal,
@@ -228,7 +227,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(goalList[2],style: TextStyle(fontSize: 18),),
+                        title: Text(goalList[2],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: goalList[2],
                           groupValue: _goal,
@@ -240,7 +239,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(goalList[3],style: TextStyle(fontSize: 18),),
+                        title: Text(goalList[3],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: goalList[3],
                           groupValue: _goal,
@@ -252,7 +251,7 @@ class _AimPageState extends State<AimPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(goalList[4],style: TextStyle(fontSize: 18),),
+                        title: Text(goalList[4],style: const TextStyle(fontSize: 18),),
                         leading: Radio(
                           value: goalList[4],
                           groupValue: _goal,
@@ -271,7 +270,7 @@ class _AimPageState extends State<AimPage> {
           ),
           GestureDetector(
             onTap: () {
-              Calculate c = new Calculate(
+              Calculate c = Calculate(
                   height: height,
                   weight: weight,
                   age: age,
@@ -301,15 +300,15 @@ class _AimPageState extends State<AimPage> {
             },
             child: Container(
               height: 50,
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(horizontal: 50,vertical: 10),
-              constraints: BoxConstraints(minWidth: 50,maxWidth: 50),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+              constraints: const BoxConstraints(minWidth: 50,maxWidth: 50),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   color: Colors.cyan
               ),
               child: Column(
-                children: <Widget>[
+                children: const <Widget>[
                   Text(
                     'Calculate',
                     style: TextStyle(
@@ -324,7 +323,7 @@ class _AimPageState extends State<AimPage> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
 
         ],
 

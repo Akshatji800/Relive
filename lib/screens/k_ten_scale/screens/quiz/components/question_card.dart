@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mental_health/screens/k_ten_scale/controllers/question_controller.dart';
-import 'package:mental_health/screens/k_ten_scale/models/Questions.dart';
+import 'package:mental_health/screens/k_ten_scale/models/questions.dart';
 import '../../../constants.dart';
 import 'option.dart';
 
@@ -18,8 +18,8 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     QuestionController _controller = Get.put(QuestionController());
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      padding: EdgeInsets.all(kDefaultPadding),
+      margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      padding: const EdgeInsets.all(kDefaultPadding),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
@@ -33,7 +33,7 @@ class QuestionCard extends StatelessWidget {
                 .headline6!
                 .copyWith(color: kBlackColor),
           ),
-          SizedBox(height: kDefaultPadding / 2),
+          const SizedBox(height: kDefaultPadding / 2),
           ...List.generate(
             question.options.length,
             (index) => Option(

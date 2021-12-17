@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/Settings_Pages/new_password.dart';
 import 'package:mental_health/screens/patient_dashboard/Food_Tracking/dinner.dart';
 import 'package:mental_health/screens/patient_dashboard/models/meals_list_data.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -16,12 +16,12 @@ double targetbreakfast = 0;
 double targetlunch = 0;
 double targetsnack = 0;
 double targetdinner = 0;
-double RCalorie = 2500;
-double RCarbs = 300;
-double RProtein = 56;
-double RCholesterol = 0.3;
-double RSugars = 38;
-double RFat = 70;
+double rCalorie = 2500;
+double rCarbs = 300;
+double rProtein = 56;
+double rCholesterol = 0.3;
+double rSugars = 38;
+double rFat = 70;
 late User user2;
 class MealsListView extends StatefulWidget {
   const MealsListView(
@@ -173,7 +173,7 @@ class _MealsListViewState extends State<MealsListView>
                   child: Transform(
                     transform: Matrix4.translationValues(
                         0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
-                    child: Container(
+                    child: SizedBox(
                       height: 216,
                       width: double.infinity,
                       child: ListView.builder(
@@ -303,7 +303,7 @@ class MealsView extends StatelessWidget {
                             Text(
                               mealsListData!.titleTxt,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: FitnessAppTheme.fontName,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -321,7 +321,7 @@ class MealsView extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       mealsListData!.meals!.join('\n'),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14,
@@ -341,7 +341,7 @@ class MealsView extends StatelessWidget {
                                 Text(
                                   mealsListData!.kacl.toString(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 24,
@@ -349,8 +349,8 @@ class MealsView extends StatelessWidget {
                                     color: FitnessAppTheme.white,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
+                                const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 4, bottom: 3),
                                   child: Text(
                                     'kcal',
@@ -374,7 +374,7 @@ class MealsView extends StatelessWidget {
                                   BoxShadow(
                                       color: FitnessAppTheme.nearlyBlack
                                           .withOpacity(0.4),
-                                      offset: Offset(8.0, 8.0),
+                                      offset: const Offset(8.0, 8.0),
                                       blurRadius: 8.0),
                                 ],
                               ),
@@ -433,12 +433,12 @@ class MealsView extends StatelessWidget {
         .doc(mealType)
         .get()
         .then((value) {
-      RCalorie = double.parse(value.data()!["Target Calories"]);
-      RCarbs = double.parse(value.data()!["Target Carbohydrate"]);
-      RProtein = double.parse(value.data()!["Target Protein"]);
-      RFat = double.parse(value.data()!["Target Fat"]);
-      RSugars = double.parse(value.data()!["Target Sugars"]);
-      RCholesterol = double.parse(value.data()!["Target Cholesterol"]);
+      rCalorie = double.parse(value.data()!["Target Calories"]);
+      rCarbs = double.parse(value.data()!["Target Carbohydrate"]);
+      rProtein = double.parse(value.data()!["Target Protein"]);
+      rFat = double.parse(value.data()!["Target Fat"]);
+      rSugars = double.parse(value.data()!["Target Sugars"]);
+      rCholesterol = double.parse(value.data()!["Target Cholesterol"]);
     });
   }
 }

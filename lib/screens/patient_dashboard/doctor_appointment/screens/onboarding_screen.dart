@@ -3,6 +3,8 @@ import '../constant.dart';
 import 'home_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class OnboardingScreen extends StatelessWidget {
                         color: kTitleTextColor,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -46,7 +48,7 @@ class OnboardingScreen extends StatelessWidget {
                         color: kTitleTextColor.withOpacity(0.7),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     MaterialButton(
@@ -54,12 +56,12 @@ class OnboardingScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomeScreen(),
+                            builder: (context) => const HomeScreen(),
                           ),
                         );
                       },
                       color: kOrangeColor,
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 30,
                       ),
                       shape: RoundedRectangleBorder(

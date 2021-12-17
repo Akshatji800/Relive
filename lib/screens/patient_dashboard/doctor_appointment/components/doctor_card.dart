@@ -3,25 +3,25 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/screens/detail_screen.dart';
-import 'package:mental_health/utils/loadProfilePic.dart';
+import 'package:mental_health/utils/load_profile_pic.dart';
 
 import '../constant.dart';
 
 //ignore: must_be_immutable
 class DoctorCard extends StatelessWidget {
-  String? _uid;
-  String? _name;
-  String? _description;
-  String? _bio;
-  var _bgColor;
+  final String? _uid;
+  final String? _name;
+  final String? _description;
+  final String? _bio;
+  final dynamic _bgColor;
 
-  DoctorCard(this._uid,this._name, this._description, this._bgColor, this._bio);
+  const DoctorCard(this._uid,this._name, this._description, this._bgColor, this._bio, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context)
-        => new DetailScreen(_name, _description, _uid, _bio)));
+        => DetailScreen(_name, _description, _uid, _bio)));
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -32,7 +32,7 @@ class DoctorCard extends StatelessWidget {
           future: loadProfilePic(_uid!),
           builder: (context,AsyncSnapshot<Uint8List?> snapshot) {
             return Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: ListTile(
                 leading: (snapshot.data != null) ? CircleAvatar(
                   radius: 35,

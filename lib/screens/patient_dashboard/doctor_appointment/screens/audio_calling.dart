@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/components/agora.config.dart' as config;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// JoinChannelAudio Example
 class JoinChannelAudio extends StatefulWidget {
+  const JoinChannelAudio({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _State();
 }
@@ -28,7 +29,7 @@ class _State extends State<JoinChannelAudio> {
   void initState() {
     super.initState();
     _controller = TextEditingController(text: channelId);
-    this._initEngine();
+    _initEngine();
   }
 
   @override
@@ -39,7 +40,7 @@ class _State extends State<JoinChannelAudio> {
 
   _initEngine() async {
     _engine = await RtcEngine.createWithContext(RtcEngineContext(config.appId));
-    this._addListeners();
+    _addListeners();
 
     await _engine.enableAudio();
     await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
@@ -49,7 +50,7 @@ class _State extends State<JoinChannelAudio> {
   _addListeners() {
     _engine.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
-        log('joinChannelSuccess ${channel} ${uid} ${elapsed}');
+        log('joinChannelSuccess $channel $uid $elapsed');
         setState(() {
           isJoined = true;
         });
@@ -71,7 +72,6 @@ class _State extends State<JoinChannelAudio> {
     await _engine
         .joinChannel(config.token, config.channelId, null, config.uid)
         .catchError((onError) {
-      print('error ${onError.toString()}');
     });
   }
 
@@ -153,7 +153,7 @@ class _State extends State<JoinChannelAudio> {
             children: [
               TextField(
                 controller: _controller,
-                decoration: InputDecoration(hintText: 'Channel ID'),
+                decoration: const InputDecoration(hintText: 'Channel ID'),
                 onChanged: (text) {
                   setState(() {
                     channelId = text;
@@ -168,7 +168,7 @@ class _State extends State<JoinChannelAudio> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         onPressed:
-                            isJoined ? this._leaveChannel : this._joinChannel,
+                            isJoined ? _leaveChannel : _joinChannel,
                         child: Text('${isJoined ? 'Leave' : 'Join'} channel'),
                         style: ElevatedButton.styleFrom(
                         primary: Colors.cyan,
@@ -188,14 +188,14 @@ class _State extends State<JoinChannelAudio> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: this._switchMicrophone,
+                      onPressed: _switchMicrophone,
                       style: ElevatedButton.styleFrom(
                         primary: Colors.cyan,
                       ),
                       child: Text('Microphone ${openMicrophone ? 'on' : 'off'}'),
                     ),
                     ElevatedButton(
-                      onPressed: this._switchSpeakerphone,
+                      onPressed: _switchSpeakerphone,
                       style: ElevatedButton.styleFrom(
                         primary: Colors.cyan,
                       ),
@@ -203,7 +203,7 @@ class _State extends State<JoinChannelAudio> {
                           Text(enableSpeakerphone ? 'Speakerphone' : 'Earpiece'),
                     ),
                     ElevatedButton(
-                      onPressed: this._switchEffect,
+                      onPressed: _switchEffect,
                       style: ElevatedButton.styleFrom(
                         primary: Colors.cyan,
                       ),
@@ -212,16 +212,16 @@ class _State extends State<JoinChannelAudio> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('RecordingVolume:'),
+                        const Text('RecordingVolume:'),
                         SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             activeTrackColor: Colors.cyan,
                             inactiveTrackColor: Colors.cyan,
                             trackHeight: 4.0,
                             thumbColor: Colors.cyan,
-                            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10.0),
                             overlayColor: Colors.cyan.withAlpha(32),
-                            overlayShape: RoundSliderOverlayShape(overlayRadius: 14.0),
+                            overlayShape: const RoundSliderOverlayShape(overlayRadius: 14.0),
                           ),
                           child: Slider(
                             value: _recordingVolume,
@@ -242,16 +242,16 @@ class _State extends State<JoinChannelAudio> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('PlaybackVolume:'),
+                        const Text('PlaybackVolume:'),
                         SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             activeTrackColor: Colors.cyan,
                             inactiveTrackColor: Colors.cyan,
                             trackHeight: 4.0,
                             thumbColor: Colors.cyan,
-                            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10.0),
                             overlayColor: Colors.cyan.withAlpha(32),
-                            overlayShape: RoundSliderOverlayShape(overlayRadius: 14.0),
+                            overlayShape: const RoundSliderOverlayShape(overlayRadius: 14.0),
                           ),
                           child: Slider(
                             value: _playbackVolume,
@@ -274,7 +274,7 @@ class _State extends State<JoinChannelAudio> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Row(mainAxisSize: MainAxisSize.min, children: [
-                          Text('InEar Monitoring Volume:'),
+                          const Text('InEar Monitoring Volume:'),
                           Switch(
                             value: _enableInEarMonitoring,
                             onChanged: _toggleInEarMonitoring,
@@ -283,7 +283,7 @@ class _State extends State<JoinChannelAudio> {
                           )
                         ]),
                         if (_enableInEarMonitoring)
-                          Container(
+                          SizedBox(
                               width: 300,
                               child: SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
@@ -291,9 +291,9 @@ class _State extends State<JoinChannelAudio> {
                                   inactiveTrackColor: Colors.cyan,
                                   trackHeight: 4.0,
                                   thumbColor: Colors.cyan,
-                                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10.0),
                                   overlayColor: Colors.cyan.withAlpha(32),
-                                  overlayShape: RoundSliderOverlayShape(overlayRadius: 14.0),
+                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 14.0),
                                 ),
                                 child: Slider(
                                   value: _inEarMonitoringVolume,
@@ -308,7 +308,7 @@ class _State extends State<JoinChannelAudio> {
                     ),
                   ],
                 ),
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
               ))
         ],
       ),

@@ -6,6 +6,8 @@ import 'package:mental_health/screens/patient_dashboard/fitness_app_home_screen.
 import '../../constants.dart';
 
 class ScoreScreen extends StatelessWidget {
+  const ScoreScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     QuestionController _qnController = Get.put(QuestionController());
@@ -16,7 +18,7 @@ class ScoreScreen extends StatelessWidget {
           SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
           Column(
             children: [
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
               Text(
                 "Score",
                 style: Theme.of(context)
@@ -24,7 +26,7 @@ class ScoreScreen extends StatelessWidget {
                     .headline3!
                     .copyWith(color: kSecondaryColor),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 "${_qnController.scoretotal}/${_qnController.questions.length * 5}",
                 style: Theme.of(context)
@@ -32,16 +34,16 @@ class ScoreScreen extends StatelessWidget {
                     .headline4!
                     .copyWith(color: kSecondaryColor),
               ),
-              Spacer(flex: 3),
-              InterpretationTable(),
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
+              const InterpretationTable(),
+              const Spacer(flex: 3),
               InkWell(
-                onTap: () => Get.to(FitnessAppHomeScreen()),
+                onTap: () => Get.to(const FitnessAppHomeScreen()),
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.all(kDefaultPadding * 0.75), // 15
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(kDefaultPadding * 0.75), // 15
+                  decoration: const BoxDecoration(
                     gradient: kPrimaryGradient,
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
@@ -54,7 +56,7 @@ class ScoreScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
             ],
           )
         ],

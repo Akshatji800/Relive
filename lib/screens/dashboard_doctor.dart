@@ -11,12 +11,14 @@ import 'package:mental_health/screens/Doctor_Dashboard_Pages/interaction.dart';
 import 'package:mental_health/screens/Doctor_Dashboard_Pages/patients_data.dart';
 import 'package:mental_health/screens/Doctor_Dashboard_Pages/reports.dart';
 import 'Doctor_Dashboard_Pages/edit_profile.dart';
-import 'Settings_Pages/NewPassword.dart';
+import 'Settings_Pages/new_password.dart';
 import 'Settings_Pages/settings.dart';
 
 class DoctorDashBoard extends StatefulWidget {
+  const DoctorDashBoard({Key? key}) : super(key: key);
+
   @override
-  DoctorDashBoardState createState() => new DoctorDashBoardState();
+  DoctorDashBoardState createState() => DoctorDashBoardState();
 }
 User activeDoctor = auth.currentUser!;
 class DoctorDashBoardState extends State<DoctorDashBoard> {
@@ -25,6 +27,7 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
   String hospital = "";
   Uint8List? dashBytes;
 
+  @override
   void initState() {
     super.initState();
     activeDoctor = auth.currentUser!;
@@ -33,7 +36,7 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Doctor \'s Dashboard',
             style: TextStyle(color: Colors.white),
           ),
@@ -41,14 +44,14 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
           elevation: 1,
           actions: <Widget>[
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.notification_add,
                 color: Colors.white,
               ),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        ImportantNotificationsPage()));
+                        const ImportantNotificationsPage()));
               },
             )
           ],
@@ -57,8 +60,8 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
           stream: FirebaseFirestore.instance.collection('userdata').snapshots(),
           builder: (context, snapshot) {
             var sn = snapshot.data;
-            if (sn != null)
-              sn.docs.forEach((element) {
+            if (sn != null) {
+              for (var element in sn.docs) {
                 if (element.id == activeDoctor.uid) {
                   try {
                     name = element.get("name");
@@ -76,9 +79,10 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
                     hospital = "";
                   }
                 }
-              });
+              }
+            }
             return FutureBuilder(
-              future: ProfilePic(),
+              future: profilePic(),
               builder: (context, snapshot) {
                 return Container(
                   width: double.infinity,
@@ -90,15 +94,15 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
                   ])),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16),
+                        padding: const EdgeInsets.only(left: 16, right: 16),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder:(BuildContext context) => DoctorProfile()));
+                                MaterialPageRoute(builder:(BuildContext context) => const DoctorProfile()));
                           },
                           child: Row(
                             children: <Widget>[
@@ -109,7 +113,7 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
                                     .memory(dashBytes!)
                                     .image,
                               ) :
-                              CircleAvatar(
+                              const CircleAvatar(
                                 radius: 30.0,
                                 child: Icon(Icons.photo_camera),
                               ),
@@ -121,18 +125,18 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
                                     Text(
                                       "Dr. " + name,
                                       style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
+                                          textStyle: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold)),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 4,
                                     ),
                                     Text(
                                       "$specialization ($hospital)",
                                       style: GoogleFonts.openSans(
-                                          textStyle: TextStyle(
+                                          textStyle: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600)),
@@ -144,7 +148,7 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       OptionsCreater()
@@ -156,7 +160,7 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
           }
         ));
   }
-  ProfilePic() async {
+  profilePic() async {
     final FirebaseStorage firebaseStorage = FirebaseStorage.instanceFor(
         bucket: "gs://mental-health-e175a.appspot.com");
     await firebaseStorage
@@ -170,42 +174,44 @@ class DoctorDashBoardState extends State<DoctorDashBoard> {
 
 // ignore: must_be_immutable
 class OptionsCreater extends StatelessWidget {
-  Items item1 = new Items(
+  Items item1 = Items(
     title: "Patients Data",
     subtitle: "About assigned patients",
     event: "3 Patients",
     img: "assets/patient.png",
   );
-  Items item2 = new Items(
+  Items item2 = Items(
     title: "Appointments",
     subtitle: "Info about appointments ",
     event: "4 appointments",
     img: "assets/appointment.png",
   );
-  Items item3 = new Items(
+  Items item3 = Items(
     title: "Availability",
     subtitle: "Set your available timings",
     event: "3 slots",
     img: "assets/available.png",
   );
-  Items item4 = new Items(
+  Items item4 = Items(
     title: "Interaction",
     subtitle: "Interact with random patients",
     event: "3 random available",
     img: "assets/interaction.png",
   );
-  Items item5 = new Items(
+  Items item5 = Items(
     title: "Report",
     subtitle: "Report a patient",
     event: "1 reported",
     img: "assets/report.png",
   );
-  Items item6 = new Items(
+  Items item6 = Items(
     title: "Settings",
     subtitle: "Access different settings",
     event: "2 Items",
     img: "assets/settings.png",
   );
+
+  OptionsCreater({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +219,7 @@ class OptionsCreater extends StatelessWidget {
     return Flexible(
       child: GridView.count(
           childAspectRatio: 1.0,
-          padding: EdgeInsets.only(left: 16, right: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16),
           crossAxisCount: 2,
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
@@ -222,29 +228,29 @@ class OptionsCreater extends StatelessWidget {
               onTap: () {
                 if (data.title == "Settings") {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => SettingsPage(role: "doctor")));
+                      builder: (BuildContext context) => const SettingsPage(role: "doctor")));
                 } else if (data.title == "Report") {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => ReportsPage()));
+                      builder: (BuildContext context) => const ReportsPage()));
                 } else if (data.title == "Interaction") {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => InteractionPage()));
+                      builder: (BuildContext context) => const InteractionPage()));
                 } else if (data.title == "Availability") {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => AvailabilityPage()));
+                      builder: (BuildContext context) => const AvailabilityPage()));
                 } else if (data.title == "Appointments") {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => AppointmentsPage()));
+                      builder: (BuildContext context) => const AppointmentsPage()));
                 } else if (data.title == "Patients Data") {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => PatientsDataPage()));
+                      builder: (BuildContext context) => const PatientsDataPage()));
                 }
               },
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                           color: Colors.black12,
                           blurRadius: 40,
@@ -257,35 +263,35 @@ class OptionsCreater extends StatelessWidget {
                       data.img,
                       width: 58,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     Text(
                       data.title,
                       style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                               fontWeight: FontWeight.w600)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
                       data.subtitle,
                       style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               color: Colors.grey,
                               fontSize: 10,
                               fontWeight: FontWeight.w600)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     Text(
                       data.event,
                       style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 11,
                               fontWeight: FontWeight.w600)),

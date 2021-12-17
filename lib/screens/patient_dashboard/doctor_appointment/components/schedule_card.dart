@@ -5,14 +5,14 @@ import '../constant.dart';
 
 //ignore: must_be_immutable
 class ScheduleCard extends StatelessWidget {
-  var _title;
-  var _description;
-  var _date;
-  var _month;
-  var _bgColor;
+  final dynamic _title;
+  final dynamic _description;
+  final dynamic _date;
+  final dynamic _month;
+  final dynamic _bgColor;
 
-  ScheduleCard(
-      this._title, this._description, this._date, this._month, this._bgColor);
+  const ScheduleCard(
+      this._title, this._description, this._date, this._month, this._bgColor, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class ScheduleCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: ListTile(
           leading: Container(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 16,
             ),
             decoration: BoxDecoration(

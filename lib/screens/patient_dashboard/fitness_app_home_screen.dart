@@ -6,10 +6,12 @@ import 'package:mental_health/screens/patient_dashboard/training/training_home_s
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'doctor_appointment/screens/doctor_appointment.dart';
 import 'fitness_app_theme.dart';
-import 'models/tabIcon_data.dart';
+import 'models/tab_icon_data.dart';
 import 'my_diary/my_diary_screen.dart';
 
 class FitnessAppHomeScreen extends StatefulWidget {
+  const FitnessAppHomeScreen({Key? key}) : super(key: key);
+
   @override
   _FitnessAppHomeScreenState createState() => _FitnessAppHomeScreenState();
 }
@@ -19,7 +21,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   AnimationController? animationController;
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
-  int index_adopted = 0;
+  int indexAdopted = 0;
 
   Widget tabBody = Container(
     color: FitnessAppTheme.background,
@@ -27,9 +29,9 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
   @override
   void initState() {
-    tabIconsList.forEach((TabIconData tab) {
+    for (var tab in tabIconsList) {
       tab.isSelected = false;
-    });
+    }
     tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
@@ -49,7 +51,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
     return Container(
       color: FitnessAppTheme.background,
       child: WillPopScope( onWillPop: () async {
-        if (index_adopted ==0) {
+        if (indexAdopted ==0) {
           if (Platform.isAndroid) {
             SystemNavigator.pop();
           } else if (Platform.isIOS) {
@@ -60,7 +62,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => FitnessAppHomeScreen()));
+                  builder: (context) => const FitnessAppHomeScreen()));
         }
         return false;
       },
@@ -102,7 +104,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
           addClick: () {},
           changeIndex: (int index) {
             setState(() {
-              index_adopted = index;
+              indexAdopted = index;
             });
             if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
@@ -121,7 +123,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      TrainingScreen();
+                      const TrainingScreen();
                 });
               });
             } else if (index == 2) {
@@ -131,7 +133,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      DoctorAppointment();
+                      const DoctorAppointment();
                 });
               });
             }
@@ -142,7 +144,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      SettingsPage(role: "patient");
+                      const SettingsPage(role: "patient");
                 });
               });
             }

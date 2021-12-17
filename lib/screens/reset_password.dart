@@ -5,6 +5,8 @@ import 'package:mental_health/screens/sign_in_page.dart';
 
 
 class ResetScreen extends StatefulWidget {
+  const ResetScreen({Key? key}) : super(key: key);
+
   @override
   _ResetScreenState createState() => _ResetScreenState();
 }
@@ -18,7 +20,7 @@ class _ResetScreenState extends State<ResetScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Reset Password',
           style: TextStyle(color: Colors.white),
         ),
@@ -29,9 +31,9 @@ class _ResetScreenState extends State<ResetScreen> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SignInPage()));
+                    builder: (context) => const SignInPage()));
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -39,7 +41,7 @@ class _ResetScreenState extends State<ResetScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Padding(
@@ -47,7 +49,7 @@ class _ResetScreenState extends State<ResetScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-              SizedBox(
+              const SizedBox(
               height: 5,
             ),
             Container(
@@ -63,11 +65,11 @@ class _ResetScreenState extends State<ResetScreen> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.all(1),
+                    padding: const EdgeInsets.all(1),
                     child: TextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.mail),
                           hintText: "Enter your email",
                           hintStyle: TextStyle(
@@ -90,24 +92,24 @@ class _ResetScreenState extends State<ResetScreen> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SignInPage()));
-                  Fluttertoast.showToast(msg: "A reset password email has been sent to ${_email}", gravity: ToastGravity.TOP);
+                          builder: (context) => const SignInPage()));
+                  Fluttertoast.showToast(msg: "A reset password email has been sent to $_email", gravity: ToastGravity.TOP);
                 },
                 child: Container(
                   height: 50,
                   width: 150,
-                  margin: EdgeInsets.symmetric(horizontal: 75),
+                  margin: const EdgeInsets.symmetric(horizontal: 75),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       color: Colors.cyan.shade500,
                       border: Border.all(color: Colors.black12),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Colors.black26,
                             spreadRadius: 1,
                             blurRadius: 4)
                       ]),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       "Send Request",
                       style: TextStyle(

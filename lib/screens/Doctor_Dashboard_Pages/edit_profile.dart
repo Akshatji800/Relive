@@ -2,9 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mental_health/screens/patient_dashboard/fitness_app_theme.dart';
 import 'package:mental_health/services/database.dart';
@@ -52,7 +50,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
     return Scaffold(
       backgroundColor: FitnessAppTheme.background,
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Profile',
             style: TextStyle(color: Colors.white),
           ),
@@ -63,7 +61,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
             ),
@@ -74,8 +72,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
             FirebaseFirestore.instance.collection('userdata').snapshots(),
             builder: (context, snapshot) {
               var sn = snapshot.data;
-              if (sn != null)
-                sn.docs.forEach((element) {
+              if (sn != null) {
+                for (var element in sn.docs) {
                   if (element.id == activeDoctor.uid) {
                     try {
                       name = element.get("name");
@@ -107,281 +105,280 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       phoneNumber = "";
                     }
                   }
-                });
+                }
+              }
               return FutureBuilder(
                   future: loadProfilePic(),
                   builder: (context, snapshot) {
                     return SingleChildScrollView(
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Material(
-                              elevation: 5,
-                              color: Colors.cyan,
-                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),
-                              child: Container(
-                                padding: EdgeInsets.only(left: 16, top: 6, right: 16),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text("Complete your Profile",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Text("Add a profile picture, name and photo to let "
-                                          "people know who you are.",
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Material(
+                            elevation: 5,
+                            color: Colors.cyan,
+                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),
+                            child: Container(
+                              padding: const EdgeInsets.only(left: 16, top: 6, right: 16),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Text("Complete your Profile",
                                         style: TextStyle(
-                                          fontSize: 14,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),),
+                                    ],
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text("Add a profile picture, name and photo to let "
+                                        "people know who you are.",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          image = await _picker.pickImage(
+                                              source: ImageSource.gallery,
+                                              imageQuality: 80);
+                                          if (image != null) {
+                                            newBytes =
+                                                File(image!.path).readAsBytesSync();
+                                            setState(() {
+                                              picked = true;
+                                            });
+                                          }
+                                        },
+                                        child: (picked)
+                                            ? CircleAvatar(
+                                          radius: 60.0,
+                                          backgroundImage:
+                                          Image
+                                              .memory(newBytes!)
+                                              .image,
+                                          child: addIcon(),
+                                        )
+                                            : (imageBytes != null)
+                                            ? CircleAvatar(
+                                          radius: 60.0,
+                                          backgroundImage:
+                                          Image
+                                              .memory(imageBytes!)
+                                              .image,
+                                          child: addIcon(),
+                                        )
+                                            : const CircleAvatar(
+                                          radius: 60.0,
+                                          child: Icon(Icons.photo_camera),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  Center(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 5),
+                                      child: TextField(
+                                        controller: nameController..text = name,
+                                        style: const TextStyle(
                                           color: Colors.white,
                                         ),
-                                        textAlign: TextAlign.center,),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {
-                                            image = await _picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 80);
-                                            if (image != null) {
-                                              newBytes =
-                                                  File(image!.path).readAsBytesSync();
-                                              setState(() {
-                                                picked = true;
-                                              });
-                                            }
-                                          },
-                                          child: (picked)
-                                              ? CircleAvatar(
-                                            radius: 60.0,
-                                            backgroundImage:
-                                            Image
-                                                .memory(newBytes!)
-                                                .image,
-                                            child: addIcon(),
-                                          )
-                                              : (imageBytes != null)
-                                              ? CircleAvatar(
-                                            radius: 60.0,
-                                            backgroundImage:
-                                            Image
-                                                .memory(imageBytes!)
-                                                .image,
-                                            child: addIcon(),
-                                          )
-                                              : CircleAvatar(
-                                            radius: 60.0,
-                                            child: Icon(Icons.photo_camera),
+                                        decoration: const InputDecoration(
+                                          fillColor: Colors.white,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.white),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10,),
-                                    Center(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 5),
-                                        child: TextField(
-                                          controller: nameController..text = name,
-                                          style: TextStyle(
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.white),
+                                          ),
+                                          hintText: "Enter your full name",
+                                          prefixText: "Dr. ",
+                                          prefixStyle: TextStyle(
                                             color: Colors.white,
                                           ),
-                                          decoration: InputDecoration(
-                                            fillColor: Colors.white,
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(color: Colors.white),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(color: Colors.white),
-                                            ),
-                                            hintText: "Enter your full name",
-                                            prefixText: "Dr. ",
-                                            prefixStyle: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                            icon: Icon(Icons.person, color: Colors.white,),
-                                          ),
+                                          icon: Icon(Icons.person, color: Colors.white,),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 20,),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(left: 20, right: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: 30),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Username"),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                    child: TextField(
-                                      controller: usernameController..text = username,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "Enter you username"
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Specialization"),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                    child: TextField(
-                                      controller: specializationController
-                                        ..text = specialization,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Enter specialization",
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Hospital"),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                    child: TextField(
-                                      controller: hospitalController..text = hospital,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Enter hospital",
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("E-mail"),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                    child: TextField(
-                                      controller: emailController..text = email,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Enter email",
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Phone number"),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                    child: TextField(
-                                      controller: phoneController..text = phoneNumber,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Enter phone number",
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Bio"),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                    child: TextField(
-                                      controller: aboutController..text = about,
-                                      maxLines: 5,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Tell us something about your experience",
-                                      ),
-                                    ),
-                                  ),
+                                  const SizedBox(height: 20,),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Center(
-                              child: Container(
-                                height: 50,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      updateUser();
-                                      if (image != null) {
-                                        locator
-                                            .get<UserController>()
-                                            .uploadProfilePicture(
-                                            File(image!.path));
-                                      }
-                                    },
-                                    child: Text("Update Profile".toUpperCase(),
-                                        style: TextStyle(fontSize: 14)),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.cyan),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(30.0),
-                                                side: BorderSide(
-                                                    color: Colors.cyan))))),
-                              ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                const SizedBox(height: 30),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Username"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(20))),
+                                  child: TextField(
+                                    controller: usernameController..text = username,
+                                    decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Enter you username"
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Specialization"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(20))),
+                                  child: TextField(
+                                    controller: specializationController
+                                      ..text = specialization,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Enter specialization",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Hospital"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(20))),
+                                  child: TextField(
+                                    controller: hospitalController..text = hospital,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Enter hospital",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("E-mail"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(20))),
+                                  child: TextField(
+                                    controller: emailController..text = email,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Enter email",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Phone number"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(20))),
+                                  child: TextField(
+                                    controller: phoneController..text = phoneNumber,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Enter phone number",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Bio"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(20))),
+                                  child: TextField(
+                                    controller: aboutController..text = about,
+                                    maxLines: 5,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Tell us something about your experience",
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 20),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 20),
+                          Center(
+                            child: SizedBox(
+                              height: 50,
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    updateUser();
+                                    if (image != null) {
+                                      locator
+                                          .get<UserController>()
+                                          .uploadProfilePicture(
+                                          File(image!.path));
+                                    }
+                                  },
+                                  child: Text("Update Profile".toUpperCase(),
+                                      style: const TextStyle(fontSize: 14)),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.cyan),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(30.0),
+                                              side: const BorderSide(
+                                                  color: Colors.cyan))))),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                        ],
                       ),
                     );
                   });
@@ -422,7 +419,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   }
 
   Widget addIcon() {
-    return Align(
+    return const Align(
       alignment: Alignment.bottomRight,
       child: CircleAvatar(
         backgroundColor: Colors.white,

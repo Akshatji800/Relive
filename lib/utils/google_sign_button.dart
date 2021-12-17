@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mental_health/screens/dashboard_doctor.dart';
 import 'package:mental_health/screens/patient_dashboard/fitness_app_home_screen.dart';
-import 'package:mental_health/services/firebase_Service.dart';
+import 'package:mental_health/services/firebase_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -34,7 +34,7 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
                   title: const Text('Select Role As:'),
-                  content: Container(
+                  content: SizedBox(
                     height: 200,
                     child: Column(
                       mainAxisAlignment:
@@ -47,13 +47,13 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                                 .getInstance();
                             prefs.setString(
                                 'login_as', "patient");
-                            FirebaseService service = new FirebaseService();
+                            FirebaseService service = FirebaseService();
                             try {
                               await service.signInwithGoogle();
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => FitnessAppHomeScreen()));
+                                      builder: (context) => const FitnessAppHomeScreen()));
                             } catch (e) {
                               if (e is FirebaseAuthException) {
                                 showMessage(e.message!);
@@ -73,13 +73,13 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                                   borderRadius:
                                   BorderRadius.circular(
                                       20)),
-                              child: Padding(
+                              child: const Padding(
                                 padding:
-                                const EdgeInsets.all(
+                                EdgeInsets.all(
                                     20.0),
                                 child: Center(
                                   child:
-                                  const Text('Patient'),
+                                  Text('Patient'),
                                 ),
                               ),
                             ),
@@ -92,14 +92,14 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                                 .getInstance();
                             prefs.setString(
                                 'login_as', "doctor");
-                            FirebaseService service = new FirebaseService();
+                            FirebaseService service = FirebaseService();
                             try {
                               await service.signInwithGoogle();
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          DoctorDashBoard()));
+                                          const DoctorDashBoard()));
                             } catch (e) {
                               if (e is FirebaseAuthException) {
                                 showMessage(e.message!);
@@ -119,13 +119,13 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                                   borderRadius:
                                   BorderRadius.circular(
                                       20)),
-                              child: Padding(
+                              child: const Padding(
                                 padding:
-                                const EdgeInsets.all(
+                                EdgeInsets.all(
                                     20.0),
                                 child: Center(
                                   child:
-                                  const Text('Doctor'),
+                                  Text('Doctor'),
                                 ),
                               ),
                             ),
@@ -138,9 +138,9 @@ class _GoogleSignInState extends State<GoogleSignIn> {
           });
         },
         label: Text(
-          "${widget.buttonText}",
+          widget.buttonText,
           style:
-          TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         style: OutlinedButton.styleFrom(
             backgroundColor: Colors.cyan.shade500,
@@ -150,7 +150,7 @@ class _GoogleSignInState extends State<GoogleSignIn> {
                 borderRadius: BorderRadius.all(Radius.circular(50)))),
       ),
     )
-        : CircularProgressIndicator();
+        : const CircularProgressIndicator();
   }
 
   void showMessage(String message) {
@@ -158,11 +158,11 @@ class _GoogleSignInState extends State<GoogleSignIn> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Error"),
+            title: const Text("Error"),
             content: Text(message),
             actions: [
               TextButton(
-                child: Text("Ok"),
+                child: const Text("Ok"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

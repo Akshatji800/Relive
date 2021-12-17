@@ -8,6 +8,8 @@ import 'k_ten_scale/ktenscale.dart';
 
 late User user;
 class VerifyScreen extends StatefulWidget {
+  const VerifyScreen({Key? key}) : super(key: key);
+
   @override
   _VerifyScreenState createState() => _VerifyScreenState();
 }
@@ -21,7 +23,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     user = auth.currentUser!;
     user.sendEmailVerification();
 
-    timer = Timer.periodic(Duration(seconds: 4), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 4), (timer) {
       checkEmailVerified();
     });
     super.initState();
@@ -37,7 +39,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Email Verification',
           style: TextStyle(color: Colors.white),
         ),
@@ -46,9 +48,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
         leading: IconButton(
           onPressed: () {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                context, MaterialPageRoute(builder: (context) => const SignUpPage()));
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -56,7 +58,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
       ),
       body: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
       Padding(
@@ -78,10 +80,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
       await SharedPreferences.getInstance();
       if (prefs.getString('login_as') == "doctor") {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+            MaterialPageRoute(builder: (context) => const DoctorDashBoard()));
       } else if (prefs.getString('login_as') == "patient") {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => KtenScale()));
+            context, MaterialPageRoute(builder: (context) => ktenScale()));
       }
     }
   }

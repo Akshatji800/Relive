@@ -4,6 +4,8 @@ import 'package:mental_health/screens/patient_dashboard/training/models/course.d
 import 'package:mental_health/utils/constants.dart';
 
 class Courses extends StatelessWidget {
+  const Courses({Key? key}) : super(key: key);
+
   Widget _buildCourses(BuildContext context, int index) {
     Size size = MediaQuery.of(context).size;
     Course course = courses[index];
@@ -20,14 +22,14 @@ class Courses extends StatelessWidget {
               BoxShadow(
                   color: Constants.black.withOpacity(0.1),
                   blurRadius: 5.0,
-                  offset: Offset(-1, 5))
+                  offset: const Offset(-1, 5))
             ]
             ),
         child: Padding(
           padding: const EdgeInsets.all(13),
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 width: size.width * 0.35,
                 height: size.height * 0.2,
                 child: ClipRRect(
@@ -38,7 +40,7 @@ class Courses extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: size.width * 0.4,
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -48,7 +50,7 @@ class Courses extends StatelessWidget {
                     children: [
                       Text(
                         course.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -100,7 +102,7 @@ class Courses extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               Text(
                 'Exercises',
                 style: TextStyle(
@@ -122,10 +124,10 @@ class Courses extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: 5,
           ),
-          child: Container(
+          child: SizedBox(
             height: size.height*0.22*courses.length,
               child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: courses.length,
                 itemBuilder: (context, index) {
                   return _buildCourses(context, index);

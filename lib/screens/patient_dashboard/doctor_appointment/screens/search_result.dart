@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/components/doctor_card.dart';
@@ -16,28 +15,28 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
-  String search_text = "";
+  String searchText = "";
   var searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    search_text = widget.searchText;
+    searchText = widget.searchText;
   }
   List<DoctorModel> doctors = [DoctorModel("", "","","","","")];
   List<DoctorModel> filteredDoctorsList = [DoctorModel("", "","","","","")];
-  var dataList;
+  dynamic dataList;
   @override
   Widget build(BuildContext context) {
     filteredDoctorsList.removeAt(0);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Search results"),
+          title: const Text("Search results"),
           backgroundColor:  Colors.cyan,
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
             ),
@@ -49,27 +48,28 @@ class _SearchResultState extends State<SearchResult> {
             doctors.clear();
             filteredDoctorsList.clear();
             if(snapshot.data != null){
-              snapshot.data!.docs.forEach((element) {
+              for (var element in snapshot.data!.docs) {
                 try{
                   if(element['type'] == "doctor"){
                     doctors.add(DoctorModel(element.id ,element['name'], element['specialization'],
                         element['phone'], element['hospital'], element['about']));
                   }
                 }catch (e){
+                  continue;
                 }
-              });
+              }
             }
-            dataList= doctors.where((row) => (row.displayName!.toLowerCase().contains(search_text.toLowerCase())));
+            dataList= doctors.where((row) => (row.displayName!.toLowerCase().contains(searchText.toLowerCase())));
             dataList.forEach((element) {
               filteredDoctorsList.add(element);
             });
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
                       'Find Your Desired\nDoctor',
@@ -80,37 +80,37 @@ class _SearchResultState extends State<SearchResult> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Stack(
                 children: <Widget>[
                 Container(
                     width: MediaQuery.of(context).size.width * 0.7,
                 height: 52,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: kSearchBackgroundColor,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: TextField(
-                  controller: searchController..text=search_text,
-                  decoration: InputDecoration.collapsed(
+                  controller: searchController..text=searchText,
+                  decoration: const InputDecoration.collapsed(
                     hintText: 'Search for doctors',
                   ),
                   onChanged: (value) {
-                    search_text = value;
+                    searchText = value;
                   },
                 ),
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: MaterialButton(
-                  onPressed: () {Search(search_text);},
+                  onPressed: () {search(searchText);},
                   color:  Colors.cyan,
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 15,
                   ),
@@ -123,7 +123,7 @@ class _SearchResultState extends State<SearchResult> {
               ],
       ),
               ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   ListView.builder(
@@ -140,12 +140,12 @@ class _SearchResultState extends State<SearchResult> {
                           (index%2==0) ? kBlueColor: kYellowColor,
                           filteredDoctorsList[index].bio,
                         ),
-                          SizedBox(height: 10,)
-                        ]) : ([CircularProgressIndicator()]),
+                          const SizedBox(height: 10,)
+                        ]) : ([const CircularProgressIndicator()]),
                       );
                     },
                   ),
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                 ],
               ),
             );
@@ -154,9 +154,9 @@ class _SearchResultState extends State<SearchResult> {
       );
   }
 
-  void Search(String text){
+  void search(String text){
     doctors = [DoctorModel("", "","","","","")];
     filteredDoctorsList = [DoctorModel("", "","","","","")];
-    setState(() {search_text=text;});
+    setState(() {searchText=text;});
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mental_health/screens/patient_dashboard/doctor_appointment/screens/search_result.dart';
-
 import '../constant.dart';
 
 class SearchBar extends StatefulWidget {
@@ -11,12 +10,12 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  String search_text = "";
+  String searchText = "";
   
   @override
   void initState() {
     super.initState();
-    search_text = "";
+    searchText = "";
   }
 
   @override
@@ -26,17 +25,17 @@ class _SearchBarState extends State<SearchBar> {
         Container(
           width: MediaQuery.of(context).size.width * 0.7,
           height: 52,
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: kSearchBackgroundColor,
             borderRadius: BorderRadius.circular(30),
           ),
           child: TextField(
-            decoration: InputDecoration.collapsed(
+            decoration: const InputDecoration.collapsed(
               hintText: 'Search for doctors',
             ),
             onChanged: (value) {
-              search_text = value;
+              searchText = value;
             },
           ),
         ),
@@ -44,9 +43,9 @@ class _SearchBarState extends State<SearchBar> {
           alignment: Alignment.centerRight,
           child: MaterialButton(
             onPressed: () {Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context)
-            => new SearchResult(searchText: search_text)));},
+            => SearchResult(searchText: searchText)));},
             color:  Colors.cyan,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 10,
               vertical: 15,
             ),

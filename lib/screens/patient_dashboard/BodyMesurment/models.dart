@@ -1,11 +1,11 @@
 class BodyM{
   final String height;
   final String weight;
-  final String BMW;
-  final String BMR;
-  final String Status;
-  final String Time;
+  final String bMW;
+  final String bMR;
+  final String status;
+  final String time;
 
   BodyM(
-  {required this.height,required this.weight,required this.BMW,required this.BMR,required this.Status, required this.Time});
+  {required this.height,required this.weight,required this.bMW,required this.bMR,required this.status, required this.time});
 }

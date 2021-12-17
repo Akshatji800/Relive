@@ -1,17 +1,17 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mental_health/screens/sign_in_page.dart';
-import 'package:mental_health/services/firebase_Service.dart';
+import 'package:mental_health/services/firebase_service.dart';
 
 final auth = FirebaseAuth.instance;
 User user = auth.currentUser!;
-var authResult;
-bool reauth_checker = false;
+bool reauthChecker = false;
 
 class ChangePassPage extends StatefulWidget {
+  const ChangePassPage({Key? key}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -36,7 +36,7 @@ class _SettingsPageState extends State<ChangePassPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Change Password',
           style: TextStyle(color: Colors.white),
         ),
@@ -46,7 +46,7 @@ class _SettingsPageState extends State<ChangePassPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -54,7 +54,7 @@ class _SettingsPageState extends State<ChangePassPage> {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Padding(
@@ -62,7 +62,7 @@ class _SettingsPageState extends State<ChangePassPage> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
@@ -78,16 +78,16 @@ class _SettingsPageState extends State<ChangePassPage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           child: TextFormField(
                             controller: oldpassController,
                             keyboardType: TextInputType.text,
                             obscureText: !oldpasswordVisible,
                             //This will obscure text dynamically
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               hintText: 'Enter your old password',
-                              hintStyle: TextStyle(color: Colors.black45),
+                              hintStyle: const TextStyle(color: Colors.black45),
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -110,7 +110,7 @@ class _SettingsPageState extends State<ChangePassPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -126,16 +126,16 @@ class _SettingsPageState extends State<ChangePassPage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           child: TextFormField(
                             controller: newpassController,
                             keyboardType: TextInputType.text,
                             obscureText: !newpasswordVisible,
                             //This will obscure text dynamically
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               hintText: 'Enter your new password',
-                              hintStyle: TextStyle(color: Colors.black45),
+                              hintStyle: const TextStyle(color: Colors.black45),
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -158,7 +158,7 @@ class _SettingsPageState extends State<ChangePassPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -174,16 +174,16 @@ class _SettingsPageState extends State<ChangePassPage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           child: TextFormField(
                             controller: confirmpassController,
                             keyboardType: TextInputType.text,
                             obscureText: !confirmpasswordVisible,
                             //This will obscure text dynamically
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               hintText: 'Confirm the new password',
-                              hintStyle: TextStyle(color: Colors.black45),
+                              hintStyle: const TextStyle(color: Colors.black45),
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -220,11 +220,11 @@ class _SettingsPageState extends State<ChangePassPage> {
                         password: oldpassController.text);
                     try {
                       await user.reauthenticateWithCredential(credential);
-                      reauth_checker = true;
+                      reauthChecker = true;
                     } catch (e) {
-                      reauth_checker = false;
+                      reauthChecker = false;
                     }
-                    if (reauth_checker == true) {
+                    if (reauthChecker == true) {
                       updatePassword(newpassController.text);
                       Fluttertoast.showToast(
                           msg: "Password has been reset",
@@ -240,13 +240,13 @@ class _SettingsPageState extends State<ChangePassPage> {
                             "The new password and confirm password does not match",
                         gravity: ToastGravity.TOP);
                   }
-                  if (reauth_checker == true) {
-                    FirebaseService service = new FirebaseService();
+                  if (reauthChecker == true) {
+                    FirebaseService service = FirebaseService();
                     await service.signOutFromGoogle();
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => SignInPage()),
+                          builder: (BuildContext context) => const SignInPage()),
                       ModalRoute.withName(''),
                     );
                     Fluttertoast.showToast(
@@ -257,18 +257,18 @@ class _SettingsPageState extends State<ChangePassPage> {
                 child: Container(
                   height: 50,
                   width: 150,
-                  margin: EdgeInsets.symmetric(horizontal: 75),
+                  margin: const EdgeInsets.symmetric(horizontal: 75),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       color: Colors.cyan.shade500,
                       border: Border.all(color: Colors.black12),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Colors.black26,
                             spreadRadius: 1,
                             blurRadius: 4)
                       ]),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       "Send Request",
                       style: TextStyle(

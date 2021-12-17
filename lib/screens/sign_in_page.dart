@@ -1,7 +1,4 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/screens/reset_password.dart';
 import 'package:mental_health/screens/sign_up_page.dart';
@@ -15,15 +12,17 @@ import 'patient_dashboard/fitness_app_home_screen.dart';
 late User user;
 
 class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
   late String email, password;
-  bool _validate_pass = false;
-  bool _validate_email = false;
-  String error_message = "";
+  bool _validatePass = false;
+  bool _validateEmail = false;
+  String errorMessage = "";
   final auth = FirebaseAuth.instance;
   bool _passwordVisible = true;
   final passwordController = TextEditingController();
@@ -49,16 +48,16 @@ class _SignInPageState extends State<SignInPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Image.asset("assets/images/sign-in.png",
                 width: double.infinity, height: 200),
-            SizedBox(
+            const SizedBox(
               height: 6,
             ),
             Padding(
-              padding: EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,7 +65,7 @@ class _SignInPageState extends State<SignInPage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text(Constants.textSignInTitle,
                           style: TextStyle(
                               color: Colors.white,
@@ -91,10 +90,10 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
             ),
-            SizedBox(height: 13),
+            const SizedBox(height: 13),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
@@ -107,150 +106,146 @@ class _SignInPageState extends State<SignInPage> {
                     ]),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       children: <Widget>[
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(50),
-                                    // boxShadow: [BoxShadow(
-                                    //     color: Colors.black12,
-                                    //     blurRadius: 25,
-                                    //     offset: Offset(0, 2)
-                                    // )]
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(0),
-                                        child: TextField(
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          decoration: InputDecoration(
-                                            prefixIcon: Icon(Icons.mail),
-                                            hintText: "Enter your mail ID",
-                                            hintStyle: TextStyle(
-                                                color: Colors.black45),
-                                            border: InputBorder.none,
-                                          ),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              email = value.trim();
-                                            });
-                                          },
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(50),
+                                  // boxShadow: [BoxShadow(
+                                  //     color: Colors.black12,
+                                  //     blurRadius: 25,
+                                  //     offset: Offset(0, 2)
+                                  // )]
+                                ),
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: const EdgeInsets.all(0),
+                                      child: TextField(
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Icons.mail),
+                                          hintText: "Enter your mail ID",
+                                          hintStyle: TextStyle(
+                                              color: Colors.black45),
+                                          border: InputBorder.none,
                                         ),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            email = value.trim();
+                                          });
+                                        },
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                !_validate_email
-                                    ? Container()
-                                    : Text(
-                                        "$error_message",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                SizedBox(
-                                  height: 10,
+                              ),
+                              !_validateEmail
+                                  ? Container()
+                                  : Text(
+                                      errorMessage,
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              //Text("    Password",style: const TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(50),
+                                  // boxShadow: [BoxShadow(
+                                  //     color: Colors.black12,
+                                  //     blurRadius: 25,
+                                  //     offset: Offset(0, 2)
+                                  // )]
                                 ),
-                                //Text("    Password",style: const TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(50),
-                                    // boxShadow: [BoxShadow(
-                                    //     color: Colors.black12,
-                                    //     blurRadius: 25,
-                                    //     offset: Offset(0, 2)
-                                    // )]
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(0),
-                                        child: TextFormField(
-                                          controller: passwordController,
-                                          keyboardType: TextInputType.text,
-                                          obscureText: !_passwordVisible,
-                                          //This will obscure text dynamically
-                                          decoration: InputDecoration(
-                                            prefixIcon: Icon(Icons.lock),
-                                            hintText: 'Enter your password',
-                                            hintStyle: TextStyle(
-                                                color: Colors.black45),
-                                            border: InputBorder.none,
-                                            suffixIcon: IconButton(
-                                              icon: Icon(
-                                                // Based on passwordVisible state choose the icon
-                                                _passwordVisible
-                                                    ? Icons.visibility
-                                                    : Icons.visibility_off,
-                                                color: Colors.black45,
-                                              ),
-                                              onPressed: () {
-                                                // Update the state i.e. toogle the state of passwordVisible variable
-                                                setState(() {
-                                                  _passwordVisible =
-                                                      !_passwordVisible;
-                                                });
-                                              },
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      padding: const EdgeInsets.all(0),
+                                      child: TextFormField(
+                                        controller: passwordController,
+                                        keyboardType: TextInputType.text,
+                                        obscureText: !_passwordVisible,
+                                        //This will obscure text dynamically
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(Icons.lock),
+                                          hintText: 'Enter your password',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.black45),
+                                          border: InputBorder.none,
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              // Based on passwordVisible state choose the icon
+                                              _passwordVisible
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Colors.black45,
                                             ),
+                                            onPressed: () {
+                                              // Update the state i.e. toogle the state of passwordVisible variable
+                                              setState(() {
+                                                _passwordVisible =
+                                                    !_passwordVisible;
+                                              });
+                                            },
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                !_validate_pass
-                                    ? Container()
-                                    : Text(
-                                        "$error_message",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                              ],
-                            ),
+                              ),
+                              !_validatePass
+                                  ? Container()
+                                  : Text(
+                                      errorMessage,
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                            ],
                           ),
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Forgot Password?"),
+                              const Text("Forgot Password?"),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ResetScreen()));
+                                          builder: (context) => const ResetScreen()));
                                 },
-                                child: Container(
-                                  child: Text("To Reset Click Here!",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.cyan.shade500,
-                                      )),
-                                ),
+                                child: Text("To Reset Click Here!",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.cyan.shade500,
+                                    )),
                               )
                             ]),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () async {
                             password = passwordController.text;
@@ -258,18 +253,18 @@ class _SignInPageState extends State<SignInPage> {
                           },
                           child: Container(
                             height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 75),
+                            margin: const EdgeInsets.symmetric(horizontal: 75),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.cyan.shade500,
                                 border: Border.all(color: Colors.black12),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Colors.black26,
                                       spreadRadius: 1,
                                       blurRadius: 4)
                                 ]),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
@@ -279,39 +274,37 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         buildRowDivider(size: size),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         GoogleSignIn(buttonText: "Sign in with Google"),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
-                              Text("Don't have an account?"),
-                              SizedBox(width: 10),
+                              const Text("Don't have an account?"),
+                              const SizedBox(width: 10),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignUpPage()));
+                                          builder: (context) => const SignUpPage()));
                                 },
-                                child: Container(
-                                  child: Text("Register now",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.cyan.shade500,
-                                      )),
-                                ),
+                                child: Text("Register now",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.cyan.shade500,
+                                    )),
                               )
                             ]),
                       ],
@@ -329,7 +322,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget buildRowDivider({required Size size}) {
     return SizedBox(
       width: size.width * 0.8,
-      child: Row(children: <Widget>[
+      child: Row(children: const <Widget>[
         Expanded(child: Divider(color: Colors.grey)),
         Padding(
             padding: EdgeInsets.only(left: 8.0, right: 8.0),
@@ -355,16 +348,16 @@ class _SignInPageState extends State<SignInPage> {
         if (user.emailVerified) {
           if (prefs.getString('login_as') == "doctor") {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+                MaterialPageRoute(builder: (context) => const DoctorDashBoard()));
           } else if (prefs.getString('login_as') == "patient") {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()));
+                context, MaterialPageRoute(builder: (context) => const FitnessAppHomeScreen()));
           } else {
             showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
                       title: const Text('Select Role As:'),
-                      content: Container(
+                      content: SizedBox(
                         height: 200,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -378,7 +371,7 @@ class _SignInPageState extends State<SignInPage> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => FitnessAppHomeScreen()));
+                                        builder: (context) => const FitnessAppHomeScreen()));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -386,10 +379,10 @@ class _SignInPageState extends State<SignInPage> {
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(20.0),
                                     child: Center(
-                                      child: const Text('Patient'),
+                                      child: Text('Patient'),
                                     ),
                                   ),
                                 ),
@@ -405,7 +398,7 @@ class _SignInPageState extends State<SignInPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            DoctorDashBoard()));
+                                            const DoctorDashBoard()));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -413,10 +406,10 @@ class _SignInPageState extends State<SignInPage> {
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(20.0),
                                     child: Center(
-                                      child: const Text('Doctor'),
+                                      child: Text('Doctor'),
                                     ),
                                   ),
                                 ),
@@ -434,23 +427,23 @@ class _SignInPageState extends State<SignInPage> {
         }
       });
     } on FirebaseAuthException catch (error) {
-      error_message = error.message.toString();
+      errorMessage = error.message.toString();
       setState(() {
-        if (error_message ==
+        if (errorMessage ==
             "The password is invalid or the user does not have a password.") {
-          error_message = "Invalid Password";
-          _validate_pass = true;
-          _validate_email = false;
+          errorMessage = "Invalid Password";
+          _validatePass = true;
+          _validateEmail = false;
         } else {
-          if (error_message == "The email address is badly formatted.") {
-            error_message = "Invalid email";
-            _validate_email = true;
-            _validate_pass = false;
+          if (errorMessage == "The email address is badly formatted.") {
+            errorMessage = "Invalid email";
+            _validateEmail = true;
+            _validatePass = false;
           } else {
             Fluttertoast.showToast(
-                msg: error_message, gravity: ToastGravity.TOP);
-            _validate_email = false;
-            _validate_pass = false;
+                msg: errorMessage, gravity: ToastGravity.TOP);
+            _validateEmail = false;
+            _validatePass = false;
           }
         }
       });

@@ -86,7 +86,7 @@ class _TokenMakerState extends State<TokenMaker> {
           controller: _controller,
           decoration: const InputDecoration(hintText: 'Enter Channel Name'),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         ElevatedButton(
@@ -114,7 +114,7 @@ class _TokenMakerState extends State<TokenMaker> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MediaChannelRelay()));
+                    builder: (context) => const MediaChannelRelay()));
           });
           }
           else if (snapshot.hasError) {

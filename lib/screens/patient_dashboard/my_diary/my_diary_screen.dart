@@ -8,8 +8,8 @@ import 'package:mental_health/screens/patient_dashboard/ui_view/title_view.dart'
 import '../fitness_app_theme.dart';
 import 'meals_list_view.dart';
 
-var now = new DateTime.now();
-var formatter = new DateFormat('yyyy-MM-dd');
+var now = DateTime.now();
+var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 class MyDiaryScreen extends StatefulWidget {
   const MyDiaryScreen({Key? key, this.animationController}) : super(key: key);
@@ -25,14 +25,14 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
-  final df = new DateFormat('dd-MMM-yyyy');
+  final df = DateFormat('dd-MMM-yyyy');
 
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: widget.animationController!,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
     addAllListData();
 
     scrollController.addListener(() {
@@ -72,7 +72,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-            Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+            const Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -81,7 +81,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-            Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
+            const Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -93,7 +93,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-            Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+            const Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -103,7 +103,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
-                curve: Interval((1 / count) * 3, 1.0,
+                curve: const Interval((1 / count) * 3, 1.0,
                     curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.animationController,
       ),
@@ -118,7 +118,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
           CurvedAnimation(
               parent: widget.animationController!,
               curve:
-              Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn)
+              const Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn)
           ),
         ),
         animationController: widget.animationController!,
@@ -130,7 +130,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-            Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
+            const Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -142,7 +142,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-            Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+            const Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -152,7 +152,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
-                curve: Interval((1 / count) * 7, 1.0,
+                curve: const Interval((1 / count) * 7, 1.0,
                     curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.animationController!,
       ),
@@ -162,7 +162,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
           animation: Tween<double>(begin: 0.0, end: 1.0).animate(
               CurvedAnimation(
                   parent: widget.animationController!,
-                  curve: Interval((1 / count) * 8, 1.0,
+                  curve: const Interval((1 / count) * 8, 1.0,
                       curve: Curves.fastOutSlowIn))),
           animationController: widget.animationController!),
     );
@@ -288,7 +288,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                     formattedDate = DateFormat('yyyy-MM-dd').format(DateTime(added.year, added.month, added.day-1));
                                     rebuildAllChildren(this.context);
                                 },
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
                                     Icons.keyboard_arrow_left,
                                     color: FitnessAppTheme.grey,
@@ -309,11 +309,9 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                       return Theme(
                                         data: ThemeData.light().copyWith(
                                           primaryColor: Colors.cyan,
-                                          accentColor: Colors.cyan,
-                                          colorScheme: ColorScheme.light(primary: Colors.cyan,),
-                                          buttonTheme: ButtonThemeData(
+                                          buttonTheme: const ButtonThemeData(
                                               textTheme: ButtonTextTheme.primary
-                                          ),
+                                          ), colorScheme: const ColorScheme.light(primary: Colors.cyan,).copyWith(secondary: Colors.cyan),
                                         ),
                                         child: child!,
                                       );
@@ -336,8 +334,8 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 },
                                 child: Row(
                                   children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8),
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 8),
                                       child: Icon(
                                         Icons.calendar_today,
                                         color: FitnessAppTheme.grey,
@@ -347,7 +345,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                     Text(
                                       " "+ DateFormat('yyyy-MM-dd').parse(formattedDate).day.toString() + " " +df.format(DateFormat('yyyy-MM-dd').parse(formattedDate)).substring(3,6),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.normal,
                                         fontSize: 18,

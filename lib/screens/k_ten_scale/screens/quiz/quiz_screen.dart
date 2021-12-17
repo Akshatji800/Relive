@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class QuizScreen extends StatelessWidget {
+  const QuizScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,10 +12,10 @@ class QuizScreen extends StatelessWidget {
         // Flutter show the back button automatically
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
+        actions: const [
         ],
       ),
-      body: Body(),
+      body: const Body(),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:hexcolor/hexcolor.dart';
-import 'package:mental_health/screens/Settings_Pages/NewPassword.dart';
+import 'package:mental_health/screens/Settings_Pages/new_password.dart';
 import 'package:mental_health/screens/patient_dashboard/my_diary/my_diary_screen.dart';
 import '../fitness_app_theme.dart';
 
@@ -76,8 +76,8 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
               builder: (BuildContext context, Widget? child) {
                 return FadeTransition(
                   opacity: widget.animation!,
-                  child: new Transform(
-                    transform: new Matrix4.translationValues(
+                  child: Transform(
+                    transform: Matrix4.translationValues(
                         0.0, 30 * (1.0 - widget.animation!.value), 0.0),
                     child: Padding(
                       padding: const EdgeInsets.only(
@@ -85,7 +85,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                       child: Container(
                         decoration: BoxDecoration(
                           color: FitnessAppTheme.white,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(8.0),
                               bottomLeft: Radius.circular(8.0),
                               bottomRight: Radius.circular(8.0),
@@ -93,7 +93,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                           boxShadow: <BoxShadow>[
                             BoxShadow(
                                 color: FitnessAppTheme.grey.withOpacity(0.2),
-                                offset: Offset(1.1, 1.1),
+                                offset: const Offset(1.1, 1.1),
                                 blurRadius: 10.0),
                           ],
                         ),
@@ -118,7 +118,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                 decoration: BoxDecoration(
                                                   color: HexColor('#48D1CC')
                                                       .withOpacity(0.5),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius: const BorderRadius.all(
                                                       Radius.circular(4.0)),
                                                 ),
                                               ),
@@ -166,7 +166,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                           child: Text(
                                                             alldatacalories.toStringAsFixed(2),
                                                             textAlign: TextAlign.center,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                               fontFamily:
                                                                   FitnessAppTheme
                                                                       .fontName,
@@ -206,7 +206,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                               )
                                             ],
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 8,
                                           ),
                                           Row(
@@ -217,7 +217,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                 decoration: BoxDecoration(
                                                   color: HexColor('#F56E98')
                                                       .withOpacity(0.5),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius: const BorderRadius.all(
                                                       Radius.circular(4.0)),
                                                 ),
                                               ),
@@ -265,7 +265,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                           child: Text(
                                                             '${(102 * widget.animation!.value).toInt()}',
                                                             textAlign: TextAlign.center,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                               fontFamily:
                                                                   FitnessAppTheme
                                                                       .fontName,
@@ -322,10 +322,10 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                               height: 100,
                                               decoration: BoxDecoration(
                                                 color: FitnessAppTheme.white,
-                                                borderRadius: BorderRadius.all(
+                                                borderRadius: const BorderRadius.all(
                                                   Radius.circular(100.0),
                                                 ),
-                                                border: new Border.all(
+                                                border: Border.all(
                                                     width: 4,
                                                     color: FitnessAppTheme
                                                         .nearlyDarkBlue
@@ -340,7 +340,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                   Text(
                                                     '${(1503 * widget.animation!.value).toInt()}',
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontFamily:
                                                           FitnessAppTheme.fontName,
                                                       fontWeight: FontWeight.normal,
@@ -379,7 +379,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                   angle: 140 +
                                                       (360 - 140) *
                                                           (1.0 - widget.animation!.value)),
-                                              child: SizedBox(
+                                              child: const SizedBox(
                                                 width: 108,
                                                 height: 108,
                                               ),
@@ -397,7 +397,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                   left: 24, right: 24, top: 8, bottom: 8),
                               child: Container(
                                 height: 2,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: FitnessAppTheme.background,
                                   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                                 ),
@@ -413,7 +413,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
+                                        const Text(
                                           'Carbs',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -432,7 +432,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                             decoration: BoxDecoration(
                                               color:
                                                   HexColor('#87A0E5').withOpacity(0.2),
-                                              borderRadius: BorderRadius.all(
+                                              borderRadius: const BorderRadius.all(
                                                   Radius.circular(4.0)),
                                             ),
                                             child: Row(
@@ -447,7 +447,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                       HexColor('#87A0E5')
                                                           .withOpacity(0.5),
                                                     ]),
-                                                    borderRadius: BorderRadius.all(
+                                                    borderRadius: const BorderRadius.all(
                                                         Radius.circular(4.0)),
                                                   ),
                                                 )
@@ -481,7 +481,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(
+                                            const Text(
                                               'Protein',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
@@ -500,7 +500,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                 decoration: BoxDecoration(
                                                   color: HexColor('#F56E98')
                                                       .withOpacity(0.2),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius: const BorderRadius.all(
                                                       Radius.circular(4.0)),
                                                 ),
                                                 child: Row(
@@ -518,7 +518,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                               .withOpacity(0.1),
                                                           HexColor('#F56E98'),
                                                         ]),
-                                                        borderRadius: BorderRadius.all(
+                                                        borderRadius: const BorderRadius.all(
                                                             Radius.circular(4.0)),
                                                       ),
                                                     ),
@@ -554,7 +554,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(
+                                            const Text(
                                               'Fat',
                                               style: TextStyle(
                                                 fontFamily: FitnessAppTheme.fontName,
@@ -573,7 +573,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                 decoration: BoxDecoration(
                                                   color: HexColor('#F1B440')
                                                       .withOpacity(0.2),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius: const BorderRadius.all(
                                                       Radius.circular(4.0)),
                                                 ),
                                                 child: Row(
@@ -591,7 +591,7 @@ class _MediterranesnDietViewState extends State<MediterranesnDietView>
                                                               .withOpacity(0.1),
                                                           HexColor('#F1B440'),
                                                         ]),
-                                                        borderRadius: BorderRadius.all(
+                                                        borderRadius: const BorderRadius.all(
                                                             Radius.circular(4.0)),
                                                       ),
                                                     ),
@@ -652,16 +652,16 @@ class CurvePainter extends CustomPainter {
       colorsList.addAll([Colors.white, Colors.white]);
     }
 
-    final shdowPaint = new Paint()
+    final shdowPaint = Paint()
       ..color = Colors.black.withOpacity(0.4)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = 14;
-    final shdowPaintCenter = new Offset(size.width / 2, size.height / 2);
+    final shdowPaintCenter = Offset(size.width / 2, size.height / 2);
     final shdowPaintRadius =
         math.min(size.width / 2, size.height / 2) - (14 / 2);
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
@@ -670,7 +670,7 @@ class CurvePainter extends CustomPainter {
     shdowPaint.color = Colors.grey.withOpacity(0.3);
     shdowPaint.strokeWidth = 16;
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
@@ -679,7 +679,7 @@ class CurvePainter extends CustomPainter {
     shdowPaint.color = Colors.grey.withOpacity(0.2);
     shdowPaint.strokeWidth = 20;
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
@@ -688,43 +688,43 @@ class CurvePainter extends CustomPainter {
     shdowPaint.color = Colors.grey.withOpacity(0.1);
     shdowPaint.strokeWidth = 22;
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
         shdowPaint);
 
-    final rect = new Rect.fromLTWH(0.0, 0.0, size.width, size.width);
-    final gradient = new SweepGradient(
+    final rect = Rect.fromLTWH(0.0, 0.0, size.width, size.width);
+    final gradient = SweepGradient(
       startAngle: degreeToRadians(268),
       endAngle: degreeToRadians(270.0 + 360),
       tileMode: TileMode.repeated,
       colors: colorsList,
     );
-    final paint = new Paint()
+    final paint = Paint()
       ..shader = gradient.createShader(rect)
       ..strokeCap = StrokeCap.round // StrokeCap.round is not recommended.
       ..style = PaintingStyle.stroke
       ..strokeWidth = 14;
-    final center = new Offset(size.width / 2, size.height / 2);
+    final center = Offset(size.width / 2, size.height / 2);
     final radius = math.min(size.width / 2, size.height / 2) - (14 / 2);
 
     canvas.drawArc(
-        new Rect.fromCircle(center: center, radius: radius),
+        Rect.fromCircle(center: center, radius: radius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
         paint);
 
-    final gradient1 = new SweepGradient(
+    const gradient1 = SweepGradient(
       tileMode: TileMode.repeated,
       colors: [Colors.white, Colors.white],
     );
 
-    var cPaint = new Paint();
-    cPaint..shader = gradient1.createShader(rect);
-    cPaint..color = Colors.white;
-    cPaint..strokeWidth = 14 / 2;
+    var cPaint = Paint();
+    cPaint.shader = gradient1.createShader(rect);
+    cPaint.color = Colors.white;
+    cPaint.strokeWidth = 14 / 2;
     canvas.save();
 
     final centerToCircle = size.width / 2;
@@ -735,7 +735,7 @@ class CurvePainter extends CustomPainter {
 
     canvas.save();
     canvas.translate(0.0, -centerToCircle + 14 / 2);
-    canvas.drawCircle(new Offset(0, 0), 14 / 5, cPaint);
+    canvas.drawCircle(const Offset(0, 0), 14 / 5, cPaint);
 
     canvas.restore();
     canvas.restore();

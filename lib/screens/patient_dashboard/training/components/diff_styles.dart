@@ -5,6 +5,8 @@ import 'package:mental_health/utils/constants.dart';
 
 
 class DiffStyles extends StatelessWidget {
+  const DiffStyles({Key? key}) : super(key: key);
+
   _buildStyles(BuildContext context, int index) {
     Size size = MediaQuery.of(context).size;
     Style style = styles[index];
@@ -16,12 +18,12 @@ class DiffStyles extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: Constants.appPadding / 2),
           child: Container(
             margin:
-                EdgeInsets.only(top: Constants.appPadding * 3, bottom: Constants.appPadding * 2),
+                const EdgeInsets.only(top: Constants.appPadding * 3, bottom: Constants.appPadding * 2),
             width: size.width * 0.4,
             height: size.height * 0.2,
             decoration: BoxDecoration(
                 color: Constants.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     bottomLeft: Radius.circular(20.0),
                     bottomRight: Radius.circular(20.0),
@@ -30,7 +32,7 @@ class DiffStyles extends StatelessWidget {
                   BoxShadow(
                       color: Constants.black.withOpacity(0.3),
                       blurRadius: 20.0,
-                      offset: Offset(5, 15))
+                      offset: const Offset(5, 15))
                 ]),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +45,7 @@ class DiffStyles extends StatelessWidget {
                       top: Constants.appPadding),
                   child: Text(
                     style.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -81,7 +83,7 @@ class DiffStyles extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Colors.cyan,
                             borderRadius: BorderRadius.circular(5.0)),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: Constants.white,
                         ),
@@ -96,12 +98,10 @@ class DiffStyles extends StatelessWidget {
         Positioned(
           right: 0,
           top: 0,
-          child: Container(
-            child: Image(
-              width: size.width * 0.3,
-              height: size.height * 0.2,
-              image: AssetImage(style.imageUrl),
-            ),
+          child: Image(
+            width: size.width * 0.3,
+            height: size.height * 0.2,
+            image: AssetImage(style.imageUrl),
           ),
         )
       ],
@@ -119,7 +119,7 @@ class DiffStyles extends StatelessWidget {
               horizontal: Constants.appPadding, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               Text(
                 'For Beginners',
                 style: TextStyle(
@@ -137,10 +137,10 @@ class DiffStyles extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: Constants.appPadding / 2),
-          child: Container(
+          child: SizedBox(
             height: size.height * 0.33,
             child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: styles.length,
                 itemBuilder: (BuildContext context, int index) {

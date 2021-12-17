@@ -33,7 +33,7 @@ class Constants {
   static const textAcc = "Don't have an account? ";
   static const textSignUp = "Sign Up here";
   static const textHome = "Home";
-  static const SignUp = "Sign Up ";
+  static const signUp = "Sign Up ";
   static const textSignUpGoogle = "Sign up with Google";
 
   //navigate
