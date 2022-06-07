@@ -67,7 +67,7 @@ Using an app as a common platform to treat patients will also be helpful for a d
             
 You can also try it out live over on [Appetize.io](https://appetize.io/app/yb7gkuq2rm8eg3yn37qqu3ba1r). 
 
-## 🎓 Resouces 
+## 🎓 Resources 
             
 A few resources to get you started if this is your first Flutter project:
 
